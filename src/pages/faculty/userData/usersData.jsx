@@ -21,6 +21,7 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import GradesModal from "./gradesModal";
 import "./usersDataStyle.css";
+import { endPoint } from "../../../utils/config";
 
 function UsersData({ studentNumber, facultyId, program, strand }) {
   const [curriculumMap, setCurriculumMap] = useState(new Map());
@@ -87,7 +88,7 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
     async function fetchStudentData() {
       try {
         const response = await axios.get(
-          `http://localhost:3000/students?studentNumber=${studentNumber}`
+          `${endPoint}/students?studentNumber=${studentNumber}`
         );
         const studentData = response.data;
         setStudentData(studentData);
@@ -116,7 +117,7 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
     const currentCourseType = getCourseType(studentNumber);
     axios
       .get(
-        `http://localhost:3000/curriculum?program_id=${program}&year_started=${currentCourseType}`
+        `${endPoint}/curriculum?program_id=${program}&year_started=${currentCourseType}`
       )
       .then((res) => {
         const courseData = res.data;
@@ -258,7 +259,7 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
       const currentCourseType = getCourseType( studentNumber);
       console.log("Fetching grades for studentNumber:", studentNumber);
       const response = await axios.get(
-        `http://localhost:3000/grades?studentNumber=${studentNumber}`
+        `${endPoint}/grades?studentNumber=${studentNumber}`
       );
 
       const gradesData = response.data;
@@ -266,7 +267,7 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
 
       // Fetch course codes from the curriculum endpoint
       const curriculumResponse = await axios.get(
-        `http://localhost:3000/curriculum?program_id=${program}&year_started=${currentCourseType}`
+        `${endPoint}/curriculum?program_id=${program}&year_started=${currentCourseType}`
       );
       console.log("Fetched curriculum data:", curriculumResponse.data);
 
@@ -470,7 +471,7 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
       console.log("CourseType inside the useEffect2:", courseType);
       try {
         const response = await fetch(
-          `http://localhost:3000/curriculum-prerequisite?program_id=${program}&year_started=${currentCourseType}`
+          `${endPoint}/curriculum-prerequisite?program_id=${program}&year_started=${currentCourseType}`
         );
         const data = await response.json();
 
@@ -557,7 +558,7 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
   //get validate base on studentnumber
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/validate`, {
+      .get(`${endPoint}/validate`, {
         params: {
           student_number: studentNumber,
         },
@@ -684,7 +685,7 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
             studentNumber
           );
           const courseData = await axios.get(
-            `http://localhost:3000/curriculum?program_id=${program}&year_started=${currentCourseType}`
+            `${endPoint}/curriculum?program_id=${program}&year_started=${currentCourseType}`
           );
           const course_id =
             courseData.data.find(
@@ -727,7 +728,7 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
       console.log("Data to send in the request:", validDataToValidate);
 
       const response = await axios.post(
-        "http://localhost:3000/validate",
+        `${endPoint}/validate`,
         validDataToValidate
       );
 
@@ -793,7 +794,7 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
   const updateStudentStatus = async (studentNumber, newStatus) => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/students/update-status/${encodeURIComponent(
+        `${endPoint}/students/update-status/${encodeURIComponent(
           studentNumber
         )}`,
         {
@@ -954,7 +955,7 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
       // Retrieve the course_id for the given courseCode
       const currentCourseType = getCourseType(studentNumber);
       const courseData = await axios.get(
-        `http://localhost:3000/curriculum?program_id=${program}&year_started=${currentCourseType}`
+        `${endPoint}/curriculum?program_id=${program}&year_started=${currentCourseType}`
       );
 
       const courseItem = courseData.data.find(
@@ -973,7 +974,7 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
       console.log("Deleting grades for course:", courseId);
       // Use courseId to construct the delete request
       const response = await axios.delete(
-        `http://localhost:3000/grades/${studentNumber}/${courseId}`
+        `${endPoint}/grades/${studentNumber}/${courseId}`
       );
 
       if (response.status === 200) {
@@ -1162,7 +1163,7 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
   useEffect(() => {
     const fetchProgramData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/programs");
+        const response = await axios.get(`${endPoint}/programs`);
         const programs = response.data;
 
         // Assuming programs is an array of objects with properties program_id, program_abbr, program_name

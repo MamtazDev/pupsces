@@ -1,6 +1,9 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 import PropTypes from 'prop-types';
+import { endPoint } from "../../../utils/config";
+
+
 const GradeContext = createContext();
 
 export function useGradeContext() {
@@ -12,14 +15,14 @@ export function GradeProvider({ children }) {
 
   useEffect(() => {
     // Fetch data from the server and update setGradesAndRemarks
-    fetch(`http://localhost:3000/grades`)
+    fetch(`${endPoint}/grades`)
       .then((response) => response.json())
       .then((data) => setGradesAndRemarks(data))
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   const updateGradesAndRemarks = (courseCode, newGrades, newRemarks) => {
-    // Make an API request to update the data on the server
+    
 
     // Update the context state as well
     setGradesAndRemarks((prevGradesAndRemarks) =>

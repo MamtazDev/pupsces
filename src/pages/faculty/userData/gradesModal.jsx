@@ -14,7 +14,7 @@ import {
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useState } from "react";
-
+import { endPoint } from "../../../utils/config";
 function GradesModal({
   isOpen,
   onClose,
@@ -43,7 +43,7 @@ function GradesModal({
     try {
         const currentCourseType = getCourseType(studentNumber);
       const response = await axios.get(
-        `http://localhost:3000/curriculum?program_id=${program}&year_started=${currentCourseType}`
+        `${endPoint}/curriculum?program_id=${program}&year_started=${currentCourseType}`
       );
 
       const courseData = response.data;
@@ -93,15 +93,12 @@ function GradesModal({
           remarks: remarks,
         });
 
-        const response = await axios.put(
-          "http://localhost:3000/update-grades",
-          {
-            studentNumber: studentNumber,
-            course_id: courseId,
-            grades: newGrade,
-            remarks: remarks,
-          }
-        );
+        const response = await axios.put(`${endPoint}/update-grades`, {
+          studentNumber: studentNumber,
+          course_id: courseId,
+          grades: newGrade,
+          remarks: remarks,
+        });
 
         console.log("Response Status:", response.status);
         console.log("Response Data:", response.data);
