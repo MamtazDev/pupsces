@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../../routes/UserContext";
 import ForgotPassword from "../components/forgotpassword/facultyForgotPassword";
 import FacultySignIn from "./facultySignin";
+import { endPoint } from "../../../utils/config";
 
 export default function NewFaculty() {
   const [showPassword, setShowPassword] = useState(false);
@@ -68,7 +69,7 @@ export default function NewFaculty() {
   useEffect(() => {
     const fetchProgramData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/programs");
+        const response = await axios.get(`${endPoint}/programs`);
         const programs = response.data;
 
         console.log("All Programs:", programs);
@@ -114,9 +115,7 @@ export default function NewFaculty() {
 
     try {
       // Fetch faculty data
-     const facultyResponse = await fetch(
-       `http://localhost:3000/faculty/${email}`
-     );
+     const facultyResponse = await fetch(`${endPoint}/faculty/${email}`);
 
      if (!facultyResponse.ok) {
        console.error("Failed to fetch faculty data");
@@ -145,7 +144,7 @@ export default function NewFaculty() {
       }
 
       // Fetch program data
-      const programResponse = await fetch(`http://localhost:3000/programs`);
+      const programResponse = await fetch(`${endPoint}/programs`);
 
       if (!programResponse.ok) {
         console.error("Failed to fetch program data");
@@ -166,20 +165,17 @@ export default function NewFaculty() {
       console.log("Formatted User Birthdate:", formattedUserBirthdate);
 
       // Perform the update request to store the updated faculty data
-      const updateResponse = await fetch(
-        `http://localhost:3000/faculty/${facultyId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            gender,
-            birthdate,
-            program_id: programId,
-          }),
-        }
-      );
+      const updateResponse = await fetch(`${endPoint}/faculty/${facultyId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          gender,
+          birthdate,
+          program_id: programId,
+        }),
+      });
       console.log("Update Response:", updateResponse);
 
       if (!updateResponse.ok) {

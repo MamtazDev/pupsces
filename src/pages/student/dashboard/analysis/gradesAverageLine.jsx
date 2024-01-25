@@ -3,6 +3,7 @@ import ApexCharts from "apexcharts";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { endPoint } from "../../../../utils/config";
 
 function GradesAverageLine({ studentNumber }) {
   const [programId, setProgramId] = useState();
@@ -25,7 +26,7 @@ function GradesAverageLine({ studentNumber }) {
     async function fetchStudentData() {
       try {
         const response = await axios.get(
-          `http://localhost:3000/students?studentNumber=${studentNumber}`
+          `${endPoint}/students?studentNumber=${studentNumber}`
         );
         const studentData = response.data;
 
@@ -57,7 +58,7 @@ function GradesAverageLine({ studentNumber }) {
 
         // Fetch curriculum data to get course_year and course_sem information
         const curriculumResponse = await axios.get(
-          `http://localhost:3000/curriculum?program_id=${programId}&year_started=${courseType}`
+          `${endPoint}/curriculum?program_id=${programId}&year_started=${courseType}`
         );
 
         const curriculumData = curriculumResponse.data;
@@ -65,7 +66,7 @@ function GradesAverageLine({ studentNumber }) {
 
         // Fetch grades data
         const gradesResponse = await axios.get(
-          `http://localhost:3000/grades?studentNumber=${studentNumber}`
+          `${endPoint}/grades?studentNumber=${studentNumber}`
         );
 
         const gradesData = gradesResponse.data;

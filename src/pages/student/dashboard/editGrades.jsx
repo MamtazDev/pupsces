@@ -15,6 +15,7 @@ import {
 import PropTypes from "prop-types";
 import { useState } from "react";
 import axios from "axios";
+import { endPoint } from "../../../utils/config";
 function EditGrades({ onClose, isOpen, selectedCourseCode }) {
   const [grades, setGrades] = useState([]);
   const [remarks, setRemarks] = useState('');
@@ -38,7 +39,7 @@ const handleSave = async () => {
     const studentNumber = "2020-00222-LQ-0";
 
 
-    await axios.post("http://localhost:3000/grades", {
+    await axios.post(`${endPoint}/grades`, {
       student_number: studentNumber,
       course_id: selectedCourseCode,
       grades: grades,

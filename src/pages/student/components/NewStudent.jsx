@@ -21,6 +21,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../routes/UserContext";
 import ForgotPassword from "../components/forgot-password/studentForgotPassword";
 import StudentSignIn from "./studentSignin";
+import { endPoint } from "../../../utils/config";
 
 export default function NewStudentSignin() {
   const [email, setEmail] = useState("");
@@ -59,7 +60,7 @@ export default function NewStudentSignin() {
 useEffect(() => {
   const fetchProgramData = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/programs");
+      const response = await axios.get(`${endPoint}/programs`);
       const programs = response.data;
 
       console.log("All Programs:", programs);
@@ -129,7 +130,7 @@ useEffect(() => {
     try {
       // Step 1: Fetch student data
       const studentResponse = await fetch(
-        `http://localhost:3000/students?studentNumber=${student_number}`
+        `${endPoint}/students?studentNumber=${student_number}`
       );
       const students = await studentResponse.json();
 
@@ -153,7 +154,7 @@ useEffect(() => {
       const schoolYear = currentYear - studentYear + 1;
 
       // Step 3: Fetch program data
-      const programResponse = await fetch(`http://localhost:3000/programs`);
+      const programResponse = await fetch(`${endPoint}/programs`);
 
       // Check if the program data fetching was successful
       if (!programResponse.ok) {
@@ -175,22 +176,19 @@ useEffect(() => {
       }
 
       // Step 4: Store student data with program_id
-      const response = await fetch(
-        `http://localhost:3000/students/${student_number}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            gender,
-            status,
-            school_year: schoolYear,
-            program_id: programId,
-            strand,
-          }),
-        }
-      );
+      const response = await fetch(`${endPoint}/students/${student_number}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          gender,
+          status,
+          school_year: schoolYear,
+          program_id: programId,
+          strand,
+        }),
+      });
 
       // Check if the student data storing was successful
       if (!response.ok) {

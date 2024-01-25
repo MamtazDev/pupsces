@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import Chart from "react-apexcharts";
 import {useState, useEffect} from "react";
 import axios from "axios";
+import { endPoint } from "../../../../utils/config";
+
 const PieChart = () => {
 
     const [femaleFaculty, setFemaleFaculty] = useState(0);
@@ -11,7 +13,7 @@ const PieChart = () => {
     useEffect(() => {
       // Fetch and count all students with the specified gender
       axios
-        .get("http://localhost:3000/faculty")
+        .get(`${endPoint}/faculty`)
         .then((response) => {
           // Assuming each student object has a "gender" property
           const data = response.data;

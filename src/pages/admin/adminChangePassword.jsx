@@ -19,6 +19,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { endPoint } from "../../utils/config";
 
 function AdminChangePassword({ isOpen, onClose }) {
   const toast = useToast();
@@ -37,7 +38,7 @@ function AdminChangePassword({ isOpen, onClose }) {
 
   const handleSave = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/admin");
+      const response = await axios.get(`${endPoint}/admin`);
       const AdminPassword = response.data[0].admin_password;
       console.log("AdminPassword", AdminPassword);
 
@@ -54,7 +55,7 @@ function AdminChangePassword({ isOpen, onClose }) {
         return;
       }
 
-      await axios.put(`http://localhost:3000/updateadmin`, {
+      await axios.put(`${endPoint}/updateadmin`, {
         admin_password: newpassword,
       });
 

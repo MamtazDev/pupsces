@@ -2,6 +2,7 @@ import { Box, HStack, Image, Text, VStack } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Vec from "../../../assets/Vector.png";
+import { endPoint } from "../../../utils/config";
 
 function Dashboard() {
   const [studentCount, setStudentCount] = useState(0);
@@ -10,7 +11,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchStudentCount = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/students/all");
+        const response = await axios.get(`${endPoint}/students/all`);
         setStudentCount(response.data.length);
       } catch (error) {
         console.error("Error fetching student count:", error);
@@ -19,7 +20,7 @@ function Dashboard() {
 
     const fetchFacultyCount = async () => {
       try {
-        const faculty = await axios.get("http://localhost:3000/faculty");
+        const faculty = await axios.get(`${endPoint}/faculty`);
         setFacultyCount(faculty.data.length);
         console.log(faculty.data.length);
       } catch (error) {

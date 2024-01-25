@@ -22,7 +22,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import UsersEvaluation from "./usersEvaluation/usersEvaluation";
-
+import { endPoint } from "../../../utils/config";
 function EvaluationTable({ students, isLoading, showTableBody }) {
   const [programAbbr, setProgramAbbr] = useState("");
   const [evalYear, setEvaluationYear] = useState({});
@@ -71,7 +71,7 @@ function EvaluationTable({ students, isLoading, showTableBody }) {
   useEffect(() => {
     const fetchProgramData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/programs");
+        const response = await axios.get(`${endPoint}/programs`);
         const programs = response.data;
 
         students.forEach(async (student) => {

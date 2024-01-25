@@ -20,7 +20,7 @@ import Footer from "../../../components/footer/footer";
 import Navbar from "../../../components/navbar/navbar";
 import breakPoints from "../../../utils/breakpoint";
 import EditGrades from "../dashboard/editGrades";
-
+import { endPoint } from "../../../utils/config";
 
 function Prescription() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,7 +41,7 @@ function Prescription() {
   useEffect(() => {
     // Fetch course data from the API
     axios
-      .get("http://localhost:3000/course")
+      .get(`${endPoint}/course`)
       .then((res) => {
         const courseData = res.data;
         setCourse(courseData);
@@ -50,7 +50,7 @@ function Prescription() {
 
     // Fetch grades data from the API
     axios
-      .get("http://localhost:3000/grades")
+      .get(`${endPoint}/grades`)
       .then((res) => {
         const gradesData = res.data;
         setGrades(gradesData);

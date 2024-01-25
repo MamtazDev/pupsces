@@ -15,6 +15,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
+import { endPoint } from "../../../utils/config";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -60,9 +61,7 @@ export default function FacultySignIn() {
       console.log("Password:", password);
 
       // Fetch faculty data
-      const facultyResponse = await fetch(
-        `http://localhost:3000/faculty/${email}`
-      );
+      const facultyResponse = await fetch(`${endPoint}/faculty/${email}`);
       const facultyData = await facultyResponse.json();
 
       console.log("Faculty data from server:", facultyData);
@@ -75,7 +74,7 @@ export default function FacultySignIn() {
 
         // Fetch admin data
         const adminResponse = await fetch(
-          `http://localhost:3000/admin/${encodeURIComponent(email)}`
+          `${endPoint}/admin/${encodeURIComponent(email)}`
         );
         const admin = await adminResponse.json();
 

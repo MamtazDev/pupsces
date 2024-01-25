@@ -2,6 +2,7 @@ import axios from "axios";
 import Chart from "chart.js/auto";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { endPoint } from "../../../../utils/config";
 export default function BarChartPerProgram({ onBarClick }) {
   const [programData, setProgramData] = useState([]);
   const [programCounts, setProgramCounts] = useState({});
@@ -10,7 +11,7 @@ export default function BarChartPerProgram({ onBarClick }) {
   useEffect(() => {
     // Fetch program data from your API endpoint
     axios
-      .get("http://localhost:3000/programs")
+      .get(`${endPoint}/programs`)
       .then((response) => {
         const programs = response.data;
 
@@ -33,7 +34,7 @@ export default function BarChartPerProgram({ onBarClick }) {
   useEffect(() => {
     // Fetch student data to count the number of students in each program
     axios
-      .get("http://localhost:3000/students/all")
+      .get(`${endPoint}/students/all`)
       .then((response) => {
         const students = response.data;
 

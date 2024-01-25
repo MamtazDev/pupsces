@@ -21,6 +21,7 @@ import InitialsAvatar from "react-initials-avatar";
 import { Link as RouterLink } from "react-router-dom";
 import AdminModal from "./adminUserModal";
 import PUP from "../../assets/PUPlogo.png";
+import { endPoint } from "../../utils/config";
 
 function AdminUser() {
   const [adminData, setAdminData] = useState(null);
@@ -30,7 +31,7 @@ function AdminUser() {
   useEffect(() => {
     const fetchAdminData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/admin");
+        const response = await axios.get(`${endPoint}/admin`);
         setAdminData(response.data[0]);
         console.log(response.data);
       } catch (error) {
@@ -55,7 +56,7 @@ function AdminUser() {
 
   const handleModalClose = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/admin");
+      const response = await axios.get(`${endPoint}/admin`);
       setAdminData(response.data[0]);
     } catch (error) {
       console.error("Error fetching updated user data:", error);

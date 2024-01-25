@@ -13,6 +13,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import * as xlsx from "xlsx";
 import "../admin.css";
 //import Sidebar from "../component/Sidebar";
+import { endPoint } from "../../../utils/config";
 
 function convertExcelDatesToReadable(dates) {
   const convertedDates = dates.map((excelValue) => {
@@ -87,13 +88,13 @@ function FacultyUpload() {
 
     try {
       // Fetch programs data from the server
-      const programsResponse = await fetch("http://localhost:3000/programs");
+      const programsResponse = await fetch(`${endPoint}/programs`);
       const programsData = await programsResponse.json();
 
       // Append the programs array to the FormData
       formData.append("programs", JSON.stringify(programsData));
 
-      const response = await fetch("http://localhost:3000/facultyupload", {
+      const response = await fetch(`${endPoint}/facultyupload`, {
         method: "POST",
         body: formData,
       });
@@ -104,9 +105,7 @@ function FacultyUpload() {
         console.log("Response data:", responseData);
 
         if (Array.isArray(responseData)) {
-          const programsResponse = await fetch(
-            "http://localhost:3000/programs"
-          );
+          const programsResponse = await fetch(`${endPoint}/programs`);
           const programsData = await programsResponse.json();
 
           const selectedProgram = programsData.find(

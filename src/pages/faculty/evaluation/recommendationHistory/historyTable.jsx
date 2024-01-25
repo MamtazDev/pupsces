@@ -23,6 +23,7 @@ import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import Lottie from "react-lottie-player";
 import NoEval from "../../../../assets/noEval.json";
+import { endPoint } from "../../../../utils/config";
 
 function HistoryTable({
   studentNumber,
@@ -69,9 +70,7 @@ function HistoryTable({
   useEffect(() => {
     if (facultyEmail) {
       axios
-        .get(
-          `http://localhost:3000/faculty/${encodeURIComponent(facultyEmail)}`
-        )
+        .get(`${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`)
         .then((response) => {
           const data = response.data;
 
@@ -87,7 +86,7 @@ function HistoryTable({
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3000/evaluate-recommend?student_number=${studentNumber}&eval_year=${year}&eval_sem=${semester}`
+        `${endPoint}/evaluate-recommend?student_number=${studentNumber}&eval_year=${year}&eval_sem=${semester}`
       )
       .then((response) => {
         console.log("API Response:", response.data); // Log the API response
@@ -107,7 +106,7 @@ function HistoryTable({
         const currentCourseType = getCourseType(studentNumber);
         console.log(currentCourseType);
         const response = await axios.get(
-          `http://localhost:3000/curriculum?program_id=${programId}&year_started=${currentCourseType}`
+          `${endPoint}/curriculum?program_id=${programId}&year_started=${currentCourseType}`
         );
 
         const courseData = response.data;
@@ -173,7 +172,7 @@ function HistoryTable({
     const fetchData = async () => {
       try {
         const studentResponse = await axios.get(
-          `http://localhost:3000/students?studentNumber=${studentNumber}`
+          `${endPoint}/students?studentNumber=${studentNumber}`
         );
 
         const studentData = studentResponse.data;

@@ -14,6 +14,8 @@ import {
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useState } from "react";
+import { endPoint } from "../../../utils/config";
+
 const ModalComponent = ({
   isOpen,
   onClose,
@@ -52,15 +54,12 @@ const ModalComponent = ({
           remarks: remarks,
         });
 
-        const response = await axios.put(
-          "http://localhost:3000/update-grades",
-          {
-            studentNumber: studentNumber,
-            course_id: courseId,
-            grades: newGrade,
-            remarks: remarks,
-          }
-        );
+        const response = await axios.put(`${endPoint}/update-grades`, {
+          studentNumber: studentNumber,
+          course_id: courseId,
+          grades: newGrade,
+          remarks: remarks,
+        });
 
         console.log("Response Status:", response.status);
         console.log("Response Data:", response.data);

@@ -11,6 +11,8 @@ import {
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 
+import { endPoint } from "../../../utils/config";
+
 function FacultyTable({
   students,
   isLoading,
@@ -23,7 +25,7 @@ function FacultyTable({
   useEffect(() => {
     const fetchProgram = async () => {
       try {
-        const response = await fetch("http://localhost:3000/programs");
+        const response = await fetch(`${endPoint}/programs`);
         if (response.ok) {
           const data = await response.json();
           setProgramData(data);

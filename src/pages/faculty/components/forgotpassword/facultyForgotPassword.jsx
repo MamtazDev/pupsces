@@ -9,6 +9,7 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
+import { endPoint } from "../../../../utils/config";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -67,7 +68,7 @@ function ForgotPassword() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/facultycheckEmail", {
+      const response = await fetch(`${endPoint}/facultycheckEmail`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,7 +83,7 @@ function ForgotPassword() {
           console.log("Name:", `${faculty_fname} ${faculty_lname}`);
           console.log("Student Number:", faculty_id);
 
-          const emailResponse = await fetch("http://localhost:3000/sendEmail", {
+          const emailResponse = await fetch(`${endPoint}/sendEmail`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -104,7 +105,7 @@ function ForgotPassword() {
             };
             // Password update code here
             const updatePasswordResponse = await fetch(
-              "http://localhost:3000/facultyupdatePassword",
+              `${endPoint}/facultyupdatePassword`,
               {
                 method: "POST",
                 headers: {
@@ -141,7 +142,7 @@ function ForgotPassword() {
         }
       }
       const AdminResponse = await fetch(
-        "http://localhost:3000/admincheckEmail",
+        `${endPoint}/admincheckEmail`,
         {
           method: "POST",
           headers: {
@@ -159,7 +160,7 @@ function ForgotPassword() {
         console.log("Exists:", exists);
 
         if (exists) {
-          const emailResponse = await fetch("http://localhost:3000/sendEmail", {
+          const emailResponse = await fetch(`${endPoint}/sendEmail`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -181,7 +182,7 @@ function ForgotPassword() {
             };
 
             const updateAdminResponse = await fetch(
-              "http://localhost:3000/adminupdatePassword",
+              `${endPoint}/adminupdatePassword`,
               {
                 method: "POST",
                 headers: {

@@ -28,6 +28,7 @@ import GradeofFive from "./gradeofFive";
 import { isAfter, subDays } from "date-fns";
 import Cookies from "js-cookie";
 import StudentAnalytics from "./studentAnalytics";
+import { endPoint } from "../../../../utils/config";
 
 function UsersEvaluation({
   studentNumber,
@@ -91,9 +92,7 @@ function UsersEvaluation({
   useEffect(() => {
     if (facultyEmail) {
       axios
-        .get(
-          `http://localhost:3000/faculty/${encodeURIComponent(facultyEmail)}`
-        )
+        .get(`${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`)
         .then((response) => {
           const facultyData = response.data;
           setFacultyId(facultyData.faculty_id);
@@ -109,7 +108,7 @@ function UsersEvaluation({
   useEffect(() => {
     console.log("Fetching student data...");
     axios
-      .get(`http://localhost:3000/students?studentNumber=${studentNumber}`)
+      .get(`${endPoint}/students?studentNumber=${studentNumber}`)
       .then((response) => {
         const studentData = response.data;
         setStudentData(studentData);
@@ -151,7 +150,7 @@ function UsersEvaluation({
     console.log("Current Course Type:", currentCourseType);
     axios
       .get(
-        `http://localhost:3000/curriculum?program_id=${programId}&year_started=${currentCourseType}`
+        `${endPoint}/curriculum?program_id=${programId}&year_started=${currentCourseType}`
       )
       .then((res) => {
         const courseData = res.data;
@@ -208,7 +207,7 @@ function UsersEvaluation({
     const fetchCousePrerequisiteData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/curriculum-prerequisite?program_id=${programId}&year_started=${currentCourseType}`
+          `${endPoint}/curriculum-prerequisite?program_id=${programId}&year_started=${currentCourseType}`
         );
         const data = await response.json();
 
@@ -228,7 +227,7 @@ function UsersEvaluation({
   useEffect(() => {
     // Fetch the validation data for the given student
     axios
-      .get(`http://localhost:3000/validate`, {
+      .get(`${endPoint}/validate`, {
         params: {
           student_number: studentNumber,
         },
@@ -307,8 +306,7 @@ function UsersEvaluation({
   useEffect(() => {
     // Fetch additional details for validated courses
     const validatedCoursesDetailsPromises = validatedCoursesId.map(
-      (courseCode) =>
-        axios.get(`http://localhost:3000/curriculum/${courseCode}`)
+      (courseCode) => axios.get(`${endPoint}/curriculum/${courseCode}`)
     );
 
     Promise.all(validatedCoursesDetailsPromises)
@@ -429,23 +427,23 @@ function UsersEvaluation({
       console.log("currentCourseType:", currentCourseType);
 
       if (evalYearValue === "1" && evalSemValue === "First Semester") {
-        endpoint = `http://localhost:3000/curriculum-first-first?program_id=${programId}&year_started=${currentCourseType}`;
+        endpoint = `${endPoint}/curriculum-first-first?program_id=${programId}&year_started=${currentCourseType}`;
       } else if (evalYearValue === "1" && evalSemValue === "Second Semester") {
-        endpoint = `http://localhost:3000/curriculumfirst-second?program_id=${programId}&year_started=${currentCourseType}`;
+        endpoint = `${endPoint}/curriculumfirst-second?program_id=${programId}&year_started=${currentCourseType}`;
       } else if (evalYearValue === "2" && evalSemValue === "First Semester") {
-        endpoint = `http://localhost:3000/curriculumsecond-first?program_id=${programId}&year_started=${currentCourseType}`;
+        endpoint = `${endPoint}/curriculumsecond-first?program_id=${programId}&year_started=${currentCourseType}`;
       } else if (evalYearValue === "2" && evalSemValue === "Second Semester") {
-        endpoint = `http://localhost:3000/curriculumsecond-second?program_id=${programId}&year_started=${currentCourseType}`;
+        endpoint = `${endPoint}/curriculumsecond-second?program_id=${programId}&year_started=${currentCourseType}`;
       } else if (evalYearValue === "3" && evalSemValue === "First Semester") {
-        endpoint = `http://localhost:3000/curriculumthird-first?program_id=${programId}&year_started=${currentCourseType}`;
+        endpoint = `${endPoint}/curriculumthird-first?program_id=${programId}&year_started=${currentCourseType}`;
       } else if (evalYearValue === "3" && evalSemValue === "Second Semester") {
-        endpoint = `http://localhost:3000/curriculumthird-second?program_id=${programId}&year_started=${currentCourseType}`;
+        endpoint = `${endPoint}/curriculumthird-second?program_id=${programId}&year_started=${currentCourseType}`;
       } else if (evalYearValue === "4" && evalSemValue === "First Semester") {
-        endpoint = `http://localhost:3000/curriculumfourth-first?program_id=${programId}&year_started=${currentCourseType}`;
+        endpoint = `${endPoint}/curriculumfourth-first?program_id=${programId}&year_started=${currentCourseType}`;
       } else if (evalYearValue === "4" && evalSemValue === "Second Semester") {
-        endpoint = `http://localhost:3000/curriculumfourth-second?program_id=${programId}&year_started=${currentCourseType}`;
+        endpoint = `${endPoint}/curriculumfourth-second?program_id=${programId}&year_started=${currentCourseType}`;
       } else if (evalSemValue === "Summer Semester") {
-        endpoint = `http://localhost:3000/curriculumsummer?program_id=${programId}&year_started=${currentCourseType}`;
+        endpoint = `${endPoint}/curriculumsummer?program_id=${programId}&year_started=${currentCourseType}`;
       } else if (evalYearValue === "5" || evalYearValue === "6") {
         // Set totalCreditUnits to 20 for evalYearValue equal to 5 or 6
         setTotalCreditUnits(20);
@@ -481,7 +479,7 @@ function UsersEvaluation({
   //evaluate
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/evaluate-student`, {
+      .get(`${endPoint}/evaluate-student`, {
         params: {
           student_number: studentNumber,
         },
@@ -885,7 +883,7 @@ function UsersEvaluation({
     const fetchTotalEvaluatedCreditUnits = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/evaluate-units?eval_year=${evalYearValue}&eval_sem=${evalSemValue}&student_number=${studentNumber}`
+          `${endPoint}/evaluate-units?eval_year=${evalYearValue}&eval_sem=${evalSemValue}&student_number=${studentNumber}`
         );
 
         const totalEvaluatedCreditUnits = response.data.totalEvalCredit;
@@ -939,14 +937,11 @@ function UsersEvaluation({
       }
 
       // Fetch the evaluated courses for the student
-      const response = await axios.get(
-        `http://localhost:3000/evaluate-student`,
-        {
-          params: {
-            student_number: studentNumber,
-          },
-        }
-      );
+      const response = await axios.get(`${endPoint}/evaluate-student`, {
+        params: {
+          student_number: studentNumber,
+        },
+      });
 
       const evaluatedCourses = response.data;
 
@@ -967,7 +962,7 @@ function UsersEvaluation({
 
           // Fetch the course details to get its credit units
           const courseDetailsResponse = await axios.get(
-            `http://localhost:3000/evalcurriculum?program_id=${programId}&year_started=${currentCourseType}&course_code=${courseCode}`
+            `${endPoint}/evalcurriculum?program_id=${programId}&year_started=${currentCourseType}&course_code=${courseCode}`
           );
 
           const courseDetailsArray = courseDetailsResponse.data;
@@ -1017,7 +1012,7 @@ function UsersEvaluation({
             }));
 
             // Send the date along with other data to the server
-            await axios.post("http://localhost:3000/evaluate", {
+            await axios.post(`${endPoint}/evaluate`, {
               course_reco: courseCode,
               evalcredit_unit: courseDetails.credit_unit,
               requiredcredit_unit: totalCreditUnits,
@@ -1098,14 +1093,11 @@ function UsersEvaluation({
       console.log("All Displayed Courses:", uniqueDisplayedCourseCodes);
 
       // Fetch the evaluated courses for the student
-      const response = await axios.get(
-        `http://localhost:3000/evaluate-student`,
-        {
-          params: {
-            student_number: studentNumber,
-          },
-        }
-      );
+      const response = await axios.get(`${endPoint}/evaluate-student`, {
+        params: {
+          student_number: studentNumber,
+        },
+      });
 
       const evaluatedCourses = response.data;
 
@@ -1160,7 +1152,7 @@ function UsersEvaluation({
           console.log(`Recommendation logic for ${courseCode} is executing`);
           // Fetch the course details to get its credit units
           const courseDetailsResponse = await axios.get(
-            `http://localhost:3000/curriculum/${courseCode}`
+            `${endPoint}/curriculum/${courseCode}`
           );
 
           const courseDetails = courseDetailsResponse.data;
@@ -1200,7 +1192,7 @@ function UsersEvaluation({
           console.log("Total Credit Units before post:", totalCreditUnits);
 
           // Send the date along with other data to the server
-          await axios.post("http://localhost:3000/evaluate", {
+          await axios.post(`${endPoint}/evaluate`, {
             course_reco: courseCode,
             evalcredit_unit: courseDetails.credit_unit,
             requiredcredit_unit: totalCreditUnits,
@@ -1285,14 +1277,11 @@ function UsersEvaluation({
       console.log("All Displayed Courses:", uniqueDisplayedCourseCodes);
 
       // Fetch the evaluated courses for the student
-      const response = await axios.get(
-        `http://localhost:3000/evaluate-student`,
-        {
-          params: {
-            student_number: studentNumber,
-          },
-        }
-      );
+      const response = await axios.get(`${endPoint}/evaluate-student`, {
+        params: {
+          student_number: studentNumber,
+        },
+      });
 
       const evaluatedCourses = response.data;
 
@@ -1343,7 +1332,7 @@ function UsersEvaluation({
           console.log(`Recommendation logic for ${courseCode} is executing`);
           // Fetch the course details to get its credit units
           const courseDetailsResponse = await axios.get(
-            `http://localhost:3000/curriculum/${courseCode}`
+            `${endPoint}/curriculum/${courseCode}`
           );
 
           const courseDetails = courseDetailsResponse.data;
@@ -1383,7 +1372,7 @@ function UsersEvaluation({
           console.log("Total Credit Units before post:", totalCreditUnits);
 
           // Send the date along with other data to the server
-          await axios.post("http://localhost:3000/evaluate", {
+          await axios.post(`${endPoint}/evaluate`, {
             course_reco: courseCode,
             evalcredit_unit: courseDetails.credit_unit,
             requiredcredit_unit: totalCreditUnits,
@@ -1480,7 +1469,7 @@ function UsersEvaluation({
   useEffect(() => {
     const fetchProgramData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/programs");
+        const response = await axios.get(`${endPoint}/programs`);
         const programs = response.data;
 
         // Assuming programs is an array of objects with properties program_id, program_abbr, program_name

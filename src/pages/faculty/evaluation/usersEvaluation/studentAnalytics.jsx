@@ -18,6 +18,7 @@ import GradesAverageLine from "../../../student/dashboard/analysis/gradesAverage
 import GradesperSemester from "../../../student/dashboard/analysis/gradesperSemester";
 import History from "../recommendationHistory/history";
 import UsersEvaluation from "./usersEvaluation";
+import { endPoint } from "../../../../utils/config";
 
 import Overstay from "../../../student/dashboard/analysis/Overstay";
 function StudentAnalytics({ studentNumber, evalSemValue, evalYearValue }) {
@@ -82,7 +83,7 @@ function StudentAnalytics({ studentNumber, evalSemValue, evalYearValue }) {
     const fetchData = async () => {
       try {
         const studentResponse = await axios.get(
-          `http://localhost:3000/students?studentNumber=${studentNumber}`
+          `${endPoint}/students?studentNumber=${studentNumber}`
         );
 
         const studentData = studentResponse.data;

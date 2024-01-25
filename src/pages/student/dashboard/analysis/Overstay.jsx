@@ -16,6 +16,7 @@ import {
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { endPoint } from "../../../../utils/config";
 
 function Overstay({ studentNumber }) {
   const [stayingYear, setStayingYear] = useState(0);
@@ -45,7 +46,7 @@ function Overstay({ studentNumber }) {
   useEffect(() => {
     const fetchProgram = async () => {
       try {
-        const response = await fetch("http://localhost:3000/programs");
+        const response = await fetch(`${endPoint}/programs`);
         if (response.ok) {
           const data = await response.json();
           setPrograms(data);
@@ -66,7 +67,7 @@ function Overstay({ studentNumber }) {
     const fetchData = async () => {
       try {
         const studentResponse = await axios.get(
-          `http://localhost:3000/students?studentNumber=${studentNumber}`
+          `${endPoint}/students?studentNumber=${studentNumber}`
         );
 
         const studentData = studentResponse.data;
@@ -128,7 +129,7 @@ function Overstay({ studentNumber }) {
     console.log(currentCourseType);
     axios
       .get(
-        `http://localhost:3000/curriculum?program_id=${programId}&year_started=${currentCourseType}`
+        `${endPoint}/curriculum?program_id=${programId}&year_started=${currentCourseType}`
       )
       .then((res) => {
         const curriculumStore = res.data;
@@ -156,7 +157,7 @@ function Overstay({ studentNumber }) {
     const fetchGrades = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/grades?studentNumber=${studentNumber}`
+          `${endPoint}/grades?studentNumber=${studentNumber}`
         );
 
         // Assuming your grades API response has a 'data' field containing the grades data

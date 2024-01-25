@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 import "./customModal.css";
 import HistoryAll from "./historyAll";
 import HistoryTable from "./historyTable";
-
+import { endPoint } from "../../../../utils/config";
 function History({
   onClose,
   studentNumber,
@@ -48,7 +48,7 @@ function History({
    const fetchData = async () => {
      try {
        const studentResponse = await axios.get(
-         `http://localhost:3000/students?studentNumber=${studentNumber}`
+         `${endPoint}/students?studentNumber=${studentNumber}`
        );
 
        const studentData = studentResponse.data;
@@ -69,7 +69,7 @@ function History({
 useEffect(() => {
   const fetchProgramData = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/programs");
+      const response = await axios.get(`${endPoint}/programs`);
       const programs = response.data;
 
       // Find the program with matching program_id as a number

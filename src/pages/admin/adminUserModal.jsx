@@ -16,6 +16,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import AdminChangePassword from "./adminChangePassword";
+import { endPoint } from "../../utils/config";
 
 function AdminModal({ onClose }) {
   const [firstName, setFirstName] = useState("");
@@ -37,7 +38,7 @@ function AdminModal({ onClose }) {
  useEffect(() => {
    const fetchAdminData = async () => {
      try {
-       const response = await axios.get("http://localhost:3000/admin");
+       const response = await axios.get(`${endPoint}/admin`);
        const user = response.data[0];
        console.log(response.data[0]);
        setFirstName(user.admin_fname || "");
@@ -57,16 +58,12 @@ function AdminModal({ onClose }) {
 
  const handleSave = async () => {
     try {
-      const response = await axios.put(`http://localhost:3000/updateadmin`,
-        {
-         admin_fname: firstName,
-         admin_mname: middleName,
-         admin_lname: lastName,
-         admin_email: email,
-
-      }
-
-      );
+      const response = await axios.put(`${endPoint}/updateadmin`, {
+        admin_fname: firstName,
+        admin_mname: middleName,
+        admin_lname: lastName,
+        admin_email: email,
+      });
     
    
       // Log the response (You might want to handle it differently)

@@ -19,6 +19,7 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import ChangePassword from "./changePassword";
+import { endPoint } from "../../../utils/config";
 
 function UserModal({ onClose }) {
   const [userData, setUserData] = useState(null);
@@ -49,7 +50,7 @@ function UserModal({ onClose }) {
       const fetchUserData = async () => {
         try {
           const response = await Axios.get(
-            `http://localhost:3000/students?studentNumber=${studentNumber}`
+            `${endPoint}/students?studentNumber=${studentNumber}`
           );
 
           const user = response.data;
@@ -84,7 +85,7 @@ function UserModal({ onClose }) {
   useEffect(() => {
     const fetchProgramData = async () => {
       try {
-        const response = await Axios.get("http://localhost:3000/programs");
+        const response = await Axios.get(`${endPoint}/programs`);
         setProgramData(response.data);
       } catch (error) {
         console.error("Error fetching program data:", error);
@@ -98,7 +99,7 @@ function UserModal({ onClose }) {
   const handleSave = async () => {
     try {
       const response = await Axios.put(
-        `http://localhost:3000/updatestudents/${studentNumber}`,
+        `${endPoint}/updatestudents/${studentNumber}`,
         {
           student_number: studentNumber,
           first_name: firstName,

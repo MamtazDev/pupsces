@@ -21,6 +21,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { endPoint } from "../../../utils/config";
 
 function ChangePassword({ isOpen, onClose }) {
   const [showOldPassword, setShowOldPassword] = useState(false);
@@ -41,7 +42,7 @@ function ChangePassword({ isOpen, onClose }) {
   const handleSave = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/students/password/${studentNumber}`
+        `${endPoint}/students/password/${studentNumber}`
       );
       const studentPassword = response.data.student_password;
       console.log("STudent password in db", response.data.student_password);
@@ -59,7 +60,7 @@ function ChangePassword({ isOpen, onClose }) {
         return;
       }
       // If the old password matches, update the password in the database
-      await axios.put(`http://localhost:3000/updatestudents/${studentNumber}`, {
+      await axios.put(`${endPoint}/updatestudents/${studentNumber}`, {
         student_password: newpassword,
       });
 

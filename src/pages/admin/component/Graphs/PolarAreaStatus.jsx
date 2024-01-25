@@ -1,6 +1,7 @@
 import axios from "axios";
 import Chart from "chart.js/auto";
 import { useEffect, useState } from "react";
+import { endPoint } from "../../../../utils/config";
 
 const PolarAreaChart = () => {
   const [regular, setRegular] = useState(0);
@@ -12,7 +13,7 @@ const PolarAreaChart = () => {
   useEffect(() => {
     // Fetch and count all students with different statuses
     axios
-      .get("http://localhost:3000/students/all")
+      .get(`${endPoint}/students/all`)
       .then((response) => {
         const students = response.data;
 

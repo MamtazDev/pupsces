@@ -19,6 +19,7 @@ import axios from "axios";
 import html2pdf from "html2pdf.js";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
+import { endPoint } from "../../../utils/config";
 
 function EvaluationAll({
   studentNumber,
@@ -80,7 +81,7 @@ function EvaluationAll({
     const fetchData = async () => {
       try {
         const studentResponse = await axios.get(
-          `http://localhost:3000/students?studentNumber=${studentNumber}`
+          `${endPoint}/students?studentNumber=${studentNumber}`
         );
 
         const studentData = studentResponse.data;
@@ -117,7 +118,7 @@ function EvaluationAll({
         const currentCourseType = getCourseType(studentNumber);
         console.log(currentCourseType);
         const response = await axios.get(
-          `http://localhost:3000/curriculum?program_id=${programId}&year_started=${currentCourseType}`
+          `${endPoint}/curriculum?program_id=${programId}&year_started=${currentCourseType}`
         );
 
         const courseData = response.data;
@@ -145,9 +146,7 @@ function EvaluationAll({
   //fetch evaluate
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:3000/evaluate-student?student_number=${studentNumber}`
-      )
+      .get(`${endPoint}/evaluate-student?student_number=${studentNumber}`)
       .then((response) => {
         console.log("API Response:", response.data);
 
@@ -192,7 +191,8 @@ function EvaluationAll({
   //fetch faculty
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/faculty`)
+
+      .get(`${endPoint}/faculty`)
       .then((response) => {
         const facultyData = response.data;
 
@@ -676,17 +676,17 @@ function EvaluationAll({
               <Text fontWeight="bold" fontSize="18px">
                 Evaluated by:
               </Text>
-              <Text fontWeight="semibold" fontSize="18px">
+              <Text ml="3rem" fontWeight="semibold" fontSize="20px">
                 {facultyname}
               </Text>
             </HStack>
 
-            <HStack>
+            <HStack mt="2rem">
               <Text fontWeight="bold" fontSize="18px">
                 {" "}
                 Total Credit Units:
               </Text>
-              <Text fontWeight="semibold" fontSize="18px">
+              <Text ml="4rem" fontWeight="semibold" fontSize="18px">
                 {totalCreditUnits} units(s)
               </Text>
             </HStack>
@@ -694,7 +694,7 @@ function EvaluationAll({
               <Text fontWeight="bold" fontSize="18px">
                 Taken Credit Units:
               </Text>
-              <Text fontWeight="semibold" fontSize="18px">
+              <Text ml="3.4rem" fontWeight="semibold" fontSize="18px">
                 {validatedTotalUnits} unit(s)
               </Text>
             </HStack>
@@ -702,7 +702,7 @@ function EvaluationAll({
               <Text fontWeight="bold" fontSize="18px">
                 Remaining Credit Units:
               </Text>
-              <Text fontWeight="semibold" fontSize="18px">
+              <Text ml="1rem" fontWeight="semibold" fontSize="18px">
                 {remainingCreditUnits} unit(s)
               </Text>
             </HStack>
@@ -710,7 +710,7 @@ function EvaluationAll({
               <Text fontWeight="bold" fontSize="18px">
                 Remaining Semester(s):
               </Text>
-              <Text fontWeight="semibold" fontSize="18px">
+              <Text ml="1rem" fontWeight="semibold" fontSize="18px">
                 {" "}
                 {Math.ceil(remainingCreditUnits / 23)} semester(s)
               </Text>
@@ -719,7 +719,7 @@ function EvaluationAll({
               <Text fontWeight="bold" fontSize="18px">
                 Remaining Year(s):
               </Text>
-              <Text fontWeight="semibold" fontSize="18px">
+              <Text ml="3.5rem" fontWeight="semibold" fontSize="18px">
                 {" "}
                 {Math.ceil(Math.ceil(remainingCreditUnits / 23) / 2)} year(s)
               </Text>

@@ -19,6 +19,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../routes/UserContext";
 import ForgotPassword from "../components/forgot-password/studentForgotPassword";
 import NewStudentSignIn from "./NewStudent";
+import { endPoint } from "../../../utils/config";
 
 export default function StudentSignIn() {
   const [email, setEmail] = useState("");
@@ -61,7 +62,7 @@ export default function StudentSignIn() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/students?studentNumber=${student_number}`
+        `${endPoint}/students?studentNumber=${student_number}`
       );
 
       if (!response.ok) {

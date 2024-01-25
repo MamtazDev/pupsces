@@ -18,6 +18,7 @@ import {
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
+import { endPoint } from "../../../../utils/config";
 
 function Gen() {
   const [inteCourses, setInteCourses] = useState([]);
@@ -43,7 +44,7 @@ function Gen() {
     const fetchData = async () => {
       try {
         const studentResponse = await axios.get(
-          `http://localhost:3000/students?studentNumber=${studentNumber}`
+          `${endPoint}/students?studentNumber=${studentNumber}`
         );
 
         const studentData = studentResponse.data;
@@ -68,7 +69,7 @@ function Gen() {
         }
 
         const curriculumResponse = await axios.get(
-          `http://localhost:3000/curriculum?program_id=${studentData.program_id}&year_started=${courseType}`
+          `${endPoint}/curriculum?program_id=${studentData.program_id}&year_started=${courseType}`
         );
 
         const curriculumData = curriculumResponse.data;
@@ -116,7 +117,7 @@ function Gen() {
         }
 
         const response = await axios.get(
-          `http://localhost:3000/grades?studentNumber=${studentNumber}`
+          `${endPoint}/grades?studentNumber=${studentNumber}`
         );
 
         const gradesData = response.data;
@@ -203,7 +204,7 @@ function Gen() {
   useEffect(() => {
     const fetchProgramData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/programs");
+        const response = await axios.get(`${endPoint}/programs`);
         const programs = response.data;
 
         // Find the program with matching program_id as a number

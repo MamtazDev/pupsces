@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 import { VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { endPoint } from "../../../../utils/config";
 
 export default function GradesperSemester({
   studentNumber,
@@ -40,7 +41,7 @@ export default function GradesperSemester({
     async function fetchStudentData() {
       try {
         const response = await axios.get(
-          `http://localhost:3000/students?studentNumber=${studentNumber}`
+          `${endPoint}/students?studentNumber=${studentNumber}`
         );
         const studentData = response.data;
 
@@ -72,7 +73,7 @@ export default function GradesperSemester({
         setCourseType(courseType);
         // Fetch curriculum data to get course_year and course_sem information
         const curriculumResponse = await axios.get(
-          `http://localhost:3000/curriculum?program_id=${programId}&year_started=${courseType}`
+          `${endPoint}/curriculum?program_id=${programId}&year_started=${courseType}`
         );
 
         const curriculumData = curriculumResponse.data;
@@ -80,7 +81,7 @@ export default function GradesperSemester({
 
         // Fetch grades data
         const gradesResponse = await axios.get(
-          `http://localhost:3000/grades?studentNumber=${studentNumber}`
+          `${endPoint}/grades?studentNumber=${studentNumber}`
         );
 
         const gradesData = gradesResponse.data;

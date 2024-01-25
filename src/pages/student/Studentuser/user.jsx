@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../../../components/footer/footer";
 import Navbar from "../../../components/navbar/navbar";
 import UserModal from "./userModal";
+import { endPoint } from "../../../utils/config";
 
 export default function UserProfile() {
   const [userData, setUserData] = useState(null);
@@ -43,7 +44,7 @@ export default function UserProfile() {
       if (studentNumber) {
         try {
           const response = await Axios.get(
-            `http://localhost:3000/students?studentNumber=${studentNumber}`
+            `${endPoint}/students?studentNumber=${studentNumber}`
           );
 
           const user = response.data;
@@ -61,7 +62,7 @@ export default function UserProfile() {
   useEffect(() => {
     const fetchProgramData = async () => {
       try {
-        const response = await Axios.get("http://localhost:3000/programs");
+        const response = await Axios.get(`${endPoint}/programs`);
         setProgramData(response.data);
       } catch (error) {
         console.error("Error fetching program data:", error);
@@ -75,7 +76,7 @@ export default function UserProfile() {
     try {
       // Fetch the updated user data directly from the server
       const response = await Axios.get(
-        `http://localhost:3000/students?studentNumber=${studentNumber}`
+        `${endPoint}/students?studentNumber=${studentNumber}`
       );
 
       const updatedUser = response.data;

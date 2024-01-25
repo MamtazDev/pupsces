@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import BarChartPerProgram from "./Graphs/BarChartPerProgram";
 import PolarAreaChart from "./Graphs/PolarAreaStatus";
+import { endPoint } from "../../../utils/config";
 
 function StudentsPerProgramStatus() {
   const [isBoxVisible, setIsBoxVisible] = useState(false);
@@ -28,7 +29,7 @@ function StudentsPerProgramStatus() {
 
   const fetchStudentCounts = (programId) => {
     axios
-      .get(`http://localhost:3000/students/program/${programId}`)
+      .get(`${endPoint}/students/program/${programId}`)
       .then((response) => {
         const students = response.data;
 

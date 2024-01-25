@@ -25,6 +25,7 @@ import FacultyNavbar from "../../../components/navbar/facultynavbar";
 import breakPoints from "../../../utils/breakpoint";
 import UsersData from "../userData/usersData";
 import FacultyTable from "./facultyTable";
+import { endPoint } from "../../../utils/config";
 
 function convertExcelDatesToReadable(dates) {
   const convertedDates = dates.map((excelValue) => {
@@ -76,9 +77,7 @@ export default function FacultyDashboard() {
   useEffect(() => {
     if (facultyEmail) {
       axios
-        .get(
-          `http://localhost:3000/faculty/${encodeURIComponent(facultyEmail)}`
-        )
+        .get(`${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`)
         .then((response) => {
           const facultyData = response.data;
           setFacultyName(
@@ -152,11 +151,7 @@ export default function FacultyDashboard() {
   //fetch student
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:3000/students/program/${encodeURIComponent(
-          facultyprogram
-        )}`
-      )
+      .get(`${endPoint}/students/program/${encodeURIComponent(facultyprogram)}`)
       .then((response) => {
         setStudents(response.data);
         setIsLoading(false);
@@ -283,7 +278,7 @@ export default function FacultyDashboard() {
     formData.append("excelFile", file);
 
     try {
-      const response = await fetch("http://localhost:3000/upload", {
+      const response = await fetch(`${endPoint}/upload`, {
         method: "POST",
         body: formData,
       });

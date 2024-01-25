@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { endPoint } from "../../../../utils/config";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -65,7 +66,7 @@ function ForgotPassword() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/checkEmail", {
+      const response = await fetch(`${endPoint}/checkEmail`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,7 +82,7 @@ function ForgotPassword() {
           console.log("Name:", `${first_name} ${last_name}`);
           console.log("Student Number:", student_number);
 
-          const emailResponse = await fetch("http://localhost:3000/sendEmail", {
+          const emailResponse = await fetch(`${endPoint}/sendEmail`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -103,7 +104,7 @@ function ForgotPassword() {
             };
 
             const updateStudentResponse = await fetch(
-              `http://localhost:3000/updatePassword`,
+              `${endPoint}/updatePassword`,
               {
                 method: "POST",
                 headers: {

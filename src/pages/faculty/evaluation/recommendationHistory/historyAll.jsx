@@ -19,6 +19,7 @@ import axios from "axios";
 import html2pdf from "html2pdf.js";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
+import { endPoint } from "../../../../utils/config";
 
 function HistoryAll({
   studentNumber,
@@ -80,7 +81,7 @@ function HistoryAll({
     const fetchData = async () => {
       try {
         const studentResponse = await axios.get(
-          `http://localhost:3000/students?studentNumber=${studentNumber}`
+          `${endPoint}/students?studentNumber=${studentNumber}`
         );
 
         const studentData = studentResponse.data;
@@ -117,7 +118,7 @@ function HistoryAll({
         const currentCourseType = getCourseType(studentNumber);
         console.log(currentCourseType);
         const response = await axios.get(
-          `http://localhost:3000/curriculum?program_id=${programId}&course_type=${currentCourseType}`
+          `${endPoint}/curriculum?program_id=${programId}&course_type=${currentCourseType}`
         );
 
         const courseData = response.data;
@@ -145,9 +146,7 @@ function HistoryAll({
   //fetch evaluate
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:3000/evaluate-student?student_number=${studentNumber}`
-      )
+      .get(`${endPoint}/evaluate-student?student_number=${studentNumber}`)
       .then((response) => {
         console.log("API Response:", response.data);
 
@@ -192,7 +191,7 @@ function HistoryAll({
   //fetch faculty
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/faculty`)
+      .get(`${endPoint}/faculty`)
       .then((response) => {
         const facultyData = response.data;
 

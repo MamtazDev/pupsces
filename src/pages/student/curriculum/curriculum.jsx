@@ -30,6 +30,7 @@ import Navbar from "../../../components/navbar/navbar";
 import breakPoints from "../../../utils/breakpoint";
 import SpecialGradeModal from "./SpecialGradeModal";
 import "./curriculum.css";
+import { endPoint } from "../../../utils/config";
 
 function Curriculum() {
   const studentNumber = Cookies.get("student_number");
@@ -85,7 +86,7 @@ function Curriculum() {
     async function fetchStudentData() {
       try {
         const response = await axios.get(
-          `http://localhost:3000/students?studentNumber=${studentNumber}`
+          `${endPoint}/students?studentNumber=${studentNumber}`
         );
         const studentData = response.data;
         setStudentData(studentData);
@@ -105,7 +106,7 @@ function Curriculum() {
     const fetchProgramName = async () => {
       try {
         if (programId) {
-          const response = await fetch(`http://localhost:3000/programs`);
+          const response = await fetch(`${endPoint}/programs`);
           if (!response.ok) {
             throw new Error("Failed to fetch program_name");
           }
@@ -179,7 +180,7 @@ function Curriculum() {
     console.log("Course Type in Curriculum:", courseType);
     axios
       .get(
-        `http://localhost:3000/curriculum?program_id=${programId}&year_started=${courseType}`
+        `${endPoint}/curriculum?program_id=${programId}&year_started=${courseType}`
       )
       .then((res) => {
         const courseData = res.data;
@@ -253,7 +254,7 @@ function Curriculum() {
       console.log("Fetching grades data...");
 
       const response = await axios.get(
-        `http://localhost:3000/grades?studentNumber=${studentNumber}`
+        `${endPoint}/grades?studentNumber=${studentNumber}`
       );
 
       console.log("Response Status:", response.status);
@@ -266,7 +267,7 @@ function Curriculum() {
         console.log("Received gradesData:", gradesData);
 
         const curriculumResponse = await axios.get(
-          `http://localhost:3000/curriculum?program_id=${programId}&year_started=${courseType}`
+          `${endPoint}/curriculum?program_id=${programId}&year_started=${courseType}`
         );
         console.log("Fetched curriculum data:", curriculumResponse.data);
 
@@ -702,7 +703,7 @@ function Curriculum() {
       );
     });
     const curriculumResponse = await axios.get(
-      `http://localhost:3000/curriculum?program_id=${programId}&year_started=${courseType}`
+      `${endPoint}/curriculum?program_id=${programId}&year_started=${courseType}`
     );
     console.log("Fetched curriculum data:", curriculumResponse.data);
 
@@ -760,7 +761,7 @@ function Curriculum() {
               console.log("New Grade to submit:", grade);
 
               // Add logic to update the grade in the database
-              await axios.put("http://localhost:3000/update-grades", {
+              await axios.put(`${endPoint}/update-grades`, {
                 studentNumber: studentNumber,
                 course_id: courseItem.course_id,
                 grades: parseFloat(grade),
@@ -783,15 +784,12 @@ function Curriculum() {
               console.log("Submitting grade for course:", courseCode);
               console.log("Grade to submit:", grade);
 
-              const response = await axios.post(
-                "http://localhost:3000/grades",
-                {
-                  student_number: studentNumber,
-                  course_id: courseItem.course_id,
-                  grades: parseFloat(grade),
-                  remarks: mapGradeToRemarks(grade),
-                }
-              );
+              const response = await axios.post(`${endPoint}/grades`, {
+                student_number: studentNumber,
+                course_id: courseItem.course_id,
+                grades: parseFloat(grade),
+                remarks: mapGradeToRemarks(grade),
+              });
 
               console.log(
                 `Grade submitted successfully for course: ${courseCode}`
@@ -909,7 +907,7 @@ function Curriculum() {
 
     for (const courseItem of coursesToSubmit) {
       const curriculumResponse = await axios.get(
-        `http://localhost:3000/curriculum?program_id=${programId}&year_started=${courseType}`
+        `${endPoint}/curriculum?program_id=${programId}&year_started=${courseType}`
       );
       console.log("Fetched curriculum data grade:", curriculumResponse.data);
 
@@ -954,7 +952,7 @@ function Curriculum() {
             remarks: mapGradeToRemarks(grade),
           });
 
-          await axios.post("http://localhost:3000/grades", {
+          await axios.post(`${endPoint}/grades`, {
             student_number: studentNumber,
             course_id: courseItem.course_id,
             grades: parseFloat(grade),

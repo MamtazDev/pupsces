@@ -11,6 +11,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
+import { endPoint } from "../../../utils/config";
 
 function ProgramUpload() {
   const [programName, setProgramName] = useState("");
@@ -19,7 +20,7 @@ function ProgramUpload() {
 
 const handleAddProgram = async () => {
   try {
-    const response = await fetch("http://localhost:3000/program", {
+    const response = await fetch(`${endPoint}/program`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

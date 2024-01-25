@@ -18,6 +18,7 @@ import Footer from "../../../components/footer/footer";
 import FacultyNavbar from "../../../components/navbar/facultynavbar";
 import breakPoints from "../../../utils/breakpoint";
 import EvaluationTable from "./evaluationTable";
+import { endPoint } from "../../../utils/config";
 
 export default function Evaluation() {
   const [students, setStudents] = useState([]);
@@ -45,9 +46,7 @@ export default function Evaluation() {
   useEffect(() => {
     if (facultyEmail) {
       axios
-        .get(
-          `http://localhost:3000/faculty/${encodeURIComponent(facultyEmail)}`
-        )
+        .get(`${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`)
         .then((response) => {
           const facultyData = response.data;
           setFacultyId(facultyData.faculty_id);
@@ -100,11 +99,7 @@ export default function Evaluation() {
   //fetch student
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:3000/students/program/${encodeURIComponent(
-          facultyprogram
-        )}`
-      )
+      .get(`${endPoint}/students/program/${encodeURIComponent(facultyprogram)}`)
       .then((response) => {
         console.log("Fetched Students:", response.data);
         setStudents(response.data);

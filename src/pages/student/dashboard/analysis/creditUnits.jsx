@@ -3,6 +3,7 @@ import Chart from "chart.js/auto";
 import Cookies from "js-cookie";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { endPoint } from "../../../../utils/config";
 export default function CreditUnits({
   studentNumber,
   onRemainingCreditUnitsChange,
@@ -19,7 +20,7 @@ export default function CreditUnits({
   const [validatedCourse, setValidatedCourse] = useState({});
   const [courseType, setCourseType] = useState("");
 
-  const program = Cookies.get("program_id");
+
   const strand = Cookies.get("strand");
   const [programId, setProgramId] = useState();
   console.log("Program ID:", programId);
@@ -32,7 +33,7 @@ export default function CreditUnits({
     async function fetchStudentData() {
       try {
         const response = await axios.get(
-          `http://localhost:3000/students?studentNumber=${studentNumber}`
+          `${endPoint}/students?studentNumber=${studentNumber}`
         );
         const studentData = response.data;
 
@@ -53,7 +54,7 @@ export default function CreditUnits({
       try {
         // Fetch data from validateData endpoint
         const validateResponse = await axios.get(
-          `http://localhost:3000/validateData?studentNumber=${studentNumber}`
+          `${endPoint}/validateData?studentNumber=${studentNumber}`
         );
 
         const validateData = validateResponse.data || [];
@@ -86,7 +87,7 @@ export default function CreditUnits({
     setCourseType(courseType);
     axios
       .get(
-        `http://localhost:3000/curriculum?program_id=${programId}&year_started=${courseType}`
+        `${endPoint}/curriculum?program_id=${programId}&year_started=${courseType}`
       )
       .then((res) => {
         const combinedData = res.data;

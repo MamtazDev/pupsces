@@ -16,6 +16,7 @@ import {
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { endPoint } from "../../../../utils/config";
 
 function Notice({ filterExcludedCourses, year, semester, studentNumber }) {
   console.log("Notice", filterExcludedCourses);
@@ -29,7 +30,7 @@ function Notice({ filterExcludedCourses, year, semester, studentNumber }) {
     const fetchData = async () => {
       try {
         const studentResponse = await axios.get(
-          `http://localhost:3000/students?studentNumber=${studentNumber}`
+          `${endPoint}/students?studentNumber=${studentNumber}`
         );
 
         const studentData = studentResponse.data;
@@ -106,7 +107,7 @@ function Notice({ filterExcludedCourses, year, semester, studentNumber }) {
     console.log(currentCourseType);
     axios
       .get(
-        `http://localhost:3000/curriculum?program_id=${programId}&course_type=${currentCourseType}`
+        `${endPoint}/curriculum?program_id=${programId}&course_type=${currentCourseType}`
       )
       .then((res) => {
         const curriculumStore = res.data;

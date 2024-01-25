@@ -19,6 +19,7 @@ import GradesperSemester from "./analysis/gradesperSemester";
 import Core from "./analysis/highestCore";
 import Major from "./analysis/highestMajor";
 import Gen from "./analysis/highestGenEd";
+import { endPoint } from "../../../utils/config";
 
 export default function StudentDashboard() {
   const studentNumber = Cookies.get("student_number");
@@ -63,7 +64,7 @@ export default function StudentDashboard() {
   useEffect(() => {
     const fetchProgramData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/programs");
+        const response = await axios.get(`${endPoint}/programs`);
         const programs = response.data;
 
         setPrograms(programs);
@@ -96,7 +97,7 @@ export default function StudentDashboard() {
     const fetchData = async () => {
       try {
         const studentResponse = await axios.get(
-          `http://localhost:3000/students?studentNumber=${studentNumber}`
+          `${endPoint}/students?studentNumber=${studentNumber}`
         );
 
         const studentData = studentResponse.data;

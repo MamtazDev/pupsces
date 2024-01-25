@@ -26,6 +26,9 @@ import Lottie from "react-lottie-player";
 import NoEval from "../../../assets/noEval.json";
 import Navbar from "../../../components/navbar/navbar";
 import EvaluationAll from "./evaluationAll";
+import { endPoint } from "../../../utils/config";
+
+
 // student evaluation
 function Evaluation() {
   const studentNumber = Cookies.get("student_number");
@@ -67,7 +70,7 @@ function Evaluation() {
     const fetchData = async () => {
       try {
         const studentResponse = await axios.get(
-          `http://localhost:3000/students?studentNumber=${studentNumber}`
+          `${endPoint}/students?studentNumber=${studentNumber}`
         );
 
         const studentData = studentResponse.data;
@@ -91,7 +94,7 @@ function Evaluation() {
   useEffect(() => {
     const fetchProgramData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/programs");
+        const response = await axios.get(`${endPoint}/programs`);
         const programs = response.data;
 
         // Find the program with matching program_id as a number
@@ -133,7 +136,7 @@ function Evaluation() {
     setCourseType(courseType);
     axios
       .get(
-        `http://localhost:3000/curriculum?program_id=${programId}&year_started=${courseType}`
+        `${endPoint}/curriculum?program_id=${programId}&year_started=${courseType}`
       )
       .then((res) => {
         const courseData = res.data;
@@ -189,7 +192,7 @@ function Evaluation() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3000/evaluate-recommend?student_number=${studentNumber}&eval_year=${year}&eval_sem=${semester}`
+        `${endPoint}/evaluate-recommend?student_number=${studentNumber}&eval_year=${year}&eval_sem=${semester}`
       )
       .then((response) => {
         console.log("API Response:", response.data); // Log the API response
@@ -223,7 +226,7 @@ function Evaluation() {
   useEffect(() => {
     if (facultyId !== null) {
       axios
-        .get(`http://localhost:3000/facultyId/${facultyId}`)
+        .get(`${endPoint}/facultyId/${facultyId}`)
         .then((res) => {
           const facultyDetails = res.data;
           console.log("Faculty Details:", facultyDetails);
@@ -497,7 +500,7 @@ function Evaluation() {
       try {
         // Fetch data from validateData endpoint
         const validateResponse = await axios.get(
-          `http://localhost:3000/validateData?studentNumber=${studentNumber}`
+          `${endPoint}/validateData?studentNumber=${studentNumber}`
         );
 
         const validateData = validateResponse.data || [];
@@ -530,7 +533,7 @@ function Evaluation() {
     setCourseType(courseType);
     axios
       .get(
-        `http://localhost:3000/curriculum?program_id=${programId}&year_started=${courseType}`
+        `${endPoint}/curriculum?program_id=${programId}&year_started=${courseType}`
       )
       .then((res) => {
         const combinedData = res.data;
@@ -1028,17 +1031,17 @@ function Evaluation() {
                   <Text fontWeight="bold" fontSize="18px">
                     Evaluated by:
                   </Text>
-                  <Text fontWeight="semibold" fontSize="18px">
+                  <Text ml="3rem" fontWeight="semibold" fontSize="20px">
                     {facultyDetails &&
                       `${facultyDetails.faculty_fname} ${facultyDetails.faculty_mname} ${facultyDetails.faculty_lname}`}
                   </Text>
                 </HStack>
 
-                <HStack mt="8px">
+                <HStack mt="3rem">
                   <Text fontSize="18px" fontWeight="bold">
                     Total Credit Units Recommended:
                   </Text>
-                  <Text fontWeight="semibold" fontSize="18px">
+                  <Text ml="2rem" fontWeight="semibold" fontSize="18px">
                     {totalEvalCreditUnits} unit(s)
                   </Text>
                 </HStack>
@@ -1047,7 +1050,7 @@ function Evaluation() {
                     {" "}
                     Total Credit Units:
                   </Text>
-                  <Text fontWeight="semibold" fontSize="18px">
+                  <Text ml="10.2rem" fontWeight="semibold" fontSize="18px">
                     {totalCreditUnits}
                     {""} unit(s)
                   </Text>
@@ -1056,7 +1059,7 @@ function Evaluation() {
                   <Text fontSize="18px" fontWeight="bold">
                     Taken Credit Units:
                   </Text>
-                  <Text fontWeight="semibold" fontSize="18px">
+                  <Text ml="9.6rem" fontWeight="semibold" fontSize="18px">
                     {validatedTotalunits} {""} unit(s)
                   </Text>
                 </HStack>
@@ -1064,7 +1067,7 @@ function Evaluation() {
                   <Text fontSize="18px" fontWeight="bold">
                     Remaining Credit Units:
                   </Text>
-                  <Text fontWeight="semibold" fontSize="18px">
+                  <Text ml="7rem" fontWeight="semibold" fontSize="18px">
                     {remainingCreditUnits} unit(s)
                   </Text>
                 </HStack>
@@ -1072,16 +1075,16 @@ function Evaluation() {
                   <Text fontSize="18px" fontWeight="bold">
                     Remaining Semester(s):
                   </Text>
-                  <Text fontWeight="semibold" fontSize="18px">
+                  <Text ml="7rem"fontWeight="semibold" fontSize="18px">
                     {" "}
                     {Math.ceil(remainingCreditUnits / 23)} semester(s)
                   </Text>
                 </HStack>
                 <HStack mt="8px">
                   <Text fontSize="18px" fontWeight="bold">
-                    Remaining Year(s)
+                    Remaining Year(s):
                   </Text>
-                  <Text fontWeight="semibold" fontSize="18px">
+                  <Text ml="10rem"fontWeight="semibold" fontSize="18px">
                     {" "}
                     {Math.ceil(Math.ceil(remainingCreditUnits / 23) / 2)}{" "}
                     year(s)

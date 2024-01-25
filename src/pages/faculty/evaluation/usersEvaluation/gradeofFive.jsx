@@ -15,6 +15,7 @@ import {
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { endPoint } from "../../../../utils/config";
 
 function GradeofFive({ filterCourses, studentNumber }) {
   const [grades, setGrades] = useState([]);
@@ -34,7 +35,7 @@ function GradeofFive({ filterCourses, studentNumber }) {
     const fetchGrades = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/grades?studentNumber=${studentNumber}`
+          `${endPoint}/grades?studentNumber=${studentNumber}`
         );
         console.log("Grades API Response:", response.data);
         setGrades(response.data); 
