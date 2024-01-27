@@ -16,7 +16,7 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { useUser } from "../../routes/UserContext";
+//import { useUser } from "../../routes/UserContext";
 import ForgotPassword from "../components/forgot-password/studentForgotPassword";
 import NewStudentSignIn from "./NewStudent";
 import { endPoint } from "../../../utils/config";
@@ -28,7 +28,7 @@ export default function StudentSignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [error, setError] = useState("");
-  const { setUser } = useUser();
+  // const { setUser } = useUser();
 
   const navigate = useNavigate();
 
@@ -76,11 +76,11 @@ export default function StudentSignIn() {
         students.email === email &&
         students.student_password === password
       ) {
-        setUser({
-          username: students.username,
-          roles: students.roles,
-          student_number: students.student_number,
-        });
+        // setUser({
+        //   username: students.username,
+        //   roles: students.roles,
+        //   student_number: students.student_number,
+        // });
 
         // Log the data before setting cookies
         console.log("Program ID:", students.program_id);

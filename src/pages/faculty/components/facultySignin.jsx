@@ -102,7 +102,7 @@ export default function FacultySignIn() {
           Cookies.set("facultyEmail", facultyData.email, { expires: 7 });
           navigate("/facultydashboard");
         } else {
-          setError("Invalid input");
+          setError("Data is invalid");
         }
       }
     } catch (error) {
