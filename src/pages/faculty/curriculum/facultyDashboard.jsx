@@ -23,27 +23,38 @@ import * as xlsx from "xlsx";
 import Footer from "../../../components/footer/footer";
 import FacultyNavbar from "../../../components/navbar/facultynavbar";
 import breakPoints from "../../../utils/breakpoint";
+import { endPoint } from "../../../utils/config";
 import UsersData from "../userData/usersData";
 import FacultyTable from "./facultyTable";
-import { endPoint } from "../../../utils/config";
 
 function convertExcelDatesToReadable(dates) {
   const convertedDates = dates.map((excelValue) => {
-    const millisecondsPerDay = 24 * 60 * 60 * 1000;
-    const daysSinceExcelStart = excelValue - 1;
-    const millisecondsSinceExcelStart =
-      daysSinceExcelStart * millisecondsPerDay;
-    const excelStartDate = new Date(1900, 0, 1);
-    const dateValue = new Date(
-      excelStartDate.getTime() + millisecondsSinceExcelStart
-    );
+    try {
+      const millisecondsPerDay = 24 * 60 * 60 * 1000;
+      const daysSinceExcelStart = excelValue - 1;
+      const millisecondsSinceExcelStart =
+        daysSinceExcelStart * millisecondsPerDay;
+      const excelStartDate = new Date(1900, 0, 1);
+      const dateValue = new Date(
+        excelStartDate.getTime() + millisecondsSinceExcelStart
+      );
 
-    // 'YYYY-MM-DD'
-    const formattedDate = dateValue.toISOString().split("T")[0];
-    return formattedDate;
+      // Check if the date is valid
+      if (isNaN(dateValue.getTime())) {
+        console.error("Invalid date value:", excelValue);
+        return null; // Skip the invalid date
+      }
+
+      // 'YYYY-MM-DD'
+      const formattedDate = dateValue.toISOString().split("T")[0];
+      return formattedDate;
+    } catch (error) {
+      console.error("Error converting date:", error);
+      return null; // Skip the invalid date
+    }
   });
 
-  return convertedDates;
+  return convertedDates.filter((date) => date !== null); // Remove null values
 }
 
 export default function FacultyDashboard() {
@@ -52,7 +63,6 @@ export default function FacultyDashboard() {
   const [selectedSchoolYear, setSelectedSchoolYear] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-
 
   const [filteredStudentCount, setFilteredStudentCount] = useState(0);
   const [showTableBody, setShowTableBody] = useState(false);
@@ -170,21 +180,18 @@ export default function FacultyDashboard() {
       const statusMatch =
         selectedStatus === "" || student.status === selectedStatus;
 
-      return (
-        selectedStatus === "All Students" || statusMatch
-      );
+      return selectedStatus === "All Students" || statusMatch;
     });
 
     setFilteredStudents(newFilteredStudents);
     setFilteredStudentCount(newFilteredStudents.length);
-  }, [ selectedStatus, students]);
+  }, [selectedStatus, students]);
 
   //filter
   useEffect(() => {
     console.log("Selected Filters:", selectedSchoolYear);
 
     const newFilteredYear = students.filter((student) => {
-    
       // Calculate student year level
       const studentYear = parseInt(student.student_number.substring(0, 4), 10);
       const currentYear = new Date().getFullYear();
@@ -211,12 +218,9 @@ export default function FacultyDashboard() {
       console.log("Selected School Year:", selectedSchoolYear);
       console.log("Year Level Match:", yearLevelMatch);
 
-     
       console.log("Filtered Student:", student);
 
-      return (
-        selectedSchoolYear === "All Years" ||  yearLevelMatch
-      );
+      return selectedSchoolYear === "All Years" || yearLevelMatch;
     });
 
     setFilteredStudents(newFilteredYear);
@@ -347,7 +351,6 @@ export default function FacultyDashboard() {
     setFilteredStudents(newFilteredSearch);
     setFilteredStudentCount(newFilteredSearch.length);
   }, [searchQuery, students]);
-
 
   console.log(facultyId);
   return (
@@ -500,11 +503,8 @@ export default function FacultyDashboard() {
                   fontSize="1.2rem"
                   color="#2B273E"
                   opacity=".5"
-                
                   transition="all .3s ease"
                   borderRadius=".5rem"
-                 
-                 
                 >
                   <BsSearch />
                 </InputRightElement>
