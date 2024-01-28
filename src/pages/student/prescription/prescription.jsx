@@ -20,7 +20,7 @@ import Footer from "../../../components/footer/footer";
 import Navbar from "../../../components/navbar/navbar";
 import breakPoints from "../../../utils/breakpoint";
 import EditGrades from "../dashboard/editGrades";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 function Prescription() {
   const [isModalOpen, setIsModalOpen] = useState(false);

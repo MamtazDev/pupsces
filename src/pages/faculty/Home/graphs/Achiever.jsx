@@ -19,7 +19,7 @@ import axios from "axios";
 import html2pdf from "html2pdf.js";
 import Cookies from "js-cookie";
 import React, { useEffect, useRef, useState } from "react";
-import { endPoint } from "../../../../utils/config";
+import { endPoint } from "../../../config";
 
 
 function Achiever() {

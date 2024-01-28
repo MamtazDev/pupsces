@@ -19,7 +19,7 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import FacultyChangePassword from "./facultyChangePassword";
-
+import { endPoint } from "../../config";
 function FacultyModal({ onClose }) {
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
@@ -48,7 +48,7 @@ function FacultyModal({ onClose }) {
       const fetchUserData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:3000/faculty/${encodeURIComponent(facultyEmail)}`
+            `${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`
           );
 
           const user = response.data;
@@ -84,7 +84,7 @@ function FacultyModal({ onClose }) {
   useEffect(() => {
     const fetchProgramData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/programs");
+        const response = await axios.get(`${endPoint}/programs`);
         setProgramData(response.data);
       } catch (error) {
         console.error("Error fetching program data:", error);
@@ -98,9 +98,7 @@ function FacultyModal({ onClose }) {
   const handleSave = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/updatefaculty/${encodeURIComponent(
-          facultyEmail
-        )}`,
+        `${endPoint}/updatefaculty/${encodeURIComponent(facultyEmail)}`,
         {
           faculty_id: facultyId,
           faculty_fname: firstName,

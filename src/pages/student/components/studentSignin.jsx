@@ -19,7 +19,7 @@ import { Link, useNavigate } from "react-router-dom";
 //import { useUser } from "../../routes/UserContext";
 import ForgotPassword from "../components/forgot-password/studentForgotPassword";
 import NewStudentSignIn from "./NewStudent";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 export default function StudentSignIn() {
   const [email, setEmail] = useState("");

@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../../../components/footer/footer";
 import Navbar from "../../../components/navbar/navbar";
 import UserModal from "./userModal";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 export default function UserProfile() {
   const [userData, setUserData] = useState(null);

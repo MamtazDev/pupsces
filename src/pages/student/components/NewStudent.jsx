@@ -21,7 +21,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../routes/UserContext";
 import ForgotPassword from "../components/forgot-password/studentForgotPassword";
 import StudentSignIn from "./studentSignin";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 export default function NewStudentSignin() {
   const [email, setEmail] = useState("");

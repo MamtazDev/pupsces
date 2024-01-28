@@ -14,7 +14,7 @@ import {
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 const ModalComponent = ({
   isOpen,
@@ -25,7 +25,7 @@ const ModalComponent = ({
   studentNumber,
   onSaveSuccess,
 }) => {
-   const [newGrade, setNewGrade] = useState(currentGrade || "");
+  const [newGrade, setNewGrade] = useState(currentGrade || "");
 
   console.log("Current Grade", currentGrade);
   console.log("Course ID", courseId);
@@ -69,7 +69,7 @@ const ModalComponent = ({
 
           onClose();
           if (onSaveSuccess) {
-          onSaveSuccess(remarks); // Call the callback function to trigger data fetching
+            onSaveSuccess(remarks); // Call the callback function to trigger data fetching
           }
         } else {
           console.error(

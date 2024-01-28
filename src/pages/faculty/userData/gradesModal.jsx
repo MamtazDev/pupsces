@@ -14,7 +14,7 @@ import {
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 function GradesModal({
   isOpen,
   onClose,

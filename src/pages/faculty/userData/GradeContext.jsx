@@ -1,7 +1,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 import PropTypes from 'prop-types';
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 
 const GradeContext = createContext();

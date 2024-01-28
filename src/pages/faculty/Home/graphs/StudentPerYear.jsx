@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import PieChart from "../Apexchart/PieChart";
 import ListPerYearModal from "../Modal/ListPerYearModal";
-import { endPoint } from "../../../../utils/config";
+import { endPoint } from "../../../config";
 
 function StudentPerYear() {
     const [isLoading, setIsLoading] = useState(true);

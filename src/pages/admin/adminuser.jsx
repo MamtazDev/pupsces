@@ -21,7 +21,7 @@ import InitialsAvatar from "react-initials-avatar";
 import { Link as RouterLink } from "react-router-dom";
 import AdminModal from "./adminUserModal";
 import PUP from "../../assets/PUPlogo.png";
-import { endPoint } from "../../utils/config";
+import { endPoint } from "../config";
 
 function AdminUser() {
   const [adminData, setAdminData] = useState(null);

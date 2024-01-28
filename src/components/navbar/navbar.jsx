@@ -11,11 +11,11 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import InitialsAvatar from "react-initials-avatar";
 import "react-initials-avatar/lib/ReactInitialsAvatar.css";
-import { NavLink, Link as RouterLink } from "react-router-dom"; 
+import { NavLink, Link as RouterLink } from "react-router-dom";
 import logo from "../../assets/PUPlogo.png";
 import "../../components/navbar/navbar.css";
+import { endPoint } from "../../pages/config";
 import { handleScroll } from "./handleNavbar";
-import { endPoint } from "../../utils/config";
 
 function Navbar() {
   const studentNumber = Cookies.get("student_number");
@@ -39,7 +39,7 @@ function Navbar() {
 
     fetchData();
   }, [studentNumber]);
-console.log("Student Name in Navbar", studentName);
+  console.log("Student Name in Navbar", studentName);
   const scrollCallback = () => {
     if (window.scrollY > 100) {
       setShowNavbar(false);

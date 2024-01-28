@@ -19,7 +19,10 @@ import axios from "axios";
 import html2pdf from "html2pdf.js";
 import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
-import { endPoint } from "../../../../utils/config";
+import { endPoint } from "../../../config";
+
+
+
 function Evaluated() {
   const [selectedSemester, setSelectedSemester] = useState("");
   const [selectedYearLevel, setSelectedYearLevel] = useState("");

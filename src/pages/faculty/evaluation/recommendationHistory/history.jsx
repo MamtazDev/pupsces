@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 import "./customModal.css";
 import HistoryAll from "./historyAll";
 import HistoryTable from "./historyTable";
-import { endPoint } from "../../../../utils/config";
+import { endPoint } from "../../../config";
 function History({
   onClose,
   studentNumber,

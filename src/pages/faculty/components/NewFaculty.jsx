@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../../routes/UserContext";
 import ForgotPassword from "../components/forgotpassword/facultyForgotPassword";
 import FacultySignIn from "./facultySignin";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 export default function NewFaculty() {
   const [showPassword, setShowPassword] = useState(false);

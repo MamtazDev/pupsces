@@ -19,7 +19,7 @@ import GradesperSemester from "./analysis/gradesperSemester";
 import Core from "./analysis/highestCore";
 import Major from "./analysis/highestMajor";
 import Gen from "./analysis/highestGenEd";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 export default function StudentDashboard() {
   const studentNumber = Cookies.get("student_number");

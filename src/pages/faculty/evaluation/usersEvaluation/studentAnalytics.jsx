@@ -18,7 +18,7 @@ import GradesAverageLine from "../../../student/dashboard/analysis/gradesAverage
 import GradesperSemester from "../../../student/dashboard/analysis/gradesperSemester";
 import History from "../recommendationHistory/history";
 import UsersEvaluation from "./usersEvaluation";
-import { endPoint } from "../../../../utils/config";
+import { endPoint } from "../../../config";
 
 import Overstay from "../../../student/dashboard/analysis/Overstay";
 function StudentAnalytics({ studentNumber, evalSemValue, evalYearValue }) {

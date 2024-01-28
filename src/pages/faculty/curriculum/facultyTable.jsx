@@ -11,7 +11,7 @@ import {
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 function FacultyTable({
   students,

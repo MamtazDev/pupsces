@@ -4,10 +4,10 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { RiFileList3Line } from "react-icons/ri";
 import Vec from "../../../assets/Vector.png";
+import { endPoint } from "../../config";
 import FemaleStudents from "./Modal/FemaleStudents";
 import MaleStudents from "./Modal/MaleStudents";
 import TotalStudents from "./Modal/TotalStudent";
-import { endPoint } from "../../../utils/config";
 
 function Card() {
   const [programName, setProgramName] = useState("");
@@ -65,7 +65,6 @@ function Card() {
 
     fetchProgramData();
   }, [facultyprogram]);
-
 
   useEffect(() => {
     // Fetch and count all students with the specified program_id

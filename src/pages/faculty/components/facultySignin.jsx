@@ -15,7 +15,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";

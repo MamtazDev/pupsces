@@ -11,7 +11,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 function ProgramUpload() {
   const [programName, setProgramName] = useState("");

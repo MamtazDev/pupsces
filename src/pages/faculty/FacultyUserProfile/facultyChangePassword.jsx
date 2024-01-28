@@ -19,6 +19,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import PropTypes from "prop-types";
 import { useState } from "react";
+import { endPoint } from "../../config";
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -46,7 +47,7 @@ function FacultyChangePassword({ isOpen, onClose }) {
   const handleSave = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/faculty/password/${facultyEmail}`
+        `${endPoint}/faculty/password/${facultyEmail}`
       );
       const facultyPassword = response.data.faculty_password;
       console.log("Faculty password in db", response.data.faculty_password);
@@ -64,11 +65,12 @@ function FacultyChangePassword({ isOpen, onClose }) {
         return;
       }
       // If the old password matches, update the password in the database
-      await axios.put( `http://localhost:3000/updatefaculty/${encodeURIComponent(
-          facultyEmail
-        )}`, {
-        faculty_password: newpassword,
-      });
+      await axios.put(
+        `${endPoint}/updatefaculty/${encodeURIComponent(facultyEmail)}`,
+        {
+          faculty_password: newpassword,
+        }
+      );
 
       onClose();
 

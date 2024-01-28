@@ -3,7 +3,7 @@ import Chart from "chart.js/auto";
 import Cookies from "js-cookie";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { endPoint } from "../../../../utils/config";
+import { endPoint } from "../../../config";
 export default function CreditUnits({
   studentNumber,
   onRemainingCreditUnitsChange,

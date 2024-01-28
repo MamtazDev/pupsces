@@ -16,7 +16,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import AdminChangePassword from "./adminChangePassword";
-import { endPoint } from "../../utils/config";
+import { endPoint } from "../config";
 
 function AdminModal({ onClose }) {
   const [firstName, setFirstName] = useState("");

@@ -16,11 +16,12 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import axios from "axios";
+import html2pdf from "html2pdf.js";
 import Cookies from "js-cookie";
 import PropTypes from "prop-types";
-import { useEffect, useState, useRef } from "react";
-import html2pdf from "html2pdf.js";
+import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { endPoint } from "../../../config";
 
 function MaleStudents({ isOpen, onClose }) {
   const [facultyProgram, setFacultyProgram] = useState([]);
@@ -32,9 +33,7 @@ function MaleStudents({ isOpen, onClose }) {
   useEffect(() => {
     if (facultyEmail) {
       axios
-        .get(
-          `http://localhost:3000/faculty/${encodeURIComponent(facultyEmail)}`
-        )
+        .get(`${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`)
         .then((response) => {
           const facultyData = response.data;
           setFacultyProgram(facultyData.program_id);
@@ -50,7 +49,7 @@ function MaleStudents({ isOpen, onClose }) {
     // Fetch and count all students with the specified program_id
     if (facultyProgram) {
       axios
-        .get(`http://localhost:3000/students/all`)
+        .get(`${endPoint}/students/all`)
         .then((response) => {
           const allStudents = response.data;
 
@@ -66,8 +65,6 @@ function MaleStudents({ isOpen, onClose }) {
 
           console.log("studentsWithProgramId", updatedStudents);
           setStudents(updatedStudents);
-
-         
         })
         .catch((error) => {
           console.error(error);
@@ -87,7 +84,6 @@ function MaleStudents({ isOpen, onClose }) {
     return yearLevel;
   };
 
-      
   const containerRef = useRef(null);
 
   const handleDownloadPDF = () => {
@@ -115,8 +111,6 @@ function MaleStudents({ isOpen, onClose }) {
       }
     });
   };
-
-
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="3xl">

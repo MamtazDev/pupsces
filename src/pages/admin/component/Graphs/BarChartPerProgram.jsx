@@ -2,7 +2,7 @@ import axios from "axios";
 import Chart from "chart.js/auto";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { endPoint } from "../../../../utils/config";
+import { endPoint } from "../../../config";
 export default function BarChartPerProgram({ onBarClick }) {
   const [programData, setProgramData] = useState([]);
   const [programCounts, setProgramCounts] = useState({});

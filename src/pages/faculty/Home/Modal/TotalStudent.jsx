@@ -21,6 +21,7 @@ import Cookies from "js-cookie";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { endPoint } from "../../../config";
 
 function TotalStudents({ isOpen, onClose }) {
   const [facultyProgram, setFacultyProgram] = useState([]);
@@ -31,9 +32,7 @@ function TotalStudents({ isOpen, onClose }) {
   useEffect(() => {
     if (facultyEmail) {
       axios
-        .get(
-          `http://localhost:3000/faculty/${encodeURIComponent(facultyEmail)}`
-        )
+        .get(`${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`)
         .then((response) => {
           const facultyData = response.data;
           setFacultyProgram(facultyData.program_id);
@@ -49,7 +48,7 @@ function TotalStudents({ isOpen, onClose }) {
     // Fetch and count all students with the specified program_id
     if (facultyProgram) {
       axios
-        .get(`http://localhost:3000/students/all`)
+        .get(`${endPoint}/students/all`)
         .then((response) => {
           const allStudents = response.data;
           console.log("All Students:", allStudents); // Add this line

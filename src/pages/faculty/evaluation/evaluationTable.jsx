@@ -22,7 +22,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import UsersEvaluation from "./usersEvaluation/usersEvaluation";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 function EvaluationTable({ students, isLoading, showTableBody }) {
   const [programAbbr, setProgramAbbr] = useState("");
   const [evalYear, setEvaluationYear] = useState({});

@@ -28,9 +28,9 @@ import { BsSearch } from "react-icons/bs";
 import Footer from "../../../components/footer/footer";
 import Navbar from "../../../components/navbar/navbar";
 import breakPoints from "../../../utils/breakpoint";
+import { endPoint } from "../../config";
 import SpecialGradeModal from "./SpecialGradeModal";
 import "./curriculum.css";
-import { endPoint } from "../../../utils/config";
 
 function Curriculum() {
   const studentNumber = Cookies.get("student_number");

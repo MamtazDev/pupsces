@@ -2,7 +2,7 @@ import { Box, HStack, Image, Text, VStack } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Vec from "../../../assets/Vector.png";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 function Dashboard() {
   const [studentCount, setStudentCount] = useState(0);

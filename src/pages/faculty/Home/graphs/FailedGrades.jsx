@@ -20,7 +20,7 @@ import axios from "axios";
 import html2pdf from "html2pdf.js";
 import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { endPoint } from "../../../../utils/config";
+import { endPoint } from "../../../config";
 
 function FailedGrades() {
   const [failedGradesData, setFailedGradesData] = useState([]);

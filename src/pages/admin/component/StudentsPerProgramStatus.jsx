@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import BarChartPerProgram from "./Graphs/BarChartPerProgram";
 import PolarAreaChart from "./Graphs/PolarAreaStatus";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 function StudentsPerProgramStatus() {
   const [isBoxVisible, setIsBoxVisible] = useState(false);

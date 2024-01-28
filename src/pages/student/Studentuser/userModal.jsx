@@ -19,7 +19,7 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import ChangePassword from "./changePassword";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 function UserModal({ onClose }) {
   const [userData, setUserData] = useState(null);

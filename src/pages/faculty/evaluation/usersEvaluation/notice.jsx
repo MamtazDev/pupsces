@@ -16,7 +16,7 @@ import {
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { endPoint } from "../../../../utils/config";
+import { endPoint } from "../../../config";
 
 function Notice({ filterExcludedCourses, year, semester, studentNumber }) {
   console.log("Notice", filterExcludedCourses);

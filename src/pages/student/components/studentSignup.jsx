@@ -13,11 +13,7 @@ import {
   Center,
   Divider,
 } from "@chakra-ui/react";
-import {
-  createUserWithEmailAndPassword,
-  fetchSignInMethodsForEmail,
-  sendEmailVerification,
-} from "firebase/auth";
+
 import { doc, setDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";

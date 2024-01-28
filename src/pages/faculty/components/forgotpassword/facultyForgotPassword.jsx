@@ -9,7 +9,7 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
-import { endPoint } from "../../../../utils/config";
+import { endPoint } from "../../../config";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import { VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { endPoint } from "../../../../utils/config";
+import { endPoint } from "../../../config";
 
 export default function GradesperSemester({
   studentNumber,

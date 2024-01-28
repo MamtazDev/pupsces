@@ -28,7 +28,7 @@ import GradeofFive from "./gradeofFive";
 import { isAfter, subDays } from "date-fns";
 import Cookies from "js-cookie";
 import StudentAnalytics from "./studentAnalytics";
-import { endPoint } from "../../../../utils/config";
+import { endPoint } from "../../../config";
 
 function UsersEvaluation({
   studentNumber,

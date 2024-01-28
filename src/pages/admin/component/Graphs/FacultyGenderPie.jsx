@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Chart from "react-apexcharts";
 import {useState, useEffect} from "react";
 import axios from "axios";
-import { endPoint } from "../../../../utils/config";
+import { endPoint } from "../../../config";
 
 const PieChart = () => {
 

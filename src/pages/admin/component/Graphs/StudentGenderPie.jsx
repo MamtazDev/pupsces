@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import Chart from "react-apexcharts";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { endPoint } from "../../../../utils/config";
+import { endPoint } from "../../../config";
 
 const PieChart = () => {
   const [femaleStudents, setFemaleStudents] = useState(0);

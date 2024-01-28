@@ -23,7 +23,7 @@ import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import Lottie from "react-lottie-player";
 import NoEval from "../../../../assets/noEval.json";
-import { endPoint } from "../../../../utils/config";
+import { endPoint } from "../../../config";
 
 function HistoryTable({
   studentNumber,

@@ -19,7 +19,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { endPoint } from "../../utils/config";
+import { endPoint } from "../config";
 
 function AdminChangePassword({ isOpen, onClose }) {
   const toast = useToast();

@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 import FacultyNavbar from "../../../components/navbar/facultynavbar";
 import FacultyModal from "./facultymodal";
 import Footer from "../../../components/footer/footer"
-
+import { endPoint } from "../../config";
 
 
 export default function FacultyUser() {
@@ -44,9 +44,7 @@ export default function FacultyUser() {
   useEffect(() => {
     if (facultyEmail) {
       axios
-        .get(
-          `http://localhost:3000/faculty/${encodeURIComponent(facultyEmail)}`
-        )
+        .get(`${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`)
         .then((response) => {
           const data = response.data;
           data.birthdate = formatBirthdate(data.birthdate);
@@ -60,7 +58,7 @@ export default function FacultyUser() {
   useEffect(() => {
     const fetchProgramData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/programs");
+        const response = await axios.get(`${endPoint}/programs`);
         setProgramData(response.data);
       } catch (error) {
         console.error("Error fetching program data:", error);
@@ -75,7 +73,7 @@ export default function FacultyUser() {
     try {
       // Fetch the updated user data directly from the server
       const response = await axios.get(
-        `http://localhost:3000/faculty/${encodeURIComponent(facultyEmail)}`
+        `${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`
       );
 
       const updatedUser = response.data;

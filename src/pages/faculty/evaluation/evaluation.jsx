@@ -18,7 +18,7 @@ import Footer from "../../../components/footer/footer";
 import FacultyNavbar from "../../../components/navbar/facultynavbar";
 import breakPoints from "../../../utils/breakpoint";
 import EvaluationTable from "./evaluationTable";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 export default function Evaluation() {
   const [students, setStudents] = useState([]);

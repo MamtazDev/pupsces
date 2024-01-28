@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
+import { endPoint } from "../../../config";
 
 const PieChart = ({ onLabelSelect }) => {
   const [selectedLabel, setSelectedLabel] = useState(null);
@@ -29,9 +30,7 @@ const PieChart = ({ onLabelSelect }) => {
   useEffect(() => {
     if (facultyEmail) {
       axios
-        .get(
-          `http://localhost:3000/faculty/${encodeURIComponent(facultyEmail)}`
-        )
+        .get(`${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`)
         .then((response) => {
           const facultyData = response.data;
 

@@ -13,7 +13,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import * as xlsx from "xlsx";
 import "../admin.css";
 //import Sidebar from "../component/Sidebar";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 function convertExcelDatesToReadable(dates) {
   const convertedDates = dates.map((excelValue) => {

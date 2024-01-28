@@ -1,7 +1,7 @@
 import axios from "axios";
 import Chart from "chart.js/auto";
 import { useEffect, useState } from "react";
-import { endPoint } from "../../../../utils/config";
+import { endPoint } from "../../../config";
 
 const PolarAreaChart = () => {
   const [regular, setRegular] = useState(0);

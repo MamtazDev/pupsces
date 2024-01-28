@@ -41,6 +41,8 @@ const UserProfile = lazy(() => import("./pages/student/Studentuser/user"));
 const FacultyUserProfile = lazy(() =>
   import("./pages/faculty/FacultyUserProfile/facultyuser")
 );
+
+
 function App() {
   return (
     <UserContextProvider>

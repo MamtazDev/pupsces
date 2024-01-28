@@ -21,7 +21,7 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import GradesModal from "./gradesModal";
 import "./usersDataStyle.css";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 function UsersData({ studentNumber, facultyId, program, strand }) {
   const [curriculumMap, setCurriculumMap] = useState(new Map());

@@ -18,7 +18,7 @@ import {
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import { endPoint } from "../../../../utils/config";
+import { endPoint } from "../../../config";
 
 function Core() {
   const [inteCourses, setInteCourses] = useState([]);

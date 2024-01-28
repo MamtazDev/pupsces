@@ -23,13 +23,19 @@ import * as xlsx from "xlsx";
 import Footer from "../../../components/footer/footer";
 import FacultyNavbar from "../../../components/navbar/facultynavbar";
 import breakPoints from "../../../utils/breakpoint";
-import { endPoint } from "../../../utils/config";
+
 import UsersData from "../userData/usersData";
 import FacultyTable from "./facultyTable";
+import { endPoint } from "../../config";
 
 function convertExcelDatesToReadable(dates) {
-  const convertedDates = dates.map((excelValue) => {
+  const convertedDates = dates.map((excelValue, index) => {
     try {
+      if (excelValue === undefined || isNaN(excelValue)) {
+        console.error(`Invalid date value at index ${index}: ${excelValue}`);
+        return null; // Skip the invalid date
+      }
+
       const millisecondsPerDay = 24 * 60 * 60 * 1000;
       const daysSinceExcelStart = excelValue - 1;
       const millisecondsSinceExcelStart =
@@ -41,7 +47,7 @@ function convertExcelDatesToReadable(dates) {
 
       // Check if the date is valid
       if (isNaN(dateValue.getTime())) {
-        console.error("Invalid date value:", excelValue);
+        console.error(`Invalid date value at index ${index}: ${excelValue}`);
         return null; // Skip the invalid date
       }
 
@@ -49,7 +55,7 @@ function convertExcelDatesToReadable(dates) {
       const formattedDate = dateValue.toISOString().split("T")[0];
       return formattedDate;
     } catch (error) {
-      console.error("Error converting date:", error);
+      console.error(`Error converting date at index ${index}: ${error}`);
       return null; // Skip the invalid date
     }
   });
@@ -330,6 +336,13 @@ export default function FacultyDashboard() {
         ...row,
         birthdate: convertedDates[index],
       }));
+      // Filter out entries with undefined birthdate
+      const filteredData = dataWithConvertedDates.filter(
+        (row) => row.birthdate !== undefined
+      );
+
+      console.log("Filtered Data:", filteredData);
+      console.log("Converted Dates:", convertedDates);
 
       insertDataIntoDatabase(dataWithConvertedDates);
       console.log("Converted Dates:", convertedDates);

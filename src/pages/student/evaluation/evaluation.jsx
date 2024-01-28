@@ -26,7 +26,7 @@ import Lottie from "react-lottie-player";
 import NoEval from "../../../assets/noEval.json";
 import Navbar from "../../../components/navbar/navbar";
 import EvaluationAll from "./evaluationAll";
-import { endPoint } from "../../../utils/config";
+import { endPoint } from "../../config";
 
 
 // student evaluation
