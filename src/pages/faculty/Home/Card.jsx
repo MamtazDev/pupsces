@@ -7,6 +7,7 @@ import Vec from "../../../assets/Vector.png";
 import FemaleStudents from "./Modal/FemaleStudents";
 import MaleStudents from "./Modal/MaleStudents";
 import TotalStudents from "./Modal/TotalStudent";
+import { endPoint } from "../../../utils/config";
 
 function Card() {
   const [programName, setProgramName] = useState("");
@@ -24,9 +25,7 @@ function Card() {
   useEffect(() => {
     if (facultyEmail) {
       axios
-        .get(
-          `http://localhost:3000/faculty/${encodeURIComponent(facultyEmail)}`
-        )
+        .get(`${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`)
         .then((response) => {
           const facultyData = response.data;
 
@@ -41,7 +40,7 @@ function Card() {
   useEffect(() => {
     const fetchProgramData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/programs");
+        const response = await axios.get(`${endPoint}/programs`);
         const programs = response.data;
 
         // Assuming programs is an array of objects with properties program_id, program_abbr, program_name
@@ -71,7 +70,7 @@ function Card() {
   useEffect(() => {
     // Fetch and count all students with the specified program_id
     axios
-      .get(`http://localhost:3000/students/all`)
+      .get(`${endPoint}/students/all`)
       .then((response) => {
         const allStudents = response.data;
         const studentsWithProgramId = allStudents.filter(

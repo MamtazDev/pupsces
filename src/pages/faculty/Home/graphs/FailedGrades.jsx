@@ -20,6 +20,7 @@ import axios from "axios";
 import html2pdf from "html2pdf.js";
 import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { endPoint } from "../../../../utils/config";
 
 function FailedGrades() {
   const [failedGradesData, setFailedGradesData] = useState([]);
@@ -35,19 +36,17 @@ function FailedGrades() {
     const fetchData = async () => {
       try {
         const failedGradesResponse = await axios.get(
-          "http://localhost:3000/failedgrades"
+          `${endPoint}/failedgrades`
         );
         setFailedGradesData(failedGradesResponse.data);
         console.log("Failed Grades Data:", failedGradesResponse.data);
 
-        const studentsResponse = await axios.get(
-          "http://localhost:3000/students/all"
-        );
+        const studentsResponse = await axios.get(`${endPoint}/students/all`);
         setStudents(studentsResponse.data);
         console.log("Students Data:", studentsResponse.data);
 
         const coursesResponse = await axios.get(
-          "http://localhost:3000/curriculum/all"
+          `${endPoint}/curriculum/all`
         );
         setCourses(coursesResponse.data);
 

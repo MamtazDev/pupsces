@@ -15,6 +15,7 @@ import { NavLink, Link as RouterLink } from "react-router-dom";
 import logo from "../../assets/PUPlogo.png";
 import "../../components/navbar/navbar.css";
 import { handleScroll } from "./handleNavbar";
+import { endPoint } from "../../utils/config";
 
 function Navbar() {
   const studentNumber = Cookies.get("student_number");
@@ -26,7 +27,7 @@ function Navbar() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/students?studentNumber=${studentNumber}`
+          `${endPoint}/students?studentNumber=${studentNumber}`
         );
         // Assuming the API returns an object with "first_name" and "last_name" properties
         const fullName = `${response.data.first_name} ${response.data.last_name}`;

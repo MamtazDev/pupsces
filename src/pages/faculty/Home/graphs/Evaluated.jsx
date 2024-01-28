@@ -19,7 +19,7 @@ import axios from "axios";
 import html2pdf from "html2pdf.js";
 import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
-
+import { endPoint } from "../../../../utils/config";
 function Evaluated() {
   const [selectedSemester, setSelectedSemester] = useState("");
   const [selectedYearLevel, setSelectedYearLevel] = useState("");
@@ -31,9 +31,7 @@ function Evaluated() {
   useEffect(() => {
     if (facultyEmail) {
       axios
-        .get(
-          `http://localhost:3000/faculty/${encodeURIComponent(facultyEmail)}`
-        )
+        .get(`${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`)
         .then((response) => {
           const facultyData = response.data;
 
@@ -53,7 +51,7 @@ function Evaluated() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/evaluate-faculty?faculty_id=${facultyId}`
+          `${endPoint}/evaluate-faculty?faculty_id=${facultyId}`
         );
         // Get unique combinations of student number and date
         console.log("response", response.data);
@@ -76,7 +74,7 @@ function Evaluated() {
 
             // Fetch additional student information using student_number
             const studentInfoResponse = await axios.get(
-              `http://localhost:3000/students/${studentNumber}`
+              `${endPoint}/students/${studentNumber}`
             );
 
             return {

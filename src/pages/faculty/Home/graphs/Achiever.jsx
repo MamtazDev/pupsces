@@ -19,6 +19,8 @@ import axios from "axios";
 import html2pdf from "html2pdf.js";
 import Cookies from "js-cookie";
 import React, { useEffect, useRef, useState } from "react";
+import { endPoint } from "../../../../utils/config";
+
 
 function Achiever() {
   const facultyEmail = Cookies.get("facultyEmail");
@@ -63,9 +65,7 @@ function Achiever() {
   useEffect(() => {
     if (facultyEmail) {
       axios
-        .get(
-          `http://localhost:3000/faculty/${encodeURIComponent(facultyEmail)}`
-        )
+        .get(`${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`)
         .then((response) => {
           const facultyData = response.data;
 
@@ -81,7 +81,7 @@ function Achiever() {
   useEffect(() => {
     if (facultyprogram) {
       axios
-        .get(`http://localhost:3000/students/program/${facultyprogram}`)
+        .get(`${endPoint}/students/program/${facultyprogram}`)
         .then((response) => {
           const studentsData = response.data;
 
@@ -112,7 +112,7 @@ function Achiever() {
         if (studentNumber.length > 0) {
           const gradesPromises = studentNumber.map(async (number) => {
             const response = await axios.get(
-              `http://localhost:3000/grades?studentNumber=${number}`
+              `${endPoint}/grades?studentNumber=${number}`
             );
             return response.data;
           });
@@ -240,7 +240,7 @@ function Achiever() {
     const fetchCourses = async () => {
       try {
         const coursesResponse = await axios.get(
-          "http://localhost:3000/curriculum/all"
+          `${endPoint}/curriculum/all`
         );
         setCourses(coursesResponse.data);
         console.log("coursesResponse", coursesResponse.data);

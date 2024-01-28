@@ -15,17 +15,19 @@ import { handleScroll } from "./handleNavbar";
 import logo from "../../assets/PUPlogo.png";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { endPoint } from "../../utils/config";
 
 function FacultyNavbar() {
   const [showNavbar, setShowNavbar] = useState(true);
   const facultyEmail = Cookies.get("facultyEmail");
   const [facultyName, setFacultyName] = useState("");
+  
 
    useEffect(() => {
      if (facultyEmail) {
        axios
          .get(
-           `http://localhost:3000/faculty/${encodeURIComponent(facultyEmail)}`
+           `${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`
          )
          .then((response) => {
            const facultyData = response.data;
