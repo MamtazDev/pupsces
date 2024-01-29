@@ -23,20 +23,15 @@ import axios from "axios";
 
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import GradeofFive from "./gradeofFive";
 //import Notice from "./notice";
 import { isAfter, subDays } from "date-fns";
 import Cookies from "js-cookie";
-import StudentAnalytics from "./studentAnalytics";
 import { endPoint } from "../../../config";
+import StudentAnalytics from "./studentAnalytics";
 
-function UsersEvaluation({
-  studentNumber,
-
-  evalYearValue,
-  evalSemValue,
-}) {
+function UsersEvaluation({ studentNumber, evalYearValue, evalSemValue }) {
   const [courses, setCourses] = useState([]);
+  console.log("evalsemValue pass in usersevaluaton", evalSemValue);
   const [
     selectedCoursesForRecommendation,
     setSelectedCoursesForRecommendation,
@@ -87,6 +82,36 @@ function UsersEvaluation({
     console.log("Eval Year Value in UsersEvaluation:", evalYearValue);
     console.log("Eval Semester Value in UsersEvaluation:", evalSemValue);
   }, [evalYearValue, evalSemValue]);
+
+  //fetch program
+  useEffect(() => {
+    const fetchProgramData = async () => {
+      try {
+        const response = await axios.get(`${endPoint}/programs`);
+        const programs = response.data;
+
+        // Assuming programs is an array of objects with properties program_id, program_abbr, program_name
+        const selectedProgram = programs.find(
+          (programTable) => programTable.program_id === programId
+        );
+
+        console.log("Selected Program:", selectedProgram);
+
+        if (selectedProgram) {
+          const program_name = selectedProgram.program_name;
+          console.log("Program Name:", program_name);
+          setProgramName(program_name);
+          console.log("Program Name has been set:", program_name);
+        } else {
+          console.error("Program not found");
+        }
+      } catch (error) {
+        console.error("Error fetching program data:", error);
+      }
+    };
+
+    fetchProgramData();
+  }, [programId]);
 
   //fetch faculty
   useEffect(() => {
@@ -222,6 +247,8 @@ function UsersEvaluation({
 
     fetchCousePrerequisiteData();
   }, [programId, studentNumber]);
+
+  console.log("programId outside:", programId);
 
   //validate
   useEffect(() => {
@@ -404,7 +431,7 @@ function UsersEvaluation({
     console.log("Eval Semester Value before setting endpoint:", evalSemValue);
     const currentCourseType = getCourseType(studentNumber);
     let endpoint = "";
-
+    console.log("programId inside useefec:", programId);
     console.log("Conditions met:", evalYearValue >= 1 && evalYearValue <= 4);
     console.log(
       "Semester conditions met:",
@@ -423,7 +450,7 @@ function UsersEvaluation({
       console.log("Conditions met: true");
       console.log("evalYearValue:", evalYearValue);
       console.log("evalSemValue:", evalSemValue);
-      console.log("programId:", programId);
+      console.log("programId inside if:", programId);
       console.log("currentCourseType:", currentCourseType);
 
       if (evalYearValue === "1" && evalSemValue === "First Semester") {
@@ -466,16 +493,18 @@ function UsersEvaluation({
       })
       .then((data) => {
         console.log("Response data:", data);
-        setTotalCreditUnits(data.totalCreditUnits);
+         const numericTotalCreditUnits = parseInt(data.total_credit_units, 10);
+         setTotalCreditUnits(numericTotalCreditUnits);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [evalYearValue, evalSemValue, programId, studentNumber]);
+  }, [evalYearValue, evalSemValue, studentNumber, programId]);
 
   useEffect(() => {
     console.log("TotalCreditUnits in endpoint", totalCreditUnits);
   }, [totalCreditUnits]);
+
   //evaluate
   useEffect(() => {
     axios
@@ -621,6 +650,7 @@ function UsersEvaluation({
       const hasPrerequisites =
         courseCodePrereq &&
         courseCodePrereq.pre_requisite &&
+        Array.isArray(courseCodePrereq.pre_requisite) &&
         courseCodePrereq.pre_requisite.length > 0;
 
       const prereqsAreValidated =
@@ -1465,36 +1495,6 @@ function UsersEvaluation({
     setShowAnalytics(true);
   };
 
-  //fetch program
-  useEffect(() => {
-    const fetchProgramData = async () => {
-      try {
-        const response = await axios.get(`${endPoint}/programs`);
-        const programs = response.data;
-
-        // Assuming programs is an array of objects with properties program_id, program_abbr, program_name
-        const selectedProgram = programs.find(
-          (programTable) => programTable.program_id === programId
-        );
-
-        console.log("Selected Program:", selectedProgram);
-
-        if (selectedProgram) {
-          const program_name = selectedProgram.program_name;
-          console.log("Program Name:", program_name);
-          setProgramName(program_name);
-          console.log("Program Name has been set:", program_name);
-        } else {
-          console.error("Program not found");
-        }
-      } catch (error) {
-        console.error("Error fetching program data:", error);
-      }
-    };
-
-    fetchProgramData();
-  }, [programId]);
-
   return (
     <div>
       {showAnalytics ? (
@@ -1926,7 +1926,6 @@ function UsersEvaluation({
                   } else if (allowRecommendAgain) {
                     handleRecommendAgain();
                   } else {
-                    
                     setRecommendFew(false);
                     handleRecommendAll();
                   }

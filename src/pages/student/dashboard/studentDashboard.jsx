@@ -12,14 +12,14 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import Footer from "../../../components/footer/footer";
 import Navbar from "../../../components/navbar/navbar";
+import { endPoint } from "../../config";
 import Overstay from "./analysis/Overstay";
 import CreditUnits from "./analysis/creditUnits";
 import GradesAverageLine from "./analysis/gradesAverageLine";
 import GradesperSemester from "./analysis/gradesperSemester";
 import Core from "./analysis/highestCore";
-import Major from "./analysis/highestMajor";
 import Gen from "./analysis/highestGenEd";
-import { endPoint } from "../../config";
+import Major from "./analysis/highestMajor";
 
 export default function StudentDashboard() {
   const studentNumber = Cookies.get("student_number");
@@ -397,13 +397,24 @@ export default function StudentDashboard() {
   return (
     <Flex
       flexDirection="column"
-      //position="absolute"
+      position="relative"
       minHeight="100vh"
       justifyContent="center"
       // alignItems="center"
-      w="100%"
     >
-      <Navbar />
+      <Box
+        w="100%"
+        pos="sticky"
+        h="6rem"
+        boxShadow="lg"
+        top="0"
+        right="0"
+        bgColor="#F3F8FF"
+        zIndex="1"
+      >
+        <Navbar />
+      </Box>
+
       <Wrap justifyContent="center" alignContent="center" flex="30" mt="10rem">
         <HStack justifyContent="center" spacing="30rem" w="100%">
           <VStack spacing="2rem">
@@ -449,10 +460,9 @@ export default function StudentDashboard() {
 
         <Flex ml="15rem" mt="5rem" justifyContent="flex-start">
           <VStack>
-            <Box padding="5rem 5rem" position="relative" boxShadow="lg">
+            <Box padding="5rem 5rem" boxShadow="lg">
               <Box
                 bg="#740202"
-                position="absolute"
                 top="0"
                 left="0"
                 right="0"
@@ -515,10 +525,9 @@ export default function StudentDashboard() {
                 </Box>
               </HStack>
             </Box>
-            <Box padding="5rem 2rem 0 2rem" position="relative" boxShadow="lg">
+            <Box padding="5rem 2rem 0 2rem" boxShadow="lg">
               <Box
                 bg="#740202"
-                position="absolute"
                 top="0"
                 left="0"
                 right="0"
@@ -532,10 +541,9 @@ export default function StudentDashboard() {
               <GradesAverageLine studentNumber={studentNumber} />
             </Box>
 
-            <Box padding="5rem 2rem 0 2rem" position="relative" boxShadow="lg">
+            <Box padding="5rem 2rem 0 2rem" boxShadow="lg">
               <Box
                 bg="#740202"
-                position="absolute"
                 top="0"
                 left="0"
                 right="0"
@@ -589,16 +597,10 @@ export default function StudentDashboard() {
               </VStack>
             </Box>
 
-            <Box
-              w="65rem"
-              padding="2rem 2rem 2rem 2rem"
-              position="relative"
-              boxShadow="lg"
-            >
+            <Box w="65rem" padding="2rem 2rem 2rem 2rem" boxShadow="lg">
               <VStack spacing="5rem">
                 <Box
                   bg="#740202"
-                  position="absolute"
                   top="0"
                   left="0"
                   right="0"
@@ -616,17 +618,20 @@ export default function StudentDashboard() {
               </VStack>
             </Box>
 
+            <Box w="65rem" padding="2rem 2rem 2rem 2rem" zIndex={0}>
+              <Box mr="5rem" w="50rem">
+                <Major />
+              </Box>
+            </Box>
             <Box w="65rem" padding="2rem 2rem 2rem 2rem">
-              <Box mr="5rem"></Box>
-              <Major />
+              <Box mr="5rem" w="50rem">
+                <Core />
+              </Box>
             </Box>
-            <Box w="65rem" padding="2rem 2rem 2rem 2rem" position="relative">
-              <Box mr="5rem" w="50rem"></Box>
-              <Core />
-            </Box>
-            <Box w="65rem" padding="2rem 2rem 2rem 2rem" position="relative">
-              <Box mr="5rem" w="50rem"></Box>
-              <Gen />
+            <Box w="65rem" padding="2rem 2rem 2rem 2rem">
+              <Box mr="5rem" w="50rem">
+                <Gen />
+              </Box>
             </Box>
           </VStack>
         </Flex>

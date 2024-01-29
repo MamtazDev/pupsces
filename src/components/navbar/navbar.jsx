@@ -15,11 +15,9 @@ import { NavLink, Link as RouterLink } from "react-router-dom";
 import logo from "../../assets/PUPlogo.png";
 import "../../components/navbar/navbar.css";
 import { endPoint } from "../../pages/config";
-import { handleScroll } from "./handleNavbar";
 
 function Navbar() {
   const studentNumber = Cookies.get("student_number");
-  const [showNavbar, setShowNavbar] = useState(true);
 
   const [studentName, setStudentName] = useState("");
 
@@ -40,23 +38,23 @@ function Navbar() {
     fetchData();
   }, [studentNumber]);
   console.log("Student Name in Navbar", studentName);
-  const scrollCallback = () => {
-    if (window.scrollY > 100) {
-      setShowNavbar(false);
-    } else {
-      setShowNavbar(true);
-    }
-  };
+  // const scrollCallback = () => {
+  //   if (window.scrollY > 100) {
+  //     setShowNavbar(false);
+  //   } else {
+  //     setShowNavbar(true);
+  //   }
+  // };
 
-  useEffect(() => {
-    const cleanupScrollHandler = handleScroll(scrollCallback);
+  // useEffect(() => {
+  //   const cleanupScrollHandler = handleScroll(scrollCallback);
 
-    return () => {
-      cleanupScrollHandler();
-    };
-  }, []);
+  //   return () => {
+  //     cleanupScrollHandler();
+  //   };
+  // }, []);
 
-  const navbarClasses = `navbar ${showNavbar ? "" : "fade-out"}`;
+  // const navbarClasses = `navbar ${showNavbar ? "" : "fade-out"}`;
 
   // const activeLinkStyle = {
   //   borderBottom: "2px solid #000", // You can adjust the style here
@@ -66,13 +64,13 @@ function Navbar() {
   return (
     <Box
       w="100%"
-      pos="fixed"
+      pos="sticky"
       h="6rem"
-      boxShadow="none"
+      boxShadow="lg"
       top="0"
       right="0"
-      //  bgColor="#F3F8FF"
-      className={navbarClasses}
+      bgColor="#F3F8FF"
+      zIndez="1"
     >
       <Flex
         padding="0 14.2rem"

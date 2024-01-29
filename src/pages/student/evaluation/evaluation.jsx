@@ -25,9 +25,8 @@ import { useEffect, useRef, useState } from "react";
 import Lottie from "react-lottie-player";
 import NoEval from "../../../assets/noEval.json";
 import Navbar from "../../../components/navbar/navbar";
-import EvaluationAll from "./evaluationAll";
 import { endPoint } from "../../config";
-
+import EvaluationAll from "./evaluationAll";
 
 // student evaluation
 function Evaluation() {
@@ -623,12 +622,14 @@ function Evaluation() {
 
   return (
     <VStack
-      padding="10rem 5rem"
       justifyContent="center"
       alignItems="center"
       height="100%"
+      position="relative"
     >
-      <Navbar />
+      <Box w="120%">
+        <Navbar />
+      </Box>
 
       <Center
         mr={year === "All Years" || semester === "All Semester" ? "28rem" : ""}
@@ -1075,7 +1076,7 @@ function Evaluation() {
                   <Text fontSize="18px" fontWeight="bold">
                     Remaining Semester(s):
                   </Text>
-                  <Text ml="7rem"fontWeight="semibold" fontSize="18px">
+                  <Text ml="7rem" fontWeight="semibold" fontSize="18px">
                     {" "}
                     {Math.ceil(remainingCreditUnits / 23)} semester(s)
                   </Text>
@@ -1084,7 +1085,7 @@ function Evaluation() {
                   <Text fontSize="18px" fontWeight="bold">
                     Remaining Year(s):
                   </Text>
-                  <Text ml="10rem"fontWeight="semibold" fontSize="18px">
+                  <Text ml="10rem" fontWeight="semibold" fontSize="18px">
                     {" "}
                     {Math.ceil(Math.ceil(remainingCreditUnits / 23) / 2)}{" "}
                     year(s)

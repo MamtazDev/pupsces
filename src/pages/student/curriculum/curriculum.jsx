@@ -20,6 +20,7 @@ import {
   VStack,
   Wrap,
   useToast,
+  Box
 } from "@chakra-ui/react";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -1188,12 +1189,24 @@ function Curriculum() {
     <Flex
       flexDirection="column"
       minHeight="100vh"
+   
       justifyContent="space-between"
       alignItems="center"
       //w="100%"
       //bgColor="#F8F8F8"
     >
-      <Navbar />
+      <Box
+        w="100%"
+        pos="sticky"
+        h="6rem"
+        boxShadow="lg"
+        top="0"
+        right="0"
+        bgColor="#F3F8FF"
+        zIndex="1"
+      >
+        <Navbar />
+      </Box>
       <VStack mt="0" mb="0" flexGrow={1} w="100%">
         <InputGroup mt="10rem" ml="45rem" w="20rem">
           <Input

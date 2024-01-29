@@ -254,6 +254,7 @@ function Major() {
       h="auto"
       boxShadow="2xl"
       borderRadius="30px"
+      zIndex={0}
     >
       <Flex justify="space-between" align="center">
         <CardHeader>Highest Grades in Major Subject(s)</CardHeader>
