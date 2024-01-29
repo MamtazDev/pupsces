@@ -15,7 +15,7 @@ import { handleScroll } from "./handleNavbar";
 import logo from "../../assets/PUPlogo.png";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { endPoint } from "../../utils/config";
+import {endPoint} from "../../pages/config"
 
 function FacultyNavbar() {
   const [showNavbar, setShowNavbar] = useState(true);
