@@ -39,9 +39,8 @@ function GradesModal({
     }
   };
   async function getCourseId(courseCode) {
-   
     try {
-        const currentCourseType = getCourseType(studentNumber);
+      const currentCourseType = getCourseType(studentNumber);
       const response = await axios.get(
         `${endPoint}/curriculum?program_id=${program}&year_started=${currentCourseType}`
       );
@@ -63,13 +62,12 @@ function GradesModal({
     }
   }
 
-
   const handleSave = async () => {
     console.log("Student Number passed in gradesmodal:", studentNumber);
     console.log("Selected Course Code:", selectedCourseCode);
     console.log("New Grades:", newGrade);
     console.log("Program:", program);
-    console.log("Strand:", strand);
+ 
     let remarks = "";
 
     if (newGrade === "0") {
@@ -125,7 +123,6 @@ function GradesModal({
       console.error(error);
     }
   };
-
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

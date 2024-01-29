@@ -78,18 +78,34 @@ export default function FacultySignIn() {
         );
         const admin = await adminResponse.json();
 
-        console.log("Admin data from server:", admin);
+      
+console.log("Admin data from server:", admin);
 
-        if (admin.admin_email === email && admin.admin_password === password) {
-          setUser({
-            username: admin.username,
-            roles: admin.roles,
-          });
-          Cookies.set("adminEmail", admin.admin_email, { expires: 7 });
-          navigate("/admin");
-        } else {
-          setError("Invalid input");
-        }
+if (admin.length > 0) {
+  const adminData = admin[0]; // Access the first (and only) element of the array
+
+  if (
+    adminData.admin_email === email &&
+    adminData.admin_password === password
+  ) {
+    setUser({
+      username: adminData.username,
+      roles: adminData.roles,
+    });
+    Cookies.set("adminEmail", adminData.admin_email, { expires: 7 });
+    navigate("/admin");
+  } else {
+    console.log("Invalid input. Check credentials:");
+    console.log("Expected Email:", adminData.admin_email);
+    console.log("Actual Email:", email);
+    console.log("Expected Password:", adminData.admin_password);
+    console.log("Actual Password:", password);
+
+    setError("Invalid input");
+  }
+} else {
+  setError("Invalid input");
+}
       } else {
         if (
           facultyData.email === email &&
