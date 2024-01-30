@@ -87,8 +87,8 @@ function FacultyNavbar() {
         justifyContent="space-between"
         alignItems="center"
         h="100%"
-        gap={5}
-        paddingX={5}
+        gap={10}
+        paddingX={20}
       >
         <HStack>
           <Image w="45px" src={logo} />

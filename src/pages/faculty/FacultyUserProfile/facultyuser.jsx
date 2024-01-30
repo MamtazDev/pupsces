@@ -93,7 +93,7 @@ export default function FacultyUser() {
 
   const confirmLogout = () => {
     Cookies.remove("facultyEmail");
-    setFacultyData(null); // or setUserData({}) depending on your use case
+    setFacultyData(null); 
     history("/");
   };
 
@@ -170,12 +170,13 @@ export default function FacultyUser() {
                 </Text>
                 <Box>
                   <Text fontSize="18px">
-                    {programData &&
+                    {facultyData &&
+                      programData &&
                       programData.find(
                         (program) =>
                           program.program_id === facultyData.program_id
                       )?.program_name}
-                  </Text>{" "}
+                  </Text>
                 </Box>
               </HStack>
               <Button ml="auto" onClick={handleLogout}>

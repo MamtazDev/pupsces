@@ -171,9 +171,11 @@ function UsersEvaluation({ studentNumber, evalYearValue, evalSemValue }) {
   //fetch curriculum
   useEffect(() => {
     console.log("Fetching course data...");
+    console.log("Program id in fetching curriculum:", programId);
+    console.log("Student Number:", studentNumber);
     const currentCourseType = getCourseType(studentNumber);
     console.log("Current Course Type:", currentCourseType);
-     console.log("Program id in fetching curriculum:", programId);
+
     axios
       .get(
         `${endPoint}/curriculum?program_id=${programId}&year_started=${currentCourseType}`
@@ -183,7 +185,7 @@ function UsersEvaluation({ studentNumber, evalYearValue, evalSemValue }) {
         console.log("API Response Data:", courseData);
         setCourses(courseData);
         console.log("CourseData", courseData);
-          console.log("Current Courses State:", courseData);
+        console.log("Current Courses State:", courseData);
 
         setCourses((prevCourses) => {
           console.log("Previous Courses State:", prevCourses);

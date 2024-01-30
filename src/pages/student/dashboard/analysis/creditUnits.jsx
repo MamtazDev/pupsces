@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { endPoint } from "../../../config";
+
 export default function CreditUnits({
   studentNumber,
   onRemainingCreditUnitsChange,
@@ -13,19 +14,11 @@ export default function CreditUnits({
   const [remainingCreditUnits, setRemainingCreditUnits] = useState(0);
   const [totalCreditUnits, setTotalCreditUnits] = useState(0);
   const [creditUnits, setCreditUnits] = useState({});
-
   const [dataFetched, setDataFetched] = useState(false);
   const [validatedTotalunits, setValidatedTotalUnits] = useState(0);
-
   const [validatedCourse, setValidatedCourse] = useState({});
   const [courseType, setCourseType] = useState("");
-
-
-  const strand = Cookies.get("strand");
-  const [programId, setProgramId] = useState();
-  console.log("Program ID:", programId);
-  console.log("Strand:", strand);
-  console.log("Student Number:", studentNumber);
+  const [programId, setProgramId] = useState("");
 
   useEffect(() => {
     console.log("Fetching student data...");
@@ -44,23 +37,30 @@ export default function CreditUnits({
       }
     }
 
-    fetchStudentData();
-    console.log("Fetching student data complete.");
+    if (studentNumber) {
+      fetchStudentData();
+    }
   }, [studentNumber]);
 
-  //fetch validate
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if (!programId || !studentNumber) {
+          return;
+        }
+
+        console.log("Fetching data for studentNumber:", studentNumber);
+
         // Fetch data from validateData endpoint
         const validateResponse = await axios.get(
           `${endPoint}/validateData?studentNumber=${studentNumber}`
         );
 
+        console.log("Response data:", validateResponse.data);
         const validateData = validateResponse.data || [];
-        // const curriculumData = curriculumResponse.data || [];
 
         setValidatedCourse(validateData);
+        console.log("Data fetched successfully");
 
         setDataFetched(true);
       } catch (error) {
@@ -68,13 +68,8 @@ export default function CreditUnits({
       }
     };
 
-    // Call fetchData when the component mounts
     fetchData();
-  }, [studentNumber]);
-
-  useEffect(() => {
-    // console.log("Validate Data:", validatedCourse);
-  }, [validatedCourse]);
+  }, [studentNumber, programId]);
 
   useEffect(() => {
     let courseType = "";
@@ -85,6 +80,7 @@ export default function CreditUnits({
     }
 
     setCourseType(courseType);
+
     axios
       .get(
         `${endPoint}/curriculum?program_id=${programId}&year_started=${courseType}`
@@ -98,7 +94,7 @@ export default function CreditUnits({
           console.error("Invalid data format. Expected an array.");
           return;
         }
-        // Check if combinedData contains the expected properties
+
         if (combinedData.length > 0 && !("course_id" in combinedData[0])) {
           console.error("Invalid data format. Missing 'course_id' property.");
           return;
@@ -106,13 +102,11 @@ export default function CreditUnits({
 
         let totalCreditUnits = 0;
         combinedData.forEach((course) => {
-          // console.log(
-          //   `Credit Unit for ${course.course_id}: ${course.credit_unit}`
-          // );
           if (
             !(
               programId === 1 &&
-              (strand === "STEM" || strand === "ICT") &&
+              (Cookies.get("strand") === "STEM" ||
+                Cookies.get("strand") === "ICT") &&
               course.course_sem === "Bridging"
             )
           ) {
@@ -123,22 +117,20 @@ export default function CreditUnits({
           }
         });
 
-        // Log the total credit units
         console.log("Total Credit Units:", totalCreditUnits);
         setTotalCreditUnits(totalCreditUnits);
-        // Extract course_ids from combinedData
+
         const courseIds = combinedData.map((course) => course.course_id);
 
-        // Filter the course_ids that exist in validatedCourse
         const matchingCourseIds = validatedCourse.filter((course) =>
           courseIds.includes(course.course_id)
         );
 
-        // Log the matching course_ids
         console.log("Matching Course IDs:", matchingCourseIds);
 
         const creditUnitsMap = {};
         let totalValidatedCreditUnits = 0;
+
         matchingCourseIds.forEach((course) => {
           const matchingData = combinedData.find(
             (data) => data.course_id === course.course_id
@@ -151,41 +143,24 @@ export default function CreditUnits({
         console.log("Validated Total Credit Units:", totalValidatedCreditUnits);
         setValidatedTotalUnits(totalValidatedCreditUnits);
 
-        // Log the credit units
         console.log("Credit Units:", creditUnitsMap);
         setCreditUnits(creditUnitsMap);
       })
       .catch((error) => {
         console.error("Error fetching curriculum data:", error.message);
       });
-  }, [strand, programId, studentNumber, validatedCourse]);
+  }, [programId, studentNumber, validatedCourse]);
 
   useEffect(() => {
-    console.log("totalCreditUnits:", totalCreditUnits);
-    console.log("validatedTotalUnits:", validatedTotalunits);
+    const updateCreditUnitsData = () => {
+      const remainingCreditUnits = totalCreditUnits - validatedTotalunits;
+      setRemainingCreditUnits(remainingCreditUnits);
 
-    const remainingCreditUnits = totalCreditUnits - validatedTotalunits;
+      onRemainingCreditUnitsChange(remainingCreditUnits);
+      onValidatedTotalUnitsChange(validatedTotalunits);
+      onTotalCreditUnitsChange(totalCreditUnits);
+    };
 
-    console.log("Remaining Credit Units:", remainingCreditUnits);
-    setRemainingCreditUnits(remainingCreditUnits);
-  }, [totalCreditUnits, validatedTotalunits]);
-
-  useEffect(() => {
-    console.log("Credit Units", creditUnits);
-    console.log("Remaining Credit Units", remainingCreditUnits);
-  }, [creditUnits, remainingCreditUnits]);
-
-  const updateCreditUnitsData = () => {
-    const remainingCreditUnits = totalCreditUnits - validatedTotalunits;
-    setRemainingCreditUnits(remainingCreditUnits);
-
-    // Notify the parent component about the change
-    onRemainingCreditUnitsChange(remainingCreditUnits);
-    onValidatedTotalUnitsChange(validatedTotalunits);
-    onTotalCreditUnitsChange(totalCreditUnits);
-  };
-
-  useEffect(() => {
     updateCreditUnitsData();
   }, [totalCreditUnits, validatedTotalunits]);
 
