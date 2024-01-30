@@ -31,8 +31,8 @@ export default function NewFaculty() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
- const [programAbbr, setProgramAbbr] = useState("");
- const [programId, setProgramId] = useState("");
+  const [programAbbr, setProgramAbbr] = useState("");
+  const [programId, setProgramId] = useState("");
   const [facultyId, setFacultyId] = useState("");
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [error, setError] = useState("");
@@ -64,7 +64,6 @@ export default function NewFaculty() {
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   }
-
 
   useEffect(() => {
     const fetchProgramData = async () => {
@@ -105,7 +104,6 @@ export default function NewFaculty() {
       !birthdate ||
       !programAbbr ||
       !gender ||
-      
       !facultyId
     ) {
       setError("Please fill in all the fields.");
@@ -115,22 +113,20 @@ export default function NewFaculty() {
 
     try {
       // Fetch faculty data
-     const facultyResponse = await fetch(`${endPoint}/faculty/${email}`);
+      const facultyResponse = await fetch(`${endPoint}/faculty/${email}`);
 
-     if (!facultyResponse.ok) {
-       console.error("Failed to fetch faculty data");
-       throw new Error("Failed to fetch the faculty data");
-     }
+      if (!facultyResponse.ok) {
+        console.error("Failed to fetch faculty data");
+        throw new Error("Failed to fetch the faculty data");
+      }
 
-     const facultyData = await facultyResponse.json();
-     console.log("Faculty Data from API:", facultyData);
+      const facultyData = await facultyResponse.json();
+      console.log("Faculty Data from API:", facultyData);
 
-     if (!facultyData || Object.keys(facultyData).length === 0) {
-       console.error("Invalid faculty data structure:", facultyData);
-       throw new Error("Invalid faculty data structure");
-     }
-
-     
+      if (!facultyData || Object.keys(facultyData).length === 0) {
+        console.error("Invalid faculty data structure:", facultyData);
+        throw new Error("Invalid faculty data structure");
+      }
 
       // Ensure the faculty object has the expected structure
       if (
@@ -196,9 +192,9 @@ export default function NewFaculty() {
           roles: facultyData.roles,
           faculty_id: facultyData.faculty_id,
         });
-                Cookies.set("facultyEmail", facultyData.email, { expires: 7 });
-        Cookies.set("Program", facultyData.program, {expires:7});
-        console.log(facultyData.program)
+        Cookies.set("facultyEmail", facultyData.email, { expires: 7 });
+        Cookies.set("Program", facultyData.program, { expires: 7 });
+        console.log(facultyData.program);
 
         console.log(
           "Student number logged in and cookie:",
@@ -234,7 +230,7 @@ export default function NewFaculty() {
       position="relative"
       justifyContent="center"
       alignItems="center"
-      mr="1rem"
+      // mx="1rem"
     >
       <AnimatePresence>
         {showForgotPassword ? (
@@ -243,8 +239,8 @@ export default function NewFaculty() {
       </AnimatePresence>
 
       {!showSignIn && !showForgotPassword && (
-        <Box paddingTop="rem" w="29rem">
-          <VStack align="flex-start">
+        <Box mr="0">
+          <VStack align="flex-start" justifyContent="center">
             <Text fontSize="2rem" color="white" mb="1rem">
               Sign In
             </Text>
@@ -269,14 +265,15 @@ export default function NewFaculty() {
                 </Center>
               ) : null}
             </AnimatePresence>
-            <Divider w="20.5rem" mb="1rem" />
+            <Divider mb="1rem" />
             {/* FACULTY ID */}
             <Input
+              height="2rem"
               bg="palette.secondary"
               variant="outline"
               placeholder="Faculty ID"
               color="palette.primay"
-              w="21rem"
+              // maxW="21rem"
               _placeholder={{
                 color: "#5C596E",
                 opacity: ".8",
@@ -287,11 +284,12 @@ export default function NewFaculty() {
             />
             {/* EMAIL */}
             <Input
+              height="2rem"
               bg="palette.secondary"
               variant="outline"
               placeholder="Email"
               color="palette.primay"
-              w="21rem"
+              // maxW="21rem"
               _placeholder={{
                 color: "#5C596E",
                 opacity: ".8",
@@ -304,12 +302,14 @@ export default function NewFaculty() {
             <DatePicker
               customInput={
                 <Input
+                  height="2rem"
                   _placeholder={{
                     color: "#5C596E",
                     opacity: ".8",
                   }}
                   focusBorderColor="palette.secondary"
-                  w="21rem"
+                  // maxW="21rem"
+                  w="100%"
                   bg="palette.secondary"
                   style={{ borderRadius: "5px" }}
                 />
@@ -326,11 +326,12 @@ export default function NewFaculty() {
             />
             {/* Program */}
             <Select
+              height="2rem"
               bg="palette.secondary"
               variant="outline"
               placeholder="Program"
               color="gray"
-              w="21rem"
+              // maxW="21rem"
               opacity="1"
               cursor={"pointer"}
               value={programAbbr}
@@ -342,10 +343,11 @@ export default function NewFaculty() {
               <option></option>
             </Select>
             <Select
+              height="2rem"
               bg="palette.secondary"
               variant="outline"
               color="gray"
-              w="21rem"
+              // maxW="21rem"
               opacity="1"
               cursor={"pointer"}
               placeholder="Gender"
@@ -359,12 +361,13 @@ export default function NewFaculty() {
             {/* PASSWORD */}
             <InputGroup size="md">
               <Input
+                height="2rem"
                 bg="palette.secondary"
                 pr="4.5rem"
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 color="palette.primary"
-                w="21rem"
+                // maxW="21rem"
                 _placeholder={{
                   color: "#5C596E",
                   opacity: ".8",
@@ -373,9 +376,10 @@ export default function NewFaculty() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <InputRightElement width="4.5rem" mr="8rem">
+              <InputRightElement mr="auto">
                 <Button
                   h="1.75rem"
+                  width="100%"
                   size="sm"
                   _hover={{ background: "none", border: "none" }}
                   _focus={{ background: "none", border: "none" }}
@@ -393,7 +397,7 @@ export default function NewFaculty() {
             </InputGroup>
 
             <Text
-              ml="13.7rem"
+              ml="auto"
               fontSize="14px"
               color="gray"
               fontWeight="bold"
@@ -408,8 +412,9 @@ export default function NewFaculty() {
 
             <Button
               size="md"
-              height="40px"
-              width="21rem"
+              height="2rem"
+              // maxW="21rem"
+              width="100%"
               border="2px"
               bg="#FAECD6"
               onClick={() => handleSignIn()}
@@ -417,7 +422,7 @@ export default function NewFaculty() {
               Sign In
             </Button>
 
-            <HStack mt="2rem">
+            <HStack mt="2rem" flexWrap="wrap" justifyContent="center">
               <Text fontSize="xs" color="gray">
                 By clicking Log In you agree to our
               </Text>
@@ -432,7 +437,7 @@ export default function NewFaculty() {
               </Text>
             </HStack>
           </VStack>
-          <HStack ml="4rem" mt="1rem">
+          <HStack mt="1rem" flexWrap="wrap" justifyContent="center">
             <Text fontSize="xs" color="gray">
               Not a new user?
             </Text>
@@ -446,7 +451,7 @@ export default function NewFaculty() {
               Click here to login
             </Text>
           </HStack>
-          <Text mt="7rem" ml="3rem" fontSize="xs" color="gray">
+          <Text mt="1rem" fontSize="xs" color="gray" textAlign="center">
             Copyright 2023 Visionalyze || All rights reserved.
           </Text>
         </Box>

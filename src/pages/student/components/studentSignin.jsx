@@ -118,7 +118,7 @@ export default function StudentSignIn() {
       position="relative"
       justifyContent="center"
       alignItems="center"
-      mr="1rem"
+      mx="1rem"
     >
       <AnimatePresence>
         {showForgotPassword ? (
@@ -127,8 +127,8 @@ export default function StudentSignIn() {
       </AnimatePresence>
 
       {!showNewSignIn && !showForgotPassword && (
-        <Box paddingTop="6rem" w="29rem">
-          <VStack align="flex-start">
+        <Box mr="0">
+          <VStack align="flex-start" justifyContent="center">
             <Text fontSize="2rem" color="white" mb="1rem">
               Sign In
             </Text>
@@ -159,14 +159,14 @@ export default function StudentSignIn() {
               ) : null}
             </AnimatePresence>
 
-            <Divider w="20.5rem" mb="1rem" />
+            <Divider mb="1rem" />
             {/* Student Number */}
             <Input
               bg="palette.secondary"
               variant="outline"
               placeholder="Student Number"
               color="palette.primary"
-              w="21rem"
+              // w="21rem"
               value={student_number}
               onChange={handleStudentNumberChange}
             />
@@ -176,7 +176,7 @@ export default function StudentSignIn() {
               variant="outline"
               placeholder="Email"
               color="palette.primary"
-              w="21rem"
+              // w="21rem"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -188,11 +188,11 @@ export default function StudentSignIn() {
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 color="palette.primary"
-                w="21rem"
+                // w="21rem"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <InputRightElement width="4.5rem" mr="8rem">
+              <InputRightElement mr="auto">
                 <Button
                   h="1.75rem"
                   size="sm"
@@ -213,7 +213,7 @@ export default function StudentSignIn() {
             </InputGroup>
 
             <Text
-              ml="13.7rem"
+              ml="auto"
               fontSize="14px"
               color="gray"
               fontWeight="bold"
@@ -230,7 +230,7 @@ export default function StudentSignIn() {
               onClick={() => handleSignIn()}
               size="md"
               height="40px"
-              width="21rem"
+              width="100%"
               border="2px"
               bg="#FAECD6"
               borderColor="#FFF5E0"
@@ -238,7 +238,7 @@ export default function StudentSignIn() {
               Log In
             </Button>
 
-            <HStack mt="2rem">
+            <HStack mt="2rem" flexWrap="wrap" justifyContent="center">
               <Text fontSize="xs" color="gray">
                 By clicking Log In you agree to our
               </Text>
@@ -257,7 +257,7 @@ export default function StudentSignIn() {
               </Link>
             </HStack>
 
-            <HStack ml="4rem" mt="2rem">
+            <HStack mt="2rem" marginX="auto">
               <Text fontSize="xs" color="gray.400">
                 Are you a new user?
               </Text>
@@ -272,7 +272,13 @@ export default function StudentSignIn() {
               </Text>
             </HStack>
 
-            <Text mt="8rem" ml="3rem" fontSize="xs" color="gray">
+            <Text
+              mt="3rem"
+              ml="3rem"
+              fontSize="xs"
+              color="gray"
+              textAlign="center"
+            >
               Copyright 2023 Visionalyze || All rights reserved.
             </Text>
           </VStack>

@@ -134,7 +134,7 @@ export default function StudentSignUp() {
       setError(
         <div dangerouslySetInnerHTML={{ __html: passwordErrorString }} />
       );
-       
+
       return;
     }
 
@@ -144,7 +144,7 @@ export default function StudentSignUp() {
 
       if (signInMethods.length > 0) {
         // Email is already registered
-        setError("This email is already registered.")
+        setError("This email is already registered.");
         return;
       }
 
@@ -216,8 +216,8 @@ export default function StudentSignUp() {
       {showSignIn ? (
         <StudentSignIn />
       ) : (
-        <Box pt="3rem" w="29rem">
-          <VStack align="flex-start">
+        <Box mr="0">
+          <VStack align="flex-start" justifyContent="center">
             <Text fontSize="2rem" color="white" mb="1rem">
               Sign Up
             </Text>
@@ -242,14 +242,14 @@ export default function StudentSignUp() {
                 </Center>
               ) : null}
             </AnimatePresence>
-            <Divider w="20.5rem" mb="1rem" />
+            <Divider mb="1rem" />
             {/* FULL NAME */}
             <Input
               bg="palette.secondary"
               variant="outline"
               placeholder="Full Name"
               color="palette.primary"
-              w="21rem"
+              // w="21rem"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -260,7 +260,7 @@ export default function StudentSignUp() {
               variant="outline"
               placeholder="Email"
               color="palette.primary"
-              w="21rem"
+              // w="21rem"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -271,7 +271,7 @@ export default function StudentSignUp() {
               variant="outline"
               placeholder="Student Number"
               color="palette.primary"
-              w="21rem"
+              // w="21rem"
               type="text"
               value={student_number}
               onChange={(e) => setStudnum(e.target.value)}
@@ -284,7 +284,7 @@ export default function StudentSignUp() {
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 color="palette.primary"
-                w="21rem"
+                // w="21rem"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -315,7 +315,7 @@ export default function StudentSignUp() {
                 type={showPassword ? "text" : "password"}
                 placeholder="Confirm Password"
                 color="palette.primary"
-                w="21rem"
+                // w="21rem"
                 value={cpassword}
                 onChange={(e) => setCpassword(e.target.value)}
               />
@@ -344,7 +344,7 @@ export default function StudentSignUp() {
                 bg="palette.secondary"
                 placeholder="Gender"
                 color="gray"
-                w="10rem"
+                // w="10rem"
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
               >
@@ -356,7 +356,7 @@ export default function StudentSignUp() {
                 placeholder="Year"
                 color="gray"
                 ml=".5rem"
-                w="10rem"
+                // w="10rem"
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
               >
@@ -372,7 +372,7 @@ export default function StudentSignUp() {
                 bg="palette.secondary"
                 placeholder="Semester"
                 color="gray"
-                w="10rem"
+                // w="10rem"
                 value={semester}
                 onChange={(e) => setSemester(e.target.value)}
               >
@@ -386,7 +386,7 @@ export default function StudentSignUp() {
                 placeholder="Status"
                 color="gray"
                 ml=".5rem"
-                w="10rem"
+                // w="10rem"
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
               >
@@ -401,7 +401,7 @@ export default function StudentSignUp() {
             <Button
               onClick={() => handleSignUp()}
               height="40px"
-              width="21rem"
+              width="100%"
               borderColor="green.500"
               color="palette.primary"
               mt="2rem"
@@ -409,7 +409,7 @@ export default function StudentSignUp() {
               Sign Up
             </Button>
 
-            <HStack mt="3rem">
+            <HStack mt="3rem" flexWrap="wrap" justifyContent="center">
               <Text fontSize="xs" color="gray.400">
                 By clicking Sign up you agree to our
               </Text>
@@ -424,7 +424,7 @@ export default function StudentSignUp() {
               </Text>
             </HStack>
 
-            <HStack ml="5rem" mt="1rem">
+            <HStack mt="1rem" flexWrap="wrap" justifyContent="center">
               <Text
                 fontSize="xs"
                 color="gray.400"

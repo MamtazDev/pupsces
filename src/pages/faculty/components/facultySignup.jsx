@@ -24,8 +24,6 @@ import {
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../../app-service/firebase-config";
 
-
-
 export default function FacultySignUp() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -148,7 +146,6 @@ export default function FacultySignUp() {
       const signInMethods = await fetchSignInMethodsForEmail(auth, email);
 
       if (signInMethods.length > 0) {
-       
         toast({
           position: "top",
           title: "Invalid Email!",
@@ -218,15 +215,14 @@ export default function FacultySignUp() {
       });
     }
   };
-  
 
   return (
     <Flex position="relative" justifyContent="center" alignItems="center">
       {showSignIn ? (
         <FacultySignIn />
       ) : (
-        <Box pt="5rem" w="29rem">
-          <VStack align="flex-start">
+        <Box>
+          <VStack align="flex-start" justifyContent="center">
             <Text fontSize="2rem" color="white" mb="1.5rem">
               Sign Up
             </Text>
@@ -236,7 +232,7 @@ export default function FacultySignUp() {
               color="palette.primary"
               variant="outline"
               placeholder="Full Name"
-              w="21rem"
+              // w="21rem"
               focusBorderColor="palette.secondary"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -247,7 +243,7 @@ export default function FacultySignUp() {
               color="palette.primary"
               variant="outline"
               placeholder="Email"
-              w="21rem"
+              // w="21rem"
               type="email"
               focusBorderColor="palette.secondary"
               value={email}
@@ -261,7 +257,7 @@ export default function FacultySignUp() {
                 pr="4.5rem"
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
-                w="21rem"
+                // w="21rem"
                 focusBorderColor="palette.secondary"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -289,7 +285,7 @@ export default function FacultySignUp() {
                 pr="4.5rem"
                 type={showPassword ? "text" : "password"}
                 placeholder="Confirm Password"
-                w="21rem"
+                // w="21rem"
                 focusBorderColor="palette.secondary"
                 value={cpassword}
                 onChange={(e) => setCpassword(e.target.value)}
@@ -318,7 +314,7 @@ export default function FacultySignUp() {
                 onChange={(e) => setGender(e.target.value)}
                 placeholder="Gender"
                 color="gray"
-                w="21rem"
+                // w="21rem"
               >
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -329,7 +325,7 @@ export default function FacultySignUp() {
               customInput={
                 <Input
                   focusBorderColor="palette.secondary"
-                  w="21rem"
+                  // w="21rem"
                   bg="palette.secondary"
                   style={{ borderRadius: "5px" }}
                 />
@@ -350,16 +346,15 @@ export default function FacultySignUp() {
               mt="3rem"
               size="md"
               height="40px"
-              width="21rem"
+              // width="21rem"
               border="2px"
-            
               color="palette.primary"
               focusBorderColor="palette.secondary"
             >
               Sign Up
             </Button>
 
-            <HStack mt="3rem">
+            <HStack mt="3rem" flexWrap="wrap" justifyContent="center">
               <Text fontSize="xs" color="gray">
                 By clicking Sign up you agree to our
               </Text>
@@ -374,7 +369,7 @@ export default function FacultySignUp() {
               </Text>
             </HStack>
 
-            <HStack ml="5rem">
+            <HStack mt="3rem" flexWrap="wrap" justifyContent="center">
               <Text fontSize="xs" color="gray" cursor="pointer">
                 Already have an account?
               </Text>

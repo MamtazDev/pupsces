@@ -12,7 +12,6 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import Logo from "../../../../assets/PUPlogo.png";
 
-
 const customButtonStyles = css`
   &:focus {
     outline: none !important;
@@ -46,49 +45,31 @@ export default function HomeButtons({ onFacultyClick, onStudentClick }) {
 
   return (
     <>
-      <VStack gap={10}>
-        <Box
-         
-          w="5rem"
-          pos="absolute"
-          top="7rem"
-          left="69rem"
-          zIndex={1}
-        >
+      <VStack gap={10} justifyContent="center" alignItems="center">
+        <Box w="5rem">
           <Image src={Logo} alt="Logo" />
         </Box>
-        <Box
-          
-          paddingTop="10rem"
-          w="30rem"
-          color="#E5F4E2"
-          mr="7rem"
-        >
-          <Text
-           
-            fontSize={26}
-            textAlign="center"
-            fontWeight="medium"
-          >
-          PUP Student Curriculum Evaluation System
+        <Box maxW="30rem" color="#E5F4E2">
+          <Text fontSize={26} textAlign="center" fontWeight="medium">
+            PUP Student Curriculum Evaluation System
           </Text>
         </Box>
-        <Box  mr="7rem">
-          <Text color="#E5F4E2">
+        <Box>
+          <Text color="#E5F4E2" mb={5}>
             Tap or Click your Destination
           </Text>
         </Box>
       </VStack>
-      <Flex justifyContent="center" alignItems="center" minHeight="100vh">
+
+      <Flex justifyContent="center" alignItems="center">
         <Stack
           direction="column"
           spacing={10}
           align="flex-start"
-          marginRight="8rem"
-          mb="35rem"
+          // marginRight="8rem"
+          // mb="35rem"
         >
           <Button
-           
             onClick={() => {
               setShowFacultySignIn(true);
               onFacultyClick();
@@ -96,13 +77,13 @@ export default function HomeButtons({ onFacultyClick, onStudentClick }) {
             }}
             css={customButtonStyles}
             bg="#E5F4E2"
-            w="20rem"
+            maxW="20rem"
+            minW="15rem"
           >
             Faculty
           </Button>
 
           <Button
-           
             onClick={() => {
               setShowStudentSignIn(true);
               onStudentClick();
@@ -111,7 +92,8 @@ export default function HomeButtons({ onFacultyClick, onStudentClick }) {
             css={customButtonStyles}
             variant="outline"
             color="#E5F4E2"
-            w="20rem"
+            maxW="20rem"
+            minW="15rem"
           >
             Student
           </Button>
