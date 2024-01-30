@@ -44,7 +44,7 @@ const PieChart = ({ onLabelSelect }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/students/program/${facultyprogram}`)
+      .get(`${endPoint}/students/program/${facultyprogram}`)
       .then((response) => {
         const data = response.data;
         console.log(data);
