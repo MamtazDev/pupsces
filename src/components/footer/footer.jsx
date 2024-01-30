@@ -12,12 +12,12 @@ export default function Footer() {
       alignItems="center"
       boxShadow="0px -2px 4px rgba(0, 0, 0, 0.2)" // Add a shadow
     >
-      <HStack spacing="24rem">
-        <Text color="black" mr="12rem" fontSize="0.8rem" fontFamily="inter">
+      <HStack flexWrap="wrap" justifyContent="center">
+        <Text color="black" fontSize="0.8rem" fontFamily="inter">
           For questions and comments, email us at @pupscesgmail.com
         </Text>
 
-        <HStack mr="1.5rem">
+        <HStack>
           <Link to="/terms">
             <Text color="black" fontSize="0.8rem" fontFamily="inter">
               Terms

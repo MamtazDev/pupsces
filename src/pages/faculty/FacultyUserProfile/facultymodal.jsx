@@ -137,7 +137,7 @@ function FacultyModal({ onClose }) {
         <ModalCloseButton />
         <ModalBody justifyContent="flex-start" alignItems="flex-start">
           <VStack spacing={2.5} alignItems="flex-start">
-            <HStack gap="3rem">
+            <HStack gap="3rem" w="100%">
               <HStack fontWeight="semibold">
                 <Text>First</Text>
                 <Text>Name:</Text>
@@ -149,11 +149,11 @@ function FacultyModal({ onClose }) {
                 style={{
                   border: "1px solid #ccc",
                   padding: "0.2rem",
-                  width: "25rem",
+                  flexGrow: 1,
                 }}
               />
             </HStack>
-            <HStack gap="2rem">
+            <HStack gap="2rem" w="100%">
               <HStack fontWeight="semibold">
                 <Text>Middle</Text>
                 <Text>Name:</Text>
@@ -165,11 +165,11 @@ function FacultyModal({ onClose }) {
                 style={{
                   border: "1px solid #ccc",
                   padding: "0.4rem",
-                  width: "25rem",
+                  flexGrow: 1,
                 }}
               />
             </HStack>
-            <HStack gap="2.2rem">
+            <HStack gap="2.2rem" w="100%">
               <HStack fontWeight="semibold">
                 <Text>Last</Text>
                 <Text>Name:</Text>
@@ -182,31 +182,31 @@ function FacultyModal({ onClose }) {
                 style={{
                   border: "1px solid #ccc",
                   padding: "0.5rem",
-                  width: "25rem",
+                  flexGrow: 1,
                 }}
               />
             </HStack>
-            <HStack gap="4rem">
+            <HStack gap="4rem" w="100%">
               <Text fontWeight="semibold">Email:</Text>
               <Input
                 ml="1.8rem"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 style={{
-                  width: "25rem",
+                  flexGrow: 1,
                   border: "1px solid #ccc",
                   padding: "0.5rem",
                 }}
               />
             </HStack>
-            <HStack gap="4rem">
+            <HStack gap="4rem" w="100%">
               <Text fontWeight="semibold">Gender:</Text>
               <Select
                 ml="1.1rem"
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
                 style={{
-                  width: "25rem",
+                  flexGrow: 1,
                   border: "1px solid #ccc",
                   padding: "0.5rem",
                 }}
@@ -215,7 +215,7 @@ function FacultyModal({ onClose }) {
                 <option value="female">Female</option>
               </Select>
             </HStack>
-            <HStack gap="4rem">
+            <HStack gap="4rem" w="100%">
               <Text fontWeight="semibold">Birthdate:</Text>
               <DatePicker
                 selected={birthdate}
@@ -230,14 +230,14 @@ function FacultyModal({ onClose }) {
                 style={{ border: "1px solid black", padding: "0.2rem" }}
               />
             </HStack>
-            <HStack gap="4rem">
+            <HStack gap="4rem" w="100%">
               <Text fontWeight="semibold">Program:</Text>
               <Select
                 ml=".5rem"
                 value={selectedProgram}
                 onChange={(e) => setSelectedProgram(e.target.value)}
                 style={{
-                  width: "25rem",
+                  flexGrow: 1,
                   border: "1px solid #ccc",
                   padding: "0.5rem",
                 }}

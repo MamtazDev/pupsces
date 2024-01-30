@@ -118,7 +118,7 @@ function Card() {
         {programName}
       </Text>
       <VStack>
-        <HStack>
+        <HStack flexDirection={{ base: "column", md: "row" }}>
           {/* Total Student */}
           <Box
             width="100%"
@@ -126,6 +126,7 @@ function Card() {
             bgColor="#740202"
             borderRadius="8px"
             boxShadow="0 4px 8px rgba(0, 0, 0, 0.1)"
+            overflow="hidden"
 
             // background="linear-gradient(to top,transparent, #740202)"
           >
@@ -135,7 +136,7 @@ function Card() {
               </Text>
               <Button onClick={handleButtonTotalClicked}>
                 {" "}
-                <RiFileList3Line />
+                <RiFileList3Line fontSize={20} />
               </Button>
             </HStack>
             <Text fontSize="25px" padding="0  2rem 0 " color="white">
@@ -157,6 +158,7 @@ function Card() {
             bgColor="#5F8670"
             borderRadius="8px"
             boxShadow="0 4px 8px rgba(0, 0, 0, 0.1)"
+            overflow="hidden"
 
             // background="linear-gradient(to top,transparent, #740202)"
           >
@@ -166,7 +168,7 @@ function Card() {
               </Text>
               <Button onClick={handleFemaleButton}>
                 {" "}
-                <RiFileList3Line />
+                <RiFileList3Line fontSize={20} />
               </Button>
             </HStack>
             <Text fontSize="25px" padding="0  2rem 0 " color="white">
@@ -188,6 +190,7 @@ function Card() {
             bgColor="#FF9800"
             borderRadius="8px"
             boxShadow="0 4px 8px rgba(0, 0, 0, 0.1)"
+            overflow="hidden"
 
             // background="linear-gradient(to top,transparent, #740202)"
           >
@@ -197,7 +200,7 @@ function Card() {
               </Text>
               <Button onClick={handleMaleButton}>
                 {" "}
-                <RiFileList3Line />
+                <RiFileList3Line fontSize={20} />
               </Button>
             </HStack>
 

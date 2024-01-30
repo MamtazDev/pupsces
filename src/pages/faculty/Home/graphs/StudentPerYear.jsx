@@ -17,7 +17,7 @@ import ListPerYearModal from "../Modal/ListPerYearModal";
 import { endPoint } from "../../../config";
 
 function StudentPerYear() {
-    const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStudents, setSelectedStudents] = useState([]);
 
@@ -174,8 +174,6 @@ function StudentPerYear() {
       });
   }, [facultyprogram]);
 
-  
-
   useEffect(() => {
     // Log counts after updating state
     console.log("Counts after update:", {
@@ -200,7 +198,7 @@ function StudentPerYear() {
       thirdYearCount,
       fourthYearCount,
     });
-      setIsLoading(false);
+    setIsLoading(false);
   }, [
     firstYearCount,
     secondYearCount,
@@ -247,8 +245,6 @@ function StudentPerYear() {
     fourthYearMaleCount,
     fourthYearFemaleCount,
   ]);
-
-  
 
   console.log("First Year Student", firstYearStudents);
   console.log("Second Year Student", secondYearStudents);
@@ -338,7 +334,7 @@ function StudentPerYear() {
   };
 
   return (
-    <Card mt="2rem" w="69rem" h="50rem" boxShadow="2xl" borderRadius="30px">
+    <Card mt="2rem" w="100%" h="50rem" boxShadow="2xl" borderRadius="30px">
       <CardHeader>Students by Year</CardHeader>
       <Divider bg="gray.300" />
       <CardBody ml="2rem" justifyContent="center">

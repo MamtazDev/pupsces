@@ -27,3 +27,7 @@
 .nav-link.active {
   border-bottom: 2px solid #000; /* Line style for active link */
 }
+
+.nav-link.drawer.active {
+  width: fit-content;
+}

@@ -45,9 +45,7 @@ function FailedGrades() {
         setStudents(studentsResponse.data);
         console.log("Students Data:", studentsResponse.data);
 
-        const coursesResponse = await axios.get(
-          `${endPoint}/curriculum/all`
-        );
+        const coursesResponse = await axios.get(`${endPoint}/curriculum/all`);
         setCourses(coursesResponse.data);
 
         const newCurriculumMap = new Map(
@@ -155,9 +153,9 @@ function FailedGrades() {
   });
 
   return (
-    <Card mt="2rem" w="69rem" h="auto" boxShadow="2xl" borderRadius="30px">
+    <Card mt="2rem" w="100%" h="auto" boxShadow="2xl" borderRadius="30px">
       <div ref={containerRef}>
-        <Flex justify="space-between" align="center">
+        <Flex justify="space-between" align="center" overflowX="scroll">
           <CardHeader>Student(s) that have Failing Grades</CardHeader>
           <HStack>
             <Select

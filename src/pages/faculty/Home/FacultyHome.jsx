@@ -20,7 +20,7 @@ const FacultyHome = () => {
     >
       <FacultyNavbar />
 
-      <VStack width="80%" spacing={8} mt="5rem" padding={8}>
+      <VStack width="80vw" mt="5rem">
         <Card />
         <StudentPerYear />
         <Achiever />
