@@ -10,30 +10,32 @@ import {
   Tfoot,
   Th,
   Thead,
+  Tooltip,
   Tr,
   VStack,
-  Tooltip,
   Wrap,
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { endPoint } from "../../config";
 import GradesModal from "./gradesModal";
 import "./usersDataStyle.css";
-import { endPoint } from "../../config";
 
 function UsersData({ studentNumber, facultyId, program, strand }) {
   const [curriculumMap, setCurriculumMap] = useState(new Map());
   const [programName, setProgramName] = useState("");
   console.log("Received Student Number in UserData:", studentNumber);
-
+  const [, forceUpdate] = React.useState();
   // console.log("Received FacultyID:", facultyId);
   console.log("Program:", program);
   console.log("Strand:", strand);
   console.log(
     "Conditions met:",
-    studentNumber.startsWith("2020") || studentNumber.startsWith("2021") || studentNumber.startsWith("2019"),
+    studentNumber.startsWith("2020") ||
+      studentNumber.startsWith("2021") ||
+      studentNumber.startsWith("2019"),
     program === "1",
     !(strand === "STEM" || strand === "ICT")
   );
@@ -70,7 +72,7 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
     useState([]);
 
   const [editable, setEditable] = useState({});
-  const [courseType, setCourseType] = useState( );
+  const [courseType, setCourseType] = useState();
 
   const [disabledCourses, setDisabledCourses] = useState({});
   const [courseCodePrerequisite, setCourseCodePrerequisite] = useState([]);
@@ -103,9 +105,8 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
     console.log("Fetching student data complete.");
   }, [studentNumber]);
 
-  const getCourseType = ( studentNumber) => {
-    if (
-      studentNumber.startsWith("2020") || studentNumber.startsWith("2021")) {
+  const getCourseType = (studentNumber) => {
+    if (studentNumber.startsWith("2020") || studentNumber.startsWith("2021")) {
       return 2019;
     } else {
       // Handle any other cases or provide a default value
@@ -256,7 +257,7 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
     setPrerequisiteCoursesWithGrades
   ) {
     try {
-      const currentCourseType = getCourseType( studentNumber);
+      const currentCourseType = getCourseType(studentNumber);
       console.log("Fetching grades for studentNumber:", studentNumber);
       const response = await axios.get(
         `${endPoint}/grades?studentNumber=${studentNumber}`
@@ -466,7 +467,7 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
 
   //fetch curriculm and its prerequisite
   useEffect(() => {
-    const currentCourseType = getCourseType( studentNumber);
+    const currentCourseType = getCourseType(studentNumber);
     const fetchCousePrerequisiteData = async () => {
       console.log("CourseType inside the useEffect2:", courseType);
       try {
@@ -631,100 +632,104 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
     const formatter = new Intl.DateTimeFormat("en-US", options);
     return formatter.format(currentDate);
   };
-  let formattedDate = "";
+  // let formattedDate = "";
 
   const handleValidateCourse = async (filteredCourseItems) => {
-    const studentNumber = studentData.student_number;
+    try {
+      const studentNumber = studentData.student_number;
 
-    const coursesWithGrades = filteredCourseItems.filter((courseItem) => {
-      const gradesAndRemark = gradesAndRemarks.find(
-        (item) => item.course_code === courseItem.course_code
-      );
-      return gradesAndRemark && gradesAndRemark.grades !== "";
-    });
-
-    const dataToValidate = await Promise.all(
-      coursesWithGrades.map(async (courseItem) => {
+      const coursesWithGrades = filteredCourseItems.filter((courseItem) => {
         const gradesAndRemark = gradesAndRemarks.find(
           (item) => item.course_code === courseItem.course_code
         );
-
-        const undesiredGrades = ["5", "-1", "Incomplete", "0", "Withdraw"];
-
-        if (
-          gradesAndRemark &&
-          undesiredGrades.includes(gradesAndRemark.grades?.toString())
-        ) {
-          console.log(
-            `Undesired Grade Found: ${gradesAndRemark.grades} for Course ${courseItem.course_code}`
-          );
-
-          // Update the status of the student to "Back Subject"
-          await updateStudentStatus(studentNumber, "Back Subject");
-
-          toast({
-            title: `Course ${courseItem.course_code} needs to be retaken`,
-            status: "warning",
-            duration: 3000,
-            isClosable: true,
-          });
-
-          console.log("Validation Data:", validationData);
-          console.log("Filtered Course Items:", filteredCourseItems);
-          console.log("Grades and Remarks:", gradesAndRemarks);
-          return null; // Skip the course from further processing
-        }
-
-        const validationEntry = validationData.find(
-          (entry) => entry.course_code === courseItem.course_code
-        );
-
-        if (!validationEntry || !validationEntry.date_validated) {
-          const currentCourseType = getCourseType(
-            
-            studentNumber
-          );
-          const courseData = await axios.get(
-            `${endPoint}/curriculum?program_id=${program}&year_started=${currentCourseType}`
-          );
-          const course_id =
-            courseData.data.find(
-              (item) => item.course_code === courseItem.course_code
-            )?.course_id || null;
-
-          formattedDate = getFormattedDate();
-
-          return {
-            student_number: studentNumber,
-            course_id: course_id,
-            grade_id:
-              gradesAndRemarks.find(
-                (item) => item.course_code === courseItem.course_code
-              )?.grade_id || null,
-            date_validated: formattedDate,
-            faculty_id: facultyId,
-          };
-        } else {
-          return null; // Skip the course from further processing
-        }
-      })
-    );
-
-    // Filter out courses that were skipped (returned null)
-    const validDataToValidate = dataToValidate.filter((data) => data !== null);
-
-    if (validDataToValidate.length === 0) {
-      toast({
-        title: "No courses with grades to validate",
-        status: "info",
-        duration: 3000,
-        isClosable: true,
+        return gradesAndRemark && gradesAndRemark.grades !== "";
       });
-      return;
-    }
 
-    try {
-      console.log("formattedDate:", formattedDate);
+      const dataToValidate = await Promise.all(
+        coursesWithGrades.map(async (courseItem) => {
+          try {
+            const gradesAndRemark = gradesAndRemarks.find(
+              (item) => item.course_code === courseItem.course_code
+            );
+
+            const undesiredGrades = ["5", "-1", "Incomplete", "0", "Withdraw"];
+
+            if (
+              gradesAndRemark &&
+              undesiredGrades.includes(gradesAndRemark.grades?.toString())
+            ) {
+              console.log(
+                `Undesired Grade Found: ${gradesAndRemark.grades} for Course ${courseItem.course_code}`
+              );
+
+              // Update the status of the student to "Back Subject"
+              await updateStudentStatus(studentNumber, "Back Subject");
+
+              toast({
+                title: `Course ${courseItem.course_code} needs to be retaken`,
+                status: "warning",
+                duration: 3000,
+                isClosable: true,
+              });
+
+              console.log("Validation Data:", validationData);
+              console.log("Filtered Course Items:", filteredCourseItems);
+              console.log("Grades and Remarks:", gradesAndRemarks);
+              return null; // Skip the course from further processing
+            }
+
+            const validationEntry = validationData.find(
+              (entry) => entry.course_code === courseItem.course_code
+            );
+
+            if (!validationEntry || !validationEntry.date_validated) {
+              let formattedDate = getFormattedDate();
+
+              const currentCourseType = getCourseType(studentNumber);
+              const courseData = await axios.get(
+                `${endPoint}/curriculum?program_id=${program}&year_started=${currentCourseType}`
+              );
+              const course_id =
+                courseData.data.find(
+                  (item) => item.course_code === courseItem.course_code
+                )?.course_id || null;
+
+              return {
+                student_number: studentNumber,
+                course_id: course_id,
+                grade_id:
+                  gradesAndRemarks.find(
+                    (item) => item.course_code === courseItem.course_code
+                  )?.grade_id || null,
+                date_validated: formattedDate,
+                faculty_id: facultyId,
+              };
+            } else {
+              return null; // Skip the course from further processing
+            }
+          } catch (error) {
+            console.error("Error preparing data for validation:", error);
+            // Handle the error as needed, e.g., log and continue processing
+            return null; // Skip the course from further processing
+          }
+        })
+      );
+
+      // Filter out courses that were skipped (returned null)
+      const validDataToValidate = dataToValidate.filter(
+        (data) => data !== null
+      );
+
+      if (validDataToValidate.length === 0) {
+        toast({
+          title: "No courses with grades to validate",
+          status: "info",
+          duration: 3000,
+          isClosable: true,
+        });
+        return;
+      }
+
       console.log("Data to send in the request:", validDataToValidate);
 
       const response = await axios.post(
@@ -901,7 +906,9 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
   };
 
   if (
-    (studentNumber.startsWith("2020") || studentNumber.startsWith("2021") || studentNumber.startsWith("2019")) &&
+    (studentNumber.startsWith("2020") ||
+      studentNumber.startsWith("2021") ||
+      studentNumber.startsWith("2019")) &&
     program === 1 &&
     !(strand === "STEM" || strand === "ICT")
   ) {
@@ -919,7 +926,11 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
   }
 
   if (
-    !(studentNumber.startsWith("2020") || studentNumber.startsWith("2021") || studentNumber.startsWith("2019")) &&
+    !(
+      studentNumber.startsWith("2020") ||
+      studentNumber.startsWith("2021") ||
+      studentNumber.startsWith("2019")
+    ) &&
     program === 1 &&
     strand !== "STEM" &&
     strand !== "ICT"
@@ -933,9 +944,6 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
     });
     console.log("Bridging Semester Courses:", filteredCourses["Bridging"]);
   }
-  // console.log("filteredCourses:", filteredCourses);
-
-  // console.log("UsersData is being rendered. Student Number:", studentNumber);
 
   //clear
   const deleteGradesForCourse = async (courseCode) => {
@@ -950,7 +958,6 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
 
       console.log("Deleting grades for student:", studentNumber);
       console.log("Program:", program);
-      console.log("Strand:", strand);
 
       // Retrieve the course_id for the given courseCode
       const currentCourseType = getCourseType(studentNumber);
@@ -973,12 +980,22 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
 
       console.log("Deleting grades for course:", courseId);
       // Use courseId to construct the delete request
-      const response = await axios.delete(
+      console.log(
+        "Request URL:",
         `${endPoint}/grades/${studentNumber}/${courseId}`
       );
 
+      // Update state immediately
+      setGradesAndRemarks((prevGradesAndRemarks) =>
+        prevGradesAndRemarks.filter((item) => item.course_code !== courseCode)
+      );
+
+      const response = await axios.delete(
+        `${endPoint}/grades/${studentNumber}/${courseId}`
+      );
       if (response.status === 200) {
         console.log(`Grades for ${courseCode} cleared successfully.`);
+        forceUpdate({});
 
         setGradesAndRemarks((prevGradesAndRemarks) => {
           const updatedGradesAndRemarks = prevGradesAndRemarks.filter(
@@ -1003,10 +1020,14 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
 
           return updatedGradesAndRemarks;
         });
-      } else if (response.status === 404) {
-        console.log("Grades not found");
+      } else if (
+        response.status === 404 &&
+        response.data.message === "Grades not found"
+      ) {
+        // Handle the case where grades are not found (404)
+        console.log(`Grades for ${courseCode} not found. No action needed.`);
       } else {
-        console.error("Error clearing grades");
+        console.error("Error clearing grades:", response.statusText);
       }
     } catch (error) {
       console.error("Error clearing grades:", error);
@@ -1191,7 +1212,7 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
   return (
     <Flex flexDirection="column" w="100%">
       <Text fontSize="19px" fontWeight="bold">
-      {programName}
+        {programName}
       </Text>
 
       <HStack mt="1rem">
@@ -1214,29 +1235,26 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
           const filteredCourseItems = filteredCourses[key];
           const [courseYear, courseSemester] = key.split(" ");
 
+          console.log("Course Year", courseYear);
 
-           console.log("Course Year", courseYear);
+          let originalSchoolYearStart = parseInt(studentNumber.substring(0, 4));
+          let schoolYearStart = originalSchoolYearStart;
+          let schoolYearEnd;
 
-           let originalSchoolYearStart = parseInt(
-             studentNumber.substring(0, 4)
-           );
-           let schoolYearStart = originalSchoolYearStart;
-           let schoolYearEnd;
-
-           if (courseYear === "First") {
-             schoolYearEnd = schoolYearStart + 1;
-           } else if (courseYear === "Second") {
-             schoolYearStart = originalSchoolYearStart + 1;
-             schoolYearEnd = schoolYearStart + 1;
-           } else if (courseYear === "Third") {
-             schoolYearStart = originalSchoolYearStart + 2;
-             schoolYearEnd = schoolYearStart + 1;
-           } else if (courseYear === "Fourth") {
-             schoolYearStart = originalSchoolYearStart + 3;
-             schoolYearEnd = schoolYearStart + 1;
-           } else {
-             schoolYearEnd = schoolYearStart + 5;
-           }
+          if (courseYear === "First") {
+            schoolYearEnd = schoolYearStart + 1;
+          } else if (courseYear === "Second") {
+            schoolYearStart = originalSchoolYearStart + 1;
+            schoolYearEnd = schoolYearStart + 1;
+          } else if (courseYear === "Third") {
+            schoolYearStart = originalSchoolYearStart + 2;
+            schoolYearEnd = schoolYearStart + 1;
+          } else if (courseYear === "Fourth") {
+            schoolYearStart = originalSchoolYearStart + 3;
+            schoolYearEnd = schoolYearStart + 1;
+          } else {
+            schoolYearEnd = schoolYearStart + 5;
+          }
 
           const schoolYear = `${schoolYearStart}-${schoolYearEnd}`;
           //let countCoursesWithGrades = 0;
@@ -1255,8 +1273,8 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
               gradesAndRemark
             );
           });
-          
-        const hasCourses = filteredCourseItems.length > 0;
+
+          const hasCourses = filteredCourseItems.length > 0;
 
           if (hasCourses) {
             return (

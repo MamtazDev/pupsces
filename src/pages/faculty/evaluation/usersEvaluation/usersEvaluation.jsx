@@ -152,7 +152,7 @@ function UsersEvaluation({ studentNumber, evalYearValue, evalSemValue }) {
   }, [studentNumber]);
 
   useEffect(() => {
-    console.log("Program id:", programId);
+    console.log("Program id in usersevaluation:", programId);
     console.log("Strand:", strand);
   }, [programId, strand]);
 
@@ -173,6 +173,7 @@ function UsersEvaluation({ studentNumber, evalYearValue, evalSemValue }) {
     console.log("Fetching course data...");
     const currentCourseType = getCourseType(studentNumber);
     console.log("Current Course Type:", currentCourseType);
+     console.log("Program id in fetching curriculum:", programId);
     axios
       .get(
         `${endPoint}/curriculum?program_id=${programId}&year_started=${currentCourseType}`
@@ -182,6 +183,7 @@ function UsersEvaluation({ studentNumber, evalYearValue, evalSemValue }) {
         console.log("API Response Data:", courseData);
         setCourses(courseData);
         console.log("CourseData", courseData);
+          console.log("Current Courses State:", courseData);
 
         setCourses((prevCourses) => {
           console.log("Previous Courses State:", prevCourses);
@@ -493,8 +495,15 @@ function UsersEvaluation({ studentNumber, evalYearValue, evalSemValue }) {
       })
       .then((data) => {
         console.log("Response data:", data);
-         const numericTotalCreditUnits = parseInt(data.total_credit_units, 10);
-         setTotalCreditUnits(numericTotalCreditUnits);
+        const numericTotalCreditUnits = parseInt(data.total_credit_units, 10);
+        if (!isNaN(numericTotalCreditUnits)) {
+          setTotalCreditUnits(numericTotalCreditUnits);
+        } else {
+          console.error(
+            "Invalid total_credit_units value:",
+            data.total_credit_units
+          );
+        }
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -1418,7 +1427,7 @@ function UsersEvaluation({ studentNumber, evalYearValue, evalSemValue }) {
           remainingCreditUnits -= courseDetails.credit_unit;
 
           // Display a success message for each recommendation
-          toast({
+          await toast({
             title: "Course Recommended",
             description: `Course ${courseCode} has been recommended successfully.`,
             status: "success",
@@ -1427,7 +1436,7 @@ function UsersEvaluation({ studentNumber, evalYearValue, evalSemValue }) {
           });
         } else {
           console.log(`Skipping ${courseCode}`);
-          toast({
+          await toast({
             title: "Course Already Recommended",
             description: `Course ${courseCode} has already been recommended.`,
             status: "warning",
