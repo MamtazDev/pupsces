@@ -21,8 +21,6 @@ import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
 import { endPoint } from "../../../config";
 
-
-
 function Evaluated() {
   const [selectedSemester, setSelectedSemester] = useState("");
   const [selectedYearLevel, setSelectedYearLevel] = useState("");
@@ -146,9 +144,9 @@ function Evaluated() {
   };
 
   return (
-    <Card mt="2rem" w="69rem" h="auto" boxShadow="2xl" borderRadius="30px">
+    <Card mt="2rem" w="100%" h="auto" boxShadow="2xl" borderRadius="30px">
       <div ref={containerRef}>
-        <Flex justify="space-between" align="center">
+        <Flex justify="space-between" align="center" overflow="scroll">
           <CardHeader>List of Evaluated Students</CardHeader>
           <HStack>
             <Select

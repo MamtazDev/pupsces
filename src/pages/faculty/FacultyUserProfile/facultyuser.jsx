@@ -11,6 +11,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Spacer,
 } from "@chakra-ui/react";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -19,9 +20,8 @@ import { FaUserEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import FacultyNavbar from "../../../components/navbar/facultynavbar";
 import FacultyModal from "./facultymodal";
-import Footer from "../../../components/footer/footer"
+import Footer from "../../../components/footer/footer";
 import { endPoint } from "../../config";
-
 
 export default function FacultyUser() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -102,32 +102,31 @@ export default function FacultyUser() {
   };
   return (
     <Flex
-      h="100vh"
-      position="absolute"
+      minHeight="100vh"
       w="100%"
+      position="absolute"
       justifyContent="center"
       zIndex={-1}
     >
       <FacultyNavbar />
-      <VStack gap="6" mt="9rem">
-        <HStack>
-          <Box mr="35rem">
+      <VStack gap="6" mt="9rem" width="80%">
+        <HStack justifyContent="space-between" w="100%">
+          <Box>
             <Text fontSize="25px" fontWeight="bold">
               Personal Data
             </Text>
           </Box>
-          <Button gap="2rem" ml="7.5rem" onClick={() => setIsModalOpen(true)}>
+          <Button gap="2rem" onClick={() => setIsModalOpen(true)}>
             <FaUserEdit />
           </Button>
         </HStack>
         {isModalOpen && <FacultyModal onClose={handleModalClose} />}
         <Box
-          w="65rem"
-          h="20rem"
+          w="100%"
           borderRadius="25px"
           boxShadow="2xl"
           bg="gray.50"
-          padding="3rem 5rem"
+          padding={{ base: "1rem", md: "3rem" }}
         >
           <VStack alignItems="flex-start" textAlign="left" gap="1rem">
             <HStack gap="3.7rem">
@@ -164,12 +163,12 @@ export default function FacultyUser() {
                 {facultyData ? facultyData.birthdate : ""}
               </Text>
             </HStack>
-            <HStack justifyContent="space-between">
-              <HStack gap="2rem">
+            <HStack justifyContent="space-between" flexWrap="wrap" w="100%">
+              <HStack gap="2rem" flexWrap="wrap">
                 <Text fontSize="20px" fontWeight="semibold">
                   Program:{" "}
                 </Text>
-                <Box w="25rem">
+                <Box>
                   <Text fontSize="18px">
                     {programData &&
                       programData.find(
@@ -179,10 +178,13 @@ export default function FacultyUser() {
                   </Text>{" "}
                 </Box>
               </HStack>
-              <Button ml="10rem" onClick={handleLogout}>Log out</Button>
+              <Button ml="auto" onClick={handleLogout}>
+                Log out
+              </Button>
             </HStack>
           </VStack>
         </Box>
+        <Spacer mt="10rem" />
         <Footer />
       </VStack>
       {showLogoutConfirmation && (

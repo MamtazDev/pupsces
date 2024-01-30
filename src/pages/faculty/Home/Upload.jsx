@@ -6,28 +6,27 @@ import {
   Divider,
   HStack,
   Select,
-  Input
+  Input,
 } from "@chakra-ui/react";
 
 import { AiOutlinePlus } from "react-icons/ai";
 
 function Upload() {
   return (
-    <Card w="69rem" h="10rem" boxShadow="2xl" borderRadius="30px">
+    <Card mt="2rem" w="100%" h="auto" boxShadow="2xl" borderRadius="30px">
       <CardHeader>Upload Curriculum</CardHeader>
       <Divider bg="gray.300" />
       <CardBody ml="2rem" justifyContent="center">
-        <HStack>
-          <Select w="10rem" placeholder="Program">
-            <option value="BSIT">BSIT</option>
-            <option value="BSOA">BSOA</option>
-            <option value="DIT">DIT</option>
-          </Select>
+        <HStack flexWrap="wrap">
           <HStack>
-            
-            <Input placeholder="Year Started"/>
+            <Select placeholder="Program">
+              <option value="BSIT">BSIT</option>
+              <option value="BSOA">BSOA</option>
+              <option value="DIT">DIT</option>
+            </Select>
+            <Input placeholder="Year Started" />
           </HStack>
-          <HStack justifyContent="center" alignContent="center" ml="4rem">
+          <HStack alignContent="center" flexWrap="wrap">
             <Button
               style={{
                 backgroundColor: "#740202",

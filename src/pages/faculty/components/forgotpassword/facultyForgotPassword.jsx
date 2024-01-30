@@ -141,16 +141,13 @@ function ForgotPassword() {
           setError("Email address is not registered.");
         }
       }
-      const AdminResponse = await fetch(
-        `${endPoint}/admincheckEmail`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        }
-      );
+      const AdminResponse = await fetch(`${endPoint}/admincheckEmail`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
 
       if (AdminResponse.ok) {
         const adminData = await AdminResponse.json();
@@ -233,8 +230,8 @@ function ForgotPassword() {
 
   return (
     <Flex justifyContent="center" alignItems="center">
-      <Box paddingTop="8rem" w="29rem">
-        <VStack align="flex-start">
+      <Box mr="0">
+        <VStack align="flex-start" justifyContent="center">
           <Text fontSize="2rem" color="white" mb="2rem">
             Forgot Password
           </Text>
@@ -264,7 +261,7 @@ function ForgotPassword() {
             mt="2rem"
             placeholder="Email"
             p="1.5rem"
-            w="65.5%"
+            // w="65.5%"
             focusBorderColor="palette.secondary"
             bg="palette.secondary"
             color="palette.primary"
@@ -277,7 +274,7 @@ function ForgotPassword() {
           />
           <Button
             mt="2rem"
-            w="65.5%"
+            w="100%"
             fontFamily="inter"
             bg="#FFF5E0"
             color="palette.primary"

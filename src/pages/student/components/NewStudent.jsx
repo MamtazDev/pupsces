@@ -57,37 +57,36 @@ export default function NewStudentSignin() {
     setProgramAbbr(value);
   };
 
-useEffect(() => {
-  const fetchProgramData = async () => {
-    try {
-      const response = await axios.get(`${endPoint}/programs`);
-      const programs = response.data;
+  useEffect(() => {
+    const fetchProgramData = async () => {
+      try {
+        const response = await axios.get(`${endPoint}/programs`);
+        const programs = response.data;
 
-      console.log("All Programs:", programs);
+        console.log("All Programs:", programs);
 
-      // Assuming programs is an array of objects with properties program_id, program_abbr, program_name
-      const selectedProgram = programs.find(
-        (program) => program.program_abbr === programAbbr
-      );
+        // Assuming programs is an array of objects with properties program_id, program_abbr, program_name
+        const selectedProgram = programs.find(
+          (program) => program.program_abbr === programAbbr
+        );
 
-      console.log("Selected Program:", selectedProgram);
+        console.log("Selected Program:", selectedProgram);
 
-      if (selectedProgram) {
-        const programId = selectedProgram.program_id;
-        console.log("Program ID:", programId);
-        setProgramId(programId);
-        console.log("Program ID has been set:", programId);
-      } else {
-        console.error("Program not found");
+        if (selectedProgram) {
+          const programId = selectedProgram.program_id;
+          console.log("Program ID:", programId);
+          setProgramId(programId);
+          console.log("Program ID has been set:", programId);
+        } else {
+          console.error("Program not found");
+        }
+      } catch (error) {
+        console.error("Error fetching program data:", error);
       }
-    } catch (error) {
-      console.error("Error fetching program data:", error);
-    }
-  };
+    };
 
-  fetchProgramData();
-}, [programAbbr]);
-
+    fetchProgramData();
+  }, [programAbbr]);
 
   const buttonStyles = {
     background: "none",
@@ -253,12 +252,7 @@ useEffect(() => {
   };
 
   return (
-    <Flex
-      position="relative"
-      justifyContent="center"
-      alignItems="center"
-      mr="1rem"
-    >
+    <Flex position="relative" justifyContent="center" alignItems="center">
       <AnimatePresence>
         {showForgotPassword ? (
           <ForgotPassword onCancel={() => setShowForgotPassword(false)} />
@@ -266,8 +260,8 @@ useEffect(() => {
       </AnimatePresence>
 
       {!showSignIn && !showForgotPassword && (
-        <Box paddingTop="rem" w="29rem">
-          <VStack align="flex-start">
+        <Box mr="0">
+          <VStack align="flex-start" justifyContent="center">
             <Text fontSize="2rem" color="white" mb="1rem">
               Sign In
             </Text>
@@ -292,34 +286,37 @@ useEffect(() => {
                 </Center>
               ) : null}
             </AnimatePresence>
-            <Divider w="20.5rem" mb="1rem" />
+            <Divider mb="1rem" />
             {/* STUDENT NUMBER */}
             <Input
+              height="2rem"
               bg="palette.secondary"
               variant="outline"
               placeholder="Student Number"
               color="palette.primary"
-              w="21rem"
+              // w="21rem"
               value={student_number}
               onChange={handleStudentNumberChange}
             />
             {/*  Email */}
             <Input
+              height="2rem"
               bg="palette.secondary"
               variant="outline"
               placeholder="Email"
               color="palette.primary"
-              w="21rem"
+              // w="21rem"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             {/* PROGRAM */}
             <Select
+              height="2rem"
               bg="palette.secondary"
               variant="outline"
               placeholder="Program"
               color="gray"
-              w="21rem"
+              // w="21rem"
               opacity="1"
               cursor={"pointer"}
               value={programAbbr}
@@ -333,11 +330,12 @@ useEffect(() => {
 
             {/* STRAND */}
             <Select
+              height="2rem"
               bg="palette.secondary"
               variant="outline"
               placeholder="Senior High Strand"
               color="gray"
-              w="21rem"
+              // w="21rem"
               opacity="1"
               cursor={"pointer"}
               value={strand}
@@ -360,56 +358,58 @@ useEffect(() => {
               <option value="AFA">Agri-Fishery Arts</option>
               <option value="Sports">Sports</option>
             </Select>
+            <HStack width="100%">
+              {/* STATUS */}
+              <Select
+                height="2rem"
+                bg="palette.secondary"
+                variant="outline"
+                color="gray"
+                opacity="1"
+                cursor={"pointer"}
+                placeholder="Status"
+                value={status}
+                onChange={(event) => setStatus(event.target.value)}
+              >
+                <option value="Regular">Regular</option>
+                <option value="Back Subject">Back Subject</option>
+                <option value="Transferee">Transferee</option>
+                <option value="Shiftee">Shiftee</option>
+                <option value="Returnee">Returnee</option>
+                <option value="Ladderized">Ladderized</option>
+              </Select>
 
-            {/* STATUS */}
-            <Select
-              bg="palette.secondary"
-              variant="outline"
-              color="gray"
-              w="21rem"
-              opacity="1"
-              cursor={"pointer"}
-              placeholder="Status"
-              value={status}
-              onChange={(event) => setStatus(event.target.value)}
-            >
-              <option value="Regular">Regular</option>
-              <option value="Back Subject">Back Subject</option>
-              <option value="Transferee">Transferee</option>
-              <option value="Shiftee">Shiftee</option>
-              <option value="Returnee">Returnee</option>
-              <option value="Ladderized">Ladderized</option>
-            </Select>
-
-            {/* GENDER */}
-            <Select
-              bg="palette.secondary"
-              variant="outline"
-              color="gray"
-              w="21rem"
-              opacity="1"
-              cursor={"pointer"}
-              placeholder="Gender"
-              value={gender}
-              onChange={(event) => setGender(event.target.value)}
-            >
-              <option value="Female">Female</option>
-              <option value="Male">Male</option>
-            </Select>
+              {/* GENDER */}
+              <Select
+                height="2rem"
+                bg="palette.secondary"
+                variant="outline"
+                color="gray"
+                opacity="1"
+                cursor={"pointer"}
+                placeholder="Gender"
+                value={gender}
+                onChange={(event) => setGender(event.target.value)}
+              >
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+              </Select>
+            </HStack>
 
             {/* PASSWORD */}
             <InputGroup size="md">
               <Input
+                height="2rem"
                 bg="palette.secondary"
                 pr="4.5rem"
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 color="palette.primary"
-                w="21rem"
+                // w="21rem"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <InputRightElement width="4.5rem" mr="8rem">
+              <InputRightElement mr="auto">
                 <Button
                   h="1.75rem"
                   size="sm"
@@ -430,7 +430,7 @@ useEffect(() => {
             </InputGroup>
 
             <Text
-              ml="13.7rem"
+              ml="auto"
               fontSize="14px"
               color="gray"
               fontWeight="bold"
@@ -446,8 +446,8 @@ useEffect(() => {
             <Button
               onClick={() => handleSignIn()}
               size="md"
-              height="40px"
-              width="21rem"
+              height="2rem"
+              width="100%"
               border="2px"
               bg="#FAECD6"
               borderColor="#FFF5E0"
@@ -455,7 +455,12 @@ useEffect(() => {
               Log In
             </Button>
 
-            <HStack mt="2rem">
+            <HStack
+              mt="2rem"
+              flexWrap="wrap"
+              justifyContent="center"
+              marginX="auto"
+            >
               <Text fontSize="xs" color="gray">
                 By clicking Log In you agree to our
               </Text>
@@ -473,7 +478,12 @@ useEffect(() => {
                 </Text>
               </Link>
             </HStack>
-            <HStack ml="4rem" mt="1rem">
+            <HStack
+              mt="1rem"
+              flexWrap="wrap"
+              justifyContent="center"
+              marginX="auto"
+            >
               <Text fontSize="xs" color="gray">
                 Not a new user?
               </Text>
@@ -488,7 +498,13 @@ useEffect(() => {
               </Text>
             </HStack>
 
-            <Text mt="4rem" ml="3rem" fontSize="xs" color="gray">
+            <Text
+              mt="1rem"
+              fontSize="xs"
+              color="gray"
+              marginX="auto"
+              textAlign="center"
+            >
               Copyright 2023 Visionalyze || All rights reserved.
             </Text>
           </VStack>

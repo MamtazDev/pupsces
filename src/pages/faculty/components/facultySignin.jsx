@@ -78,34 +78,33 @@ export default function FacultySignIn() {
         );
         const admin = await adminResponse.json();
 
-      
-console.log("Admin data from server:", admin);
+        console.log("Admin data from server:", admin);
 
-if (admin.length > 0) {
-  const adminData = admin[0]; // Access the first (and only) element of the array
+        if (admin.length > 0) {
+          const adminData = admin[0]; // Access the first (and only) element of the array
 
-  if (
-    adminData.admin_email === email &&
-    adminData.admin_password === password
-  ) {
-    setUser({
-      username: adminData.username,
-      roles: adminData.roles,
-    });
-    Cookies.set("adminEmail", adminData.admin_email, { expires: 7 });
-    navigate("/admin");
-  } else {
-    console.log("Invalid input. Check credentials:");
-    console.log("Expected Email:", adminData.admin_email);
-    console.log("Actual Email:", email);
-    console.log("Expected Password:", adminData.admin_password);
-    console.log("Actual Password:", password);
+          if (
+            adminData.admin_email === email &&
+            adminData.admin_password === password
+          ) {
+            setUser({
+              username: adminData.username,
+              roles: adminData.roles,
+            });
+            Cookies.set("adminEmail", adminData.admin_email, { expires: 7 });
+            navigate("/admin");
+          } else {
+            console.log("Invalid input. Check credentials:");
+            console.log("Expected Email:", adminData.admin_email);
+            console.log("Actual Email:", email);
+            console.log("Expected Password:", adminData.admin_password);
+            console.log("Actual Password:", password);
 
-    setError("Invalid input");
-  }
-} else {
-  setError("Invalid input");
-}
+            setError("Invalid input");
+          }
+        } else {
+          setError("Invalid input");
+        }
       } else {
         if (
           facultyData.email === email &&
@@ -144,7 +143,7 @@ if (admin.length > 0) {
       position="relative"
       justifyContent="center"
       alignItems="center"
-      mr="1rem"
+      mx="1rem"
     >
       <AnimatePresence>
         {showForgotPassword ? (
@@ -153,8 +152,8 @@ if (admin.length > 0) {
       </AnimatePresence>
 
       {!showNewSignIn && !showForgotPassword && (
-        <Box paddingTop="8rem" w="29rem">
-          <VStack align="flex-start">
+        <Box mr="0">
+          <VStack align="flex-start" justifyContent="center">
             <Text fontSize="2rem" color="white" mb="1rem">
               Sign In
             </Text>
@@ -179,7 +178,7 @@ if (admin.length > 0) {
                 </Center>
               ) : null}
             </AnimatePresence>
-            <Divider w="20.5rem" mb="1rem" />
+            <Divider mb="1rem" />
 
             {/* /EMAIL */}
             <Input
@@ -187,7 +186,7 @@ if (admin.length > 0) {
               variant="outline"
               placeholder="Email"
               color="palette.primay"
-              w="21rem"
+              // maxW="21rem"
               _placeholder={{
                 color: "#5C596E",
                 opacity: ".8",
@@ -205,7 +204,7 @@ if (admin.length > 0) {
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 color="palette.primary"
-                w="21rem"
+                // maxW="21rem"
                 _placeholder={{
                   color: "#5C596E",
                   opacity: ".8",
@@ -214,7 +213,7 @@ if (admin.length > 0) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <InputRightElement width="4.5rem" mr="8rem">
+              <InputRightElement>
                 <Button
                   h="1.75rem"
                   size="sm"
@@ -234,7 +233,7 @@ if (admin.length > 0) {
             </InputGroup>
 
             <Text
-              ml="13.7rem"
+              ml="auto"
               fontSize="14px"
               color="gray"
               fontWeight="bold"
@@ -250,7 +249,7 @@ if (admin.length > 0) {
             <Button
               size="md"
               height="40px"
-              width="21rem"
+              width="100%"
               border="2px"
               bg="#FAECD6"
               onClick={() => handleSignIn()}
@@ -258,7 +257,7 @@ if (admin.length > 0) {
               Sign In
             </Button>
 
-            <HStack mt="2rem">
+            <HStack mt="2rem" flexWrap="wrap" justifyContent="center">
               <Text fontSize="xs" color="gray">
                 By clicking Log In you agree to our
               </Text>
@@ -273,7 +272,7 @@ if (admin.length > 0) {
               </Text>
             </HStack>
 
-            <HStack ml="4rem" mt="2rem">
+            <HStack mt="2rem" marginX="auto">
               <Text fontSize="xs" color="gray">
                 Are you a new user?
               </Text>
@@ -287,7 +286,7 @@ if (admin.length > 0) {
               </Text>
             </HStack>
           </VStack>
-          <Text mt="10rem" ml="3rem" fontSize="xs" color="gray">
+          <Text mt="3rem" fontSize="xs" color="gray" textAlign="center">
             Copyright 2023 Visionalyze || All rights reserved.
           </Text>
         </Box>

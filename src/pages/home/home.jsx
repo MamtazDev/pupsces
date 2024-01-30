@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, useBreakpointValue } from "@chakra-ui/react";
 import { useState } from "react";
 import "./home.css";
 
@@ -30,6 +30,9 @@ export const Home = () => {
   //    setShowFacultySignIn(false);
   //  };
 
+  const width = useBreakpointValue({ base: "100%", lg: "55.5%" });
+  const isDesktop = useBreakpointValue({ base: false, lg: true });
+
   return (
     <Flex
       h="100vh"
@@ -39,8 +42,8 @@ export const Home = () => {
       position="absolute"
     >
       <Box
-      className="image"
-        w="55.5%"
+        className="image"
+        w={showFacultySignIn || showStudentSignIn ? width : "55.5%"}
         h="100%"
         pos="absolute"
         bgImage={`url(${PUP})`}
@@ -54,7 +57,18 @@ export const Home = () => {
         opacity={0.6}
       />
 
-      <Box zIndex="3" ml="55rem" mt="3rem">
+      <Box
+        zIndex="3"
+        pos="absolute"
+        right={isDesktop ? "3rem" : undefined}
+        minH="100vh"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        maxW="30rem" // Set the desired maximum width
+        width="100%" // Stretch the width to 100%
+      >
         {showFacultySignIn ? (
           <FacultySignIn />
         ) : showStudentSignIn ? (

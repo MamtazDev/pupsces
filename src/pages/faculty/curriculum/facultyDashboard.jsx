@@ -371,195 +371,201 @@ export default function FacultyDashboard() {
       minHeight="100vh"
       position="absolute"
       justifyContent="center"
+      alignItems="center"
       w="100%"
       flexDirection="column"
     >
       <FacultyNavbar />
 
-      <VStack mt="9rem" w="100%">
-        <Wrap spacing="3" w={breakPoints} mb="8rem">
-          <VStack gap="3rem">
-            <Box
-              bg="#E3B04B"
-              w="68rem"
-              boxShadow="lg"
-              h="8rem"
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between" // Use space-between to place items at the sides
-              borderRadius="20px"
-              overflow="hidden"
+      {/* <VStack mt="9rem" w="80vw"> */}
+      {/* <Wrap spacing="3" w={breakPoints} mb="8rem"> */}
+      <Box mt="9rem" w="80vw">
+        <VStack gap="3rem">
+          <Box
+            bg="#E3B04B"
+            w="100%"
+            boxShadow="lg"
+            minH="8rem"
+            height="auto"
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            borderRadius="20px"
+            overflow="hidden"
+            flexWrap="wrap"
+            padding="2rem"
+            gap={2}
+          >
+            <Text
+              fontSize="20px"
+              fontWeight="semibold"
+              fontStyle="Bitter"
+              textAlign="center"
             >
-              <Text
-                fontSize="20px"
-                fontWeight="semibold"
-                fontStyle="Bitter"
-                textAlign="center"
-                padding="2rem"
-              >
-                Faculty Name: {facultyName}
-              </Text>
+              Faculty Name: {facultyName}
+            </Text>
 
-              <HStack spacing={3}>
-                <Button
-                  onClick={handleUpload}
-                  bg="palette.primary"
-                  color="white"
-                  fontWeight="semibold"
-                  fontStyle="bitter"
-                  cursor="pointer"
-                  w="11rem"
-                  focusBorderColor="white"
-                  leftIcon={<AiOutlinePlus />}
-                  _hover={{
-                    bg: "palette.primaryDark",
-                    transition: "background-color 0.3s",
-                  }}
-                >
-                  Upload Classlist
-                </Button>
-
-                <input
-                  type="file"
-                  onChange={handleFileChange}
-                  style={{
-                    cursor: "pointer",
-                  }}
-                />
-              </HStack>
-            </Box>
-
-            <HStack justify="flex-start">
-              <Select
-                placeholder="Year Level"
-                focusBorderColor="white"
-                opacity="1"
-                w="11rem"
-                fontSize=".9rem"
-                bgColor="#EEEEEE"
-                color="black"
+            <HStack spacing={3} flexWrap="wrap">
+              <Button
+                onClick={handleUpload}
+                bg="palette.primary"
+                color="white"
                 fontWeight="semibold"
                 fontStyle="bitter"
                 cursor="pointer"
-                value={selectedSchoolYear}
-                onChange={(event) => setSelectedSchoolYear(event.target.value)}
-              >
-                <option style={{ color: "black" }} value="All Years">
-                  All Years
-                </option>
-                <option style={{ color: "black" }} value="1">
-                  First Year
-                </option>
-                <option style={{ color: "black" }} value="2">
-                  Second Year
-                </option>
-                <option style={{ color: "black" }} value="3">
-                  Third Year
-                </option>
-                <option style={{ color: "black" }} value="4">
-                  Fourth Year
-                </option>
-              </Select>
-              <Select
-                placeholder="Status"
-                focusBorderColor="white"
-                opacity="1"
                 w="11rem"
-                fontSize=".9rem"
-                bgColor="#EEEEEE"
-                color="black"
-                fontWeight="semibold"
-                fontStyle="bitter"
-                cursor="pointer"
-                value={selectedStatus}
-                onChange={(event) => setSelectedStatus(event.target.value)}
+                focusBorderColor="white"
+                leftIcon={<AiOutlinePlus />}
+                _hover={{
+                  bg: "palette.primaryDark",
+                  transition: "background-color 0.3s",
+                }}
               >
-                <option style={{ color: "black" }} value="Regular">
-                  Regular
-                </option>
-                <option style={{ color: "black" }} value="Back Subject">
-                  Back Subject
-                </option>
-                <option style={{ color: "black" }} value="Returnee">
-                  Returnee
-                </option>
-                <option style={{ color: "black" }} value="Shiftee">
-                  Shiftee
-                </option>
-                <option style={{ color: "black" }} value="Transferee">
-                  Transferee
-                </option>
-                <option style={{ color: "black" }} value="Ladderized">
-                  Ladderized
-                </option>
-                <option style={{ color: "black" }} value="All Students">
-                  All Students
-                </option>
-              </Select>
+                Upload Classlist
+              </Button>
 
-              <InputGroup w="20rem" mr="11rem">
-                <Input
-                  p="1rem"
-                  fontFamily="inter"
-                  placeholder="Search..."
-                  focusBorderColor="palette.primary"
-                  borderColor="rgba(0, 0, 0, .2)"
-                  _placeholder={{
-                    color: "#5C596E",
-                    opacity: ".7",
-                  }}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <InputRightElement
-                  marginRight=".2rem"
-                  fontSize="1.2rem"
-                  color="#2B273E"
-                  opacity=".5"
-                  transition="all .3s ease"
-                  borderRadius=".5rem"
-                >
-                  <BsSearch />
-                </InputRightElement>
-              </InputGroup>
-
-              <HStack ml="8rem">
-                <Text opacity={0.7}>Total:</Text>
-                {showTableBody ? (
-                  <Text opacity={0.7}>{filteredStudentCount}</Text>
-                ) : (
-                  <Text opacity={0.7}>0</Text>
-                )}
-              </HStack>
+              <input
+                type="file"
+                onChange={handleFileChange}
+                style={{
+                  cursor: "pointer",
+                }}
+              />
             </HStack>
-          </VStack>
+          </Box>
 
-          <FacultyTable
-            students={filteredStudents}
-            isLoading={isLoading}
-            handleStudentNumberClick={handleStudentNumberClick}
-            showTableBody={showTableBody}
-            toggleUsersData={handleToggleUsersData}
-          />
-          <Flex mt="5rem">
-            {isUsersDataVisible &&
-              (console.log(
-                "selectedProgram in UsersData:",
-                selectedProgramForView
-              ),
-              (
-                <div id={`userData-${studentNumber}`}>
-                  <UsersData
-                    studentNumber={studentNumber}
-                    facultyId={facultyId}
-                    program={selectedProgramForView}
-                    strand={selectedStrand}
-                  />
-                </div>
-              ))}
-          </Flex>
-        </Wrap>
-      </VStack>
+          <HStack justify="flex-start" w="100%" flexWrap="wrap">
+            <Select
+              placeholder="Year Level"
+              focusBorderColor="white"
+              opacity="1"
+              w={{ base: "100%", md: "11rem" }}
+              fontSize=".9rem"
+              bgColor="#EEEEEE"
+              color="black"
+              fontWeight="semibold"
+              fontStyle="bitter"
+              cursor="pointer"
+              value={selectedSchoolYear}
+              onChange={(event) => setSelectedSchoolYear(event.target.value)}
+            >
+              <option style={{ color: "black" }} value="All Years">
+                All Years
+              </option>
+              <option style={{ color: "black" }} value="1">
+                First Year
+              </option>
+              <option style={{ color: "black" }} value="2">
+                Second Year
+              </option>
+              <option style={{ color: "black" }} value="3">
+                Third Year
+              </option>
+              <option style={{ color: "black" }} value="4">
+                Fourth Year
+              </option>
+            </Select>
+            <Select
+              placeholder="Status"
+              focusBorderColor="white"
+              opacity="1"
+              w={{ base: "100%", md: "11rem" }}
+              fontSize=".9rem"
+              bgColor="#EEEEEE"
+              color="black"
+              fontWeight="semibold"
+              fontStyle="bitter"
+              cursor="pointer"
+              value={selectedStatus}
+              onChange={(event) => setSelectedStatus(event.target.value)}
+            >
+              <option style={{ color: "black" }} value="Regular">
+                Regular
+              </option>
+              <option style={{ color: "black" }} value="Back Subject">
+                Back Subject
+              </option>
+              <option style={{ color: "black" }} value="Returnee">
+                Returnee
+              </option>
+              <option style={{ color: "black" }} value="Shiftee">
+                Shiftee
+              </option>
+              <option style={{ color: "black" }} value="Transferee">
+                Transferee
+              </option>
+              <option style={{ color: "black" }} value="Ladderized">
+                Ladderized
+              </option>
+              <option style={{ color: "black" }} value="All Students">
+                All Students
+              </option>
+            </Select>
+
+            <InputGroup w={{ base: "100%", md: "20rem" }}>
+              <Input
+                p="1rem"
+                fontFamily="inter"
+                placeholder="Search..."
+                focusBorderColor="palette.primary"
+                borderColor="rgba(0, 0, 0, .2)"
+                _placeholder={{
+                  color: "#5C596E",
+                  opacity: ".7",
+                }}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <InputRightElement
+                marginRight=".2rem"
+                fontSize="1.2rem"
+                color="#2B273E"
+                opacity=".5"
+                transition="all .3s ease"
+                borderRadius=".5rem"
+              >
+                <BsSearch />
+              </InputRightElement>
+            </InputGroup>
+
+            <HStack ml="auto">
+              <Text opacity={0.7}>Total:</Text>
+              {showTableBody ? (
+                <Text opacity={0.7}>{filteredStudentCount}</Text>
+              ) : (
+                <Text opacity={0.7}>0</Text>
+              )}
+            </HStack>
+          </HStack>
+        </VStack>
+
+        <FacultyTable
+          students={filteredStudents}
+          isLoading={isLoading}
+          handleStudentNumberClick={handleStudentNumberClick}
+          showTableBody={showTableBody}
+          toggleUsersData={handleToggleUsersData}
+        />
+        <Flex mt="5rem">
+          {isUsersDataVisible &&
+            (console.log(
+              "selectedProgram in UsersData:",
+              selectedProgramForView
+            ),
+            (
+              <div id={`userData-${studentNumber}`}>
+                <UsersData
+                  studentNumber={studentNumber}
+                  facultyId={facultyId}
+                  program={selectedProgramForView}
+                  strand={selectedStrand}
+                />
+              </div>
+            ))}
+        </Flex>
+      </Box>
+      {/* </Wrap> */}
+      {/* </VStack> */}
       <Spacer mt="10rem" />
       <Footer />
     </Flex>

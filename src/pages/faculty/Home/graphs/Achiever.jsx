@@ -21,7 +21,6 @@ import Cookies from "js-cookie";
 import React, { useEffect, useRef, useState } from "react";
 import { endPoint } from "../../../config";
 
-
 function Achiever() {
   const facultyEmail = Cookies.get("facultyEmail");
   console.log("faculty email in cookies:", facultyEmail);
@@ -239,9 +238,7 @@ function Achiever() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const coursesResponse = await axios.get(
-          `${endPoint}/curriculum/all`
-        );
+        const coursesResponse = await axios.get(`${endPoint}/curriculum/all`);
         setCourses(coursesResponse.data);
         console.log("coursesResponse", coursesResponse.data);
       } catch (error) {
@@ -309,9 +306,9 @@ function Achiever() {
   console.log("Filtered Students by Year Level:", filteredStudentsByYearLevel);
 
   return (
-    <Card mt="2rem" w="69rem" h="auto" boxShadow="2xl" borderRadius="30px">
+    <Card mt="2rem" w="100%" h="auto" boxShadow="2xl" borderRadius="30px">
       <div ref={containerRef}>
-        <Flex justify="space-between" align="center">
+        <Flex justify="space-between" align="center" overflow="scroll">
           <CardHeader>Student(s) that are Listers</CardHeader>
           <HStack>
             <Select

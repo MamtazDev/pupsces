@@ -42,7 +42,7 @@ export default function Evaluation() {
   console.log("faculty email in cookies:", facultyEmail);
 
   const [facultyId, setFacultyId] = useState("");
-// fetch Faculty
+  // fetch Faculty
   useEffect(() => {
     if (facultyEmail) {
       axios
@@ -240,12 +240,12 @@ export default function Evaluation() {
       <FacultyNavbar />
       <VStack mt="12rem" w="100%">
         <Wrap spacing="3" w={breakPoints} mb="8rem">
-          <HStack>
+          <HStack justify="flex-start" w="100%" flexWrap="wrap">
             <Select
               placeholder="Year Level"
               focusBorderColor="white"
               opacity=".6"
-              w="11rem"
+              w={{ base: "100%", md: "11rem" }}
               fontSize=".9rem"
               bgColor="#EEEEEE"
               color="black"
@@ -275,7 +275,7 @@ export default function Evaluation() {
               placeholder="Status"
               focusBorderColor="white"
               opacity=".6"
-              w="11rem"
+              w={{ base: "100%", md: "11rem" }}
               fontSize=".9rem"
               bgColor="#EEEEEE"
               color="black"
@@ -308,7 +308,7 @@ export default function Evaluation() {
               </option>
             </Select>
 
-            <InputGroup w="20rem">
+            <InputGroup w={{ base: "100%", md: "20rem" }}>
               <Input
                 p="1rem"
                 fontFamily="inter"
@@ -336,7 +336,7 @@ export default function Evaluation() {
               </InputRightElement>
             </InputGroup>
 
-            <HStack ml="20rem">
+            <HStack ml="auto">
               <Text opacity={0.7}>Total:</Text>
               {showTableBody ? (
                 <Text opacity={0.7}>{filteredStudentCount}</Text>
