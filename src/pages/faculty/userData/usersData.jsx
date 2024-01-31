@@ -634,6 +634,187 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
   };
   // let formattedDate = "";
 
+  // const handleValidateCourse = async (filteredCourseItems) => {
+  //   try {
+  //     const studentNumber = studentData.student_number;
+
+  //     const coursesWithGrades = filteredCourseItems.filter((courseItem) => {
+  //       const gradesAndRemark = gradesAndRemarks.find(
+  //         (item) => item.course_code === courseItem.course_code
+  //       );
+  //       return gradesAndRemark && gradesAndRemark.grades !== "";
+  //     });
+
+  //     const dataToValidate = await Promise.all(
+  //       coursesWithGrades.map(async (courseItem) => {
+  //         try {
+  //           const gradesAndRemark = gradesAndRemarks.find(
+  //             (item) => item.course_code === courseItem.course_code
+  //           );
+
+  //           const undesiredGrades = ["5", "-1", "Incomplete", "0", "Withdraw"];
+
+  //           if (
+  //             gradesAndRemark &&
+  //             undesiredGrades.includes(gradesAndRemark.grades?.toString())
+  //           ) {
+  //             console.log(
+  //               `Undesired Grade Found: ${gradesAndRemark.grades} for Course ${courseItem.course_code}`
+  //             );
+
+  //             // Update the status of the student to "Back Subject"
+  //             await updateStudentStatus(studentNumber, "Back Subject");
+
+  //             toast({
+  //               title: `Course ${courseItem.course_code} needs to be retaken`,
+  //               status: "warning",
+  //               duration: 3000,
+  //               isClosable: true,
+  //             });
+
+  //             console.log("Validation Data:", validationData);
+  //             console.log("Filtered Course Items:", filteredCourseItems);
+  //             console.log("Grades and Remarks:", gradesAndRemarks);
+  //             return null; // Skip the course from further processing
+  //           }
+
+  //           const validationEntry = validationData.find(
+  //             (entry) => entry.course_code === courseItem.course_code
+  //           );
+
+  //           if (!validationEntry || !validationEntry.date_validated) {
+  //             let formattedDate = getFormattedDate();
+
+  //             const currentCourseType = getCourseType(studentNumber);
+  //             const courseData = await axios.get(
+  //               `${endPoint}/curriculum?program_id=${program}&year_started=${currentCourseType}`
+  //             );
+  //             const course_id =
+  //               courseData.data.find(
+  //                 (item) => item.course_code === courseItem.course_code
+  //               )?.course_id || null;
+
+  //             return {
+  //               student_number: studentNumber,
+  //               course_id: course_id,
+  //               grade_id:
+  //                 gradesAndRemarks.find(
+  //                   (item) => item.course_code === courseItem.course_code
+  //                 )?.grade_id || null,
+  //               date_validated: formattedDate,
+  //               faculty_id: facultyId,
+  //             };
+  //           } else {
+  //             return null; // Skip the course from further processing
+  //           }
+  //         } catch (error) {
+  //           console.error("Error preparing data for validation:", error);
+  //           // Handle the error as needed, e.g., log and continue processing
+  //           return null; // Skip the course from further processing
+  //         }
+  //       })
+  //     );
+
+  //     // Filter out courses that were skipped (returned null)
+  //     console.log("Data to validate:", dataToValidate);
+  //     const validDataToValidate = dataToValidate.filter((data) => {
+  //       console.log("Checking data:", data);
+  //       const isValid =
+  //         data !== null &&
+  //         data.date_validated &&
+  //         typeof data.date_validated === "string" &&
+  //         data.date_validated.trim() !== "";
+  //       console.log("Is data valid?", isValid);
+  //       return isValid;
+  //     });
+
+  //     // console.log("Valid data to validate:", validDataToValidate);
+
+  //     // if (validDataToValidate.length === 0) {
+  //     //   toast({
+  //     //     title: "No courses with grades to validate",
+  //     //     status: "info",
+  //     //     duration: 3000,
+  //     //     isClosable: true,
+  //     //   });
+  //     //   return;
+  //     // }
+
+  //     console.log("Valid data to validate:", validDataToValidate);
+
+  //     if (validDataToValidate.length > 0) {
+  //       const response = await axios.post(
+  //         `${endPoint}/validate`,
+  //         validDataToValidate
+  //       );
+  //       console.log("Success toast should display");
+  //       if (response.status === 201) {
+  //         toast({
+  //           title: "Courses validated successfully",
+  //           status: "success",
+  //           duration: 3000,
+  //           isClosable: true,
+  //         });
+
+  //         const existingCodes = new Set(
+  //           validationData.map((entry) => entry.course_code)
+  //         );
+  //         const updatedValidationData = validDataToValidate
+  //           .filter(
+  //             (item) =>
+  //               !existingCodes.has(item.course_code) || !item.date_validated
+  //           )
+  //           .map((item) => ({
+  //             course_code: item.course_code,
+  //             date_validated: item.date_validated,
+  //           }));
+
+  //         updateAnalysisData(
+  //           studentNumber,
+  //           program,
+  //           strand,
+  //           courses,
+  //           gradesAndRemarks
+  //         );
+  //         setValidationData([...validationData, ...updatedValidationData]);
+  //         setKeyForRerender((prevKey) => prevKey + 1);
+  //       } else {
+  //         toast({
+  //           title: "Failed to validate courses",
+  //           status: "error",
+  //           duration: 3000,
+  //           isClosable: true,
+  //         });
+  //       }
+  //     } else {
+  //       toast({
+  //         title: "No courses with grades to validate",
+  //         status: "info",
+  //         duration: 3000,
+  //         isClosable: true,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error("Error validating courses:", error);
+  //     if (error.response) {
+  //       console.error("Server responded with data:", error.response.data);
+  //       console.error("Status code:", error.response.status);
+  //       console.error("Headers:", error.response.headers);
+  //     } else if (error.request) {
+  //       console.error("No response received. Request details:", error.request);
+  //     } else {
+  //       console.error("Error details:", error.message);
+  //     }
+  //     toast({
+  //       title: "An error occurred while validating courses",
+  //       description: error.message,
+  //       status: "error",
+  //       duration: 3000,
+  //       isClosable: true,
+  //     });
+  //   }
+  // };
+
   const handleValidateCourse = async (filteredCourseItems) => {
     try {
       const studentNumber = studentData.student_number;
@@ -695,12 +876,10 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
                 )?.course_id || null;
 
               return {
+                course_code: courseItem.course_code, // Include course_code for filtering
                 student_number: studentNumber,
                 course_id: course_id,
-                grade_id:
-                  gradesAndRemarks.find(
-                    (item) => item.course_code === courseItem.course_code
-                  )?.grade_id || null,
+                grade_id: gradesAndRemark?.grade_id || null,
                 date_validated: formattedDate,
                 faculty_id: facultyId,
               };
@@ -715,62 +894,96 @@ function UsersData({ studentNumber, facultyId, program, strand }) {
         })
       );
 
-      // Filter out courses that were skipped (returned null)
-      const validDataToValidate = dataToValidate.filter(
-        (data) => data !== null
-      );
+      // Filter out courses that were skipped (returned null) or already validated
+      const validDataToValidate = dataToValidate.filter((data) => {
+        const isAlreadyValidated = validationData.some(
+          (existingEntry) =>
+            (existingEntry.course_code === data.course_code ||
+              existingEntry.course_id === data.course_id) &&
+            existingEntry.date_validated
+        );
 
-      if (validDataToValidate.length === 0) {
+        const isValid =
+          data !== null &&
+          !isAlreadyValidated &&
+          data.date_validated &&
+          typeof data.date_validated === "string" &&
+          data.date_validated.trim() !== "";
+
+        return isValid;
+      });
+
+      console.log("Valid Data to Validate:", validDataToValidate);
+
+      // ... rest of your code ...
+
+      if (validDataToValidate.length > 0) {
+        const response = await axios.post(
+          `${endPoint}/validate`,
+          validDataToValidate
+        );
+
+        console.log("Validation Response:", response);
+
+        if (response.status === 201) {
+          const existingCodes = new Set(
+            validationData.map((entry) => entry.course_code)
+          );
+
+          const updatedValidationData = validDataToValidate
+            .filter((item) => {
+              const isAlreadyValidated =
+                existingCodes.has(item.course_code) &&
+                validationData.some(
+                  (existingEntry) =>
+                    existingEntry.course_code === item.course_code &&
+                    existingEntry.date_validated
+                );
+
+              return !isAlreadyValidated;
+            })
+            .map((item) => ({
+              course_code: item.course_code,
+              date_validated: item.date_validated,
+            }));
+
+          if (updatedValidationData.length > 0) {
+            updateAnalysisData(
+              studentNumber,
+              program,
+              strand,
+              courses,
+              gradesAndRemarks
+            );
+            setValidationData([...validationData, ...updatedValidationData]);
+            setKeyForRerender((prevKey) => prevKey + 1);
+
+            toast({
+              title: "Courses validated successfully",
+              status: "success",
+              duration: 3000,
+              isClosable: true,
+            });
+          } else {
+            toast({
+              title: "No new courses with grades to validate",
+              status: "info",
+              duration: 3000,
+              isClosable: true,
+            });
+          }
+        } else {
+          toast({
+            title: "Failed to validate courses",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+      } else {
         toast({
           title: "No courses with grades to validate",
           status: "info",
-          duration: 3000,
-          isClosable: true,
-        });
-        return;
-      }
-
-      console.log("Data to send in the request:", validDataToValidate);
-
-      const response = await axios.post(
-        `${endPoint}/validate`,
-        validDataToValidate
-      );
-
-      if (response.status === 201) {
-        toast({
-          title: "Courses validated successfully",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
-
-        const existingCodes = new Set(
-          validationData.map((entry) => entry.course_code)
-        );
-        const updatedValidationData = validDataToValidate
-          .filter(
-            (item) =>
-              !existingCodes.has(item.course_code) || !item.date_validated
-          )
-          .map((item) => ({
-            course_code: item.course_code,
-            date_validated: item.date_validated,
-          }));
-
-        updateAnalysisData(
-          studentNumber,
-          program,
-          strand,
-          courses,
-          gradesAndRemarks
-        );
-        setValidationData([...validationData, ...updatedValidationData]);
-        setKeyForRerender((prevKey) => prevKey + 1);
-      } else {
-        toast({
-          title: "Failed to validate courses",
-          status: "error",
           duration: 3000,
           isClosable: true,
         });

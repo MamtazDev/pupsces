@@ -156,6 +156,7 @@ export default function CreditUnits({
       const remainingCreditUnits = totalCreditUnits - validatedTotalunits;
       setRemainingCreditUnits(remainingCreditUnits);
 
+      console.log("validated",validatedTotalunits)
       onRemainingCreditUnitsChange(remainingCreditUnits);
       onValidatedTotalUnitsChange(validatedTotalunits);
       onTotalCreditUnitsChange(totalCreditUnits);
