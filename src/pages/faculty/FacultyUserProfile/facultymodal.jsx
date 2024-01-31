@@ -14,13 +14,14 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { format } from "date-fns";
 import Cookies from "js-cookie";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import FacultyChangePassword from "./facultyChangePassword";
 import { endPoint } from "../../config";
-function FacultyModal({ onClose }) {
+import FacultyChangePassword from "./facultyChangePassword";
+function FacultyModal({ onClose, isOpen }) {
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -97,6 +98,27 @@ function FacultyModal({ onClose }) {
 
   const handleSave = async () => {
     try {
+      console.log("Faculty Email", facultyEmail);
+      // Log variable values
+      console.log("Variables:", {
+        facultyId,
+        firstName,
+        middleName,
+        lastName,
+        gender,
+        birthdate,
+        selectedProgram,
+        email,
+      });
+
+      // Log the endpoint
+      console.log(
+        "Endpoint:",
+        `${endPoint}/updatefaculty/${encodeURIComponent(facultyEmail)}`
+      );
+
+      const formattedBirthdate = format(birthdate, "yyyy-MM-dd");
+
       const response = await axios.put(
         `${endPoint}/updatefaculty/${encodeURIComponent(facultyEmail)}`,
         {
@@ -105,7 +127,8 @@ function FacultyModal({ onClose }) {
           faculty_mname: middleName,
           faculty_lname: lastName,
           gender: gender,
-          birthdate: new Date(birthdate).toISOString().split("T")[0],
+          // birthdate: new Date(birthdate).toISOString().split("T")[0],
+          birthdate: formattedBirthdate,
           program_id: programData.find(
             (program) => program.program_name === selectedProgram
           )?.program_id,
@@ -113,6 +136,10 @@ function FacultyModal({ onClose }) {
           email: email,
         }
       );
+
+      // Log the response status and data
+      console.log("PUT Response Status:", response.status);
+      console.log("PUT Response Data:", response.data);
 
       // Log the response (You might want to handle it differently)
       console.log("User data updated:", response.data);
@@ -130,7 +157,7 @@ function FacultyModal({ onClose }) {
     setIsChangePasswordModalOpen(false);
   };
   return (
-    <Modal isOpen={true} onClose={onClose} size="xl">
+    <Modal isOpen={isOpen} onClose={onClose} size="xl">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Edit User Profile</ModalHeader>
@@ -211,8 +238,8 @@ function FacultyModal({ onClose }) {
                   padding: "0.5rem",
                 }}
               >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </Select>
             </HStack>
             <HStack gap="4rem" w="100%">
@@ -281,6 +308,7 @@ function FacultyModal({ onClose }) {
 }
 FacultyModal.propTypes = {
   onClose: PropTypes.func,
+  isOpen: PropTypes.bool.isRequired,
 };
 
 export default FacultyModal;

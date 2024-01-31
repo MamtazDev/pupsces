@@ -3,8 +3,6 @@ import {
   Button,
   Flex,
   HStack,
-  Text,
-  VStack,
   Modal,
   ModalBody,
   ModalContent,
@@ -12,16 +10,18 @@ import {
   ModalHeader,
   ModalOverlay,
   Spacer,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { FaUserEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import FacultyNavbar from "../../../components/navbar/facultynavbar";
-import FacultyModal from "./facultymodal";
 import Footer from "../../../components/footer/footer";
+import FacultyNavbar from "../../../components/navbar/facultynavbar";
 import { endPoint } from "../../config";
+import FacultyModal from "./facultymodal";
 
 export default function FacultyUser() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,6 +71,7 @@ export default function FacultyUser() {
 
   const handleModalClose = async () => {
     try {
+      console.log("Before updating state:", isModalOpen);
       // Fetch the updated user data directly from the server
       const response = await axios.get(
         `${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`
@@ -80,6 +81,9 @@ export default function FacultyUser() {
       updatedUser.birthdate = formatBirthdate(updatedUser.birthdate);
 
       setFacultyData(updatedUser);
+      setIsModalOpen(false);
+      console.log("Modal closed successfully!");
+      console.log("After updating state:", isModalOpen);
     } catch (error) {
       console.error("Error fetching updated user data:", error);
     }
@@ -93,12 +97,16 @@ export default function FacultyUser() {
 
   const confirmLogout = () => {
     Cookies.remove("facultyEmail");
-    setFacultyData(null); 
+    setFacultyData(null);
     history("/");
   };
 
   const cancelLogout = () => {
     setShowLogoutConfirmation(false);
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
   };
   return (
     <Flex
@@ -116,11 +124,13 @@ export default function FacultyUser() {
               Personal Data
             </Text>
           </Box>
-          <Button gap="2rem" onClick={() => setIsModalOpen(true)}>
+          <Button gap="2rem" onClick={handleOpenModal}>
             <FaUserEdit />
           </Button>
         </HStack>
-        {isModalOpen && <FacultyModal onClose={handleModalClose} />}
+        {isModalOpen && (
+          <FacultyModal isOpen={isModalOpen} onClose={handleModalClose} />
+        )}
         <Box
           w="100%"
           borderRadius="25px"
