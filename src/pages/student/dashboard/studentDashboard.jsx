@@ -607,6 +607,7 @@ export default function StudentDashboard() {
                   textAlign="center"
                   padding="1rem"
                   color="white"
+                  w="100%"
                 >
                   Courses
                 </Box>
