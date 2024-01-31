@@ -17,7 +17,7 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { FaUserEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import Footer from "../../../components/footer/footer";
+//import Footer from "../../../components/footer/footer";
 import Navbar from "../../../components/navbar/navbar";
 import UserModal from "./userModal";
 import { endPoint } from "../../config";
@@ -29,6 +29,7 @@ export default function UserProfile() {
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const studentNumber = Cookies.get("student_number");
   const history = useNavigate();
+  
   // Function to format the birthdate
   const formatBirthdate = (birthdate) => {
     const date = new Date(birthdate);
@@ -72,6 +73,10 @@ export default function UserProfile() {
     // Call the fetchProgramData function when the component mounts
     fetchProgramData();
   }, []);
+
+    const handleOpenModal = () => {
+      setIsModalOpen(true);
+    };
   const handleModalClose = async () => {
     try {
       // Fetch the updated user data directly from the server
@@ -84,6 +89,7 @@ export default function UserProfile() {
 
       // Update the state with the new data
       setUserData(updatedUser);
+       console.log("Modal closed successfully!");
     } catch (error) {
       console.error("Error fetching updated user data:", error);
     }
@@ -116,18 +122,20 @@ export default function UserProfile() {
       zIndex={-1}
     >
       <Navbar />
-      <VStack gap="6" mt="9rem">
+      <VStack position="absolute" gap="6" mt="9rem">
         <HStack>
           <Box mr="40rem">
             <Text fontSize="25px" fontWeight="bold">
               Personal Data
             </Text>
           </Box>
-          <Button gap="2rem" ml="7.5rem" onClick={() => setIsModalOpen(true)}>
+          <Button gap="2rem" ml="7.5rem" onClick={handleOpenModal}>
             <FaUserEdit />
           </Button>
         </HStack>
-        {isModalOpen && <UserModal onClose={handleModalClose} />}
+        {isModalOpen && (
+          <UserModal isOpen={isModalOpen} onClose={handleModalClose} />
+        )}
 
         {userData ? ( // Render user data if available
           <Box
@@ -140,6 +148,19 @@ export default function UserProfile() {
           >
             <HStack gap="20rem">
               <VStack alignItems="flex-start" textAlign="left" gap="1rem">
+                <HStack gap="3rem">
+                  <HStack>
+                    <Text fontSize="20px" fontWeight="semibold">
+                      Student
+                    </Text>
+                    <Text fontSize="20px" fontWeight="semibold">
+                      Number:
+                    </Text>
+                  </HStack>
+                  <Text w="10rem" fontSize="18px">
+                    {userData.student_number}
+                  </Text>
+                </HStack>
                 <HStack gap="6rem">
                   <Text fontSize="20px" fontWeight="semibold">
                     Name:
@@ -150,12 +171,7 @@ export default function UserProfile() {
                     {userData.last_name}
                   </Text>
                 </HStack>
-                <HStack gap="3rem">
-                  <Text fontSize="20px" fontWeight="semibold">
-                    ID Number:
-                  </Text>
-                  <Text fontSize="18px">{userData.student_number}</Text>
-                </HStack>
+
                 <HStack gap="5rem">
                   <Text fontSize="20px" fontWeight="semibold">
                     Gender:
@@ -185,7 +201,7 @@ export default function UserProfile() {
                   <Text fontSize="20px" fontWeight="semibold">
                     Program:
                   </Text>
-{/* 
+                  {/* 
                   <Text mr="-6.7rem" fontSize="20px" fontWeight="semibold">
                     Year:
                   </Text> */}
@@ -221,7 +237,7 @@ export default function UserProfile() {
         ) : (
           <Text>Loading user data...</Text>
         )}
-        <Footer />
+        {/* <Footer /> */}
       </VStack>
       {showLogoutConfirmation && (
         <Modal isOpen={showLogoutConfirmation} onClose={cancelLogout}>

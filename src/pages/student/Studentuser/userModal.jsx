@@ -18,11 +18,11 @@ import Cookies from "js-cookie";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import ChangePassword from "./changePassword";
 import { endPoint } from "../../config";
+import ChangePassword from "./changePassword";
 
-function UserModal({ onClose }) {
-  const [userData, setUserData] = useState(null);
+function UserModal({ onClose, isOpen }) {
+  const [userData, setStudentData] = useState(null);
   const [programData, setProgramData] = useState(null);
 
   // State variables for editable fields
@@ -34,6 +34,8 @@ function UserModal({ onClose }) {
   const [selectedProgram, setSelectedProgram] = useState("");
   const [status, setStatus] = useState("");
   const [email, setEmail] = useState("");
+  const [strand, setStrand] = useState("");
+  const [studentnumber, setStudentnumber] = useState("");
 
   const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] =
     useState(false);
@@ -71,8 +73,10 @@ function UserModal({ onClose }) {
           );
           setStatus(user.status || "");
           setEmail(user.email || "");
+          setStudentnumber(user.student_number || "");
+          setStrand(user.strand || "");
 
-          setUserData(user);
+          setStudentData(user);
         } catch (error) {
           console.error("Error fetching user data:", error);
         }
@@ -101,23 +105,40 @@ function UserModal({ onClose }) {
       const response = await Axios.put(
         `${endPoint}/updatestudents/${studentNumber}`,
         {
-          student_number: studentNumber,
+          student_number: studentnumber,
           first_name: firstName,
           middle_name: middleName,
           last_name: lastName,
           gender: gender,
           birthdate: new Date(birthdate).toISOString().split("T")[0],
+          status: status,
+          email: email,
           program_id: programData.find(
             (program) => program.program_name === selectedProgram
           )?.program_id,
-          status: status,
-          email: email,
+          strand: strand,
         }
       );
 
-      // Log the response (You might want to handle it differently)
-      console.log("User data updated:", response.data);
-      onClose(response.data.updatedUser);
+      console.log("PUT Response Status:", response.status);
+      console.log("PUT Response Data:", response.data);
+
+      if (
+        response.status === 200 &&
+        response.data.message === "Student updated successfully"
+      ) {
+        // Data structure might vary, adjust accordingly
+        const updatedUserData = response.data.updatedUser || {};
+
+        // Log the updated user data
+        console.log("User data updated:", updatedUserData);
+        Cookies.set("facultyEmail", email);
+
+        // Close the modal
+        onClose();
+      } else {
+        console.error("Unexpected response:", response.data);
+      }
     } catch (error) {
       console.error("Error updating user data:", error);
     }
@@ -132,7 +153,7 @@ function UserModal({ onClose }) {
   };
 
   return (
-    <Modal isOpen={true} onClose={onClose} size="xl">
+    <Modal isOpen={isOpen} onClose={onClose} size="xl">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Edit User Profile</ModalHeader>
@@ -143,6 +164,19 @@ function UserModal({ onClose }) {
           alignItems="flex-start"
         >
           <VStack spacing={2.5} alignItems="flex-start">
+            <HStack gap="2rem">
+              <HStack>
+                <Text>Student</Text>
+                <Text>Number:</Text>
+              </HStack>
+
+              <Input
+                ml=".8rem"
+                value={studentnumber}
+                onChange={(e) => setStudentnumber(e.target.value)}
+                style={{ border: "1px solid #ccc", width: "20rem" }}
+              />
+            </HStack>
             <HStack gap="2rem">
               <HStack>
                 <Text>First</Text>
@@ -245,6 +279,26 @@ function UserModal({ onClose }) {
               </Select>
             </HStack>
             <HStack>
+              <Text>Strand:</Text>
+              <Select
+                ml="4.3rem"
+                value={strand}
+                onChange={(e) => setStrand(e.target.value)}
+                style={{
+                  width: "20rem",
+                  border: "1px solid #ccc",
+                  padding: "0.2rem",
+                }}
+              >
+                <option value="ICT">ICT</option>
+                <option value="Back Subject">Back Subject</option>
+                <option value="Transferee">Transferee</option>
+                <option value="Shiftee">Shiftee</option>
+                <option value="Ladderized">Ladderized</option>
+              </Select>
+            </HStack>
+
+            <HStack>
               <Text>Status:</Text>
               <Select
                 ml="4.3rem"
@@ -291,6 +345,7 @@ function UserModal({ onClose }) {
 
 UserModal.propTypes = {
   onClose: PropTypes.func,
+  isOpen: PropTypes.bool.isRequired,
 };
 
 export default UserModal;

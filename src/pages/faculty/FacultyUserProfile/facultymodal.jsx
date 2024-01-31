@@ -98,52 +98,49 @@ function FacultyModal({ onClose, isOpen }) {
 
   const handleSave = async () => {
     try {
-      console.log("Faculty Email", facultyEmail);
-      // Log variable values
-      console.log("Variables:", {
-        facultyId,
-        firstName,
-        middleName,
-        lastName,
-        gender,
-        birthdate,
-        selectedProgram,
-        email,
-      });
+      const formattedBirthdate = format(birthdate, "yyyy-MM-dd");
 
-      // Log the endpoint
-      console.log(
-        "Endpoint:",
-        `${endPoint}/updatefaculty/${encodeURIComponent(facultyEmail)}`
+      // Find program_id using selectedProgram
+      const selectedProgramObj = programData.find(
+        (program) => program.program_name === selectedProgram
       );
 
-      const formattedBirthdate = format(birthdate, "yyyy-MM-dd");
+      console.log("Selected Program Name:", selectedProgram);
+      console.log("Selected Program ID:", selectedProgramObj?.program_id);
 
       const response = await axios.put(
         `${endPoint}/updatefaculty/${encodeURIComponent(facultyEmail)}`,
         {
-          faculty_id: facultyId,
           faculty_fname: firstName,
           faculty_mname: middleName,
           faculty_lname: lastName,
           gender: gender,
-          // birthdate: new Date(birthdate).toISOString().split("T")[0],
           birthdate: formattedBirthdate,
-          program_id: programData.find(
-            (program) => program.program_name === selectedProgram
-          )?.program_id,
-
           email: email,
+          program_id: selectedProgramObj?.program_id, // Use the found program_id
         }
       );
 
-      // Log the response status and data
       console.log("PUT Response Status:", response.status);
       console.log("PUT Response Data:", response.data);
 
-      // Log the response (You might want to handle it differently)
-      console.log("User data updated:", response.data);
-      onClose(response.data.updatedUser);
+      if (
+        response.status === 200 &&
+        response.data.message === "Faculty updated successfully"
+      ) {
+        // Data structure might vary, adjust accordingly
+        const updatedUserData = response.data.updatedUser || {};
+
+        // Log the updated user data
+        console.log("User data updated:", updatedUserData);
+              Cookies.set("facultyEmail", email);
+
+
+        // Close the modal
+        onClose();
+      } else {
+        console.error("Unexpected response:", response.data);
+      }
     } catch (error) {
       console.error("Error updating user data:", error);
     }

@@ -28,13 +28,10 @@ function FacultyChangePassword({ isOpen, onClose }) {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [oldpassword, setOldPassword] = useState("");
   const [newpassword, setNewPassword] = useState("");
-   const facultyEmail = Cookies.get("facultyEmail");
-   console.log("faculty email in cookies:", facultyEmail);
-
+  const facultyEmail = Cookies.get("facultyEmail");
+  console.log("faculty email in cookies:", facultyEmail);
 
   const toast = useToast();
-
-
 
   const buttonStyles = {
     background: "none",
@@ -66,7 +63,7 @@ function FacultyChangePassword({ isOpen, onClose }) {
       }
       // If the old password matches, update the password in the database
       await axios.put(
-        `${endPoint}/updatefaculty/${encodeURIComponent(facultyEmail)}`,
+        `${endPoint}/updatefacultypassword/${encodeURIComponent(facultyEmail)}`,
         {
           faculty_password: newpassword,
         }

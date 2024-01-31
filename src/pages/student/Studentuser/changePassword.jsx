@@ -60,7 +60,7 @@ function ChangePassword({ isOpen, onClose }) {
         return;
       }
       // If the old password matches, update the password in the database
-      await axios.put(`${endPoint}/updatestudents/${studentNumber}`, {
+      await axios.put(`${endPoint}/updatestudentspassword/${studentNumber}`, {
         student_password: newpassword,
       });
 

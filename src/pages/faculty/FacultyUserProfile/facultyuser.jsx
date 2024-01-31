@@ -69,28 +69,7 @@ export default function FacultyUser() {
     fetchProgramData();
   }, []);
 
-  const handleModalClose = async () => {
-    try {
-      console.log("Before updating state:", isModalOpen);
-      // Fetch the updated user data directly from the server
-      const response = await axios.get(
-        `${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`
-      );
-
-      const updatedUser = response.data;
-      updatedUser.birthdate = formatBirthdate(updatedUser.birthdate);
-
-      setFacultyData(updatedUser);
-      setIsModalOpen(false);
-      console.log("Modal closed successfully!");
-      console.log("After updating state:", isModalOpen);
-    } catch (error) {
-      console.error("Error fetching updated user data:", error);
-    }
-
-    // Close the modal
-    setIsModalOpen(false);
-  };
+  
   const handleLogout = () => {
     setShowLogoutConfirmation(true);
   };
@@ -108,6 +87,26 @@ export default function FacultyUser() {
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
+const handleModalClose = async () => {
+  try {
+    // Fetch the updated user data directly from the server
+    const response = await axios.get(
+      `${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`
+    );
+
+    const updatedUser = response.data;
+    updatedUser.birthdate = formatBirthdate(updatedUser.birthdate);
+
+    setFacultyData(updatedUser);
+    console.log("Modal closed successfully!");
+  } catch (error) {
+    console.error("Error fetching updated user data:", error);
+  }
+
+  // Close the modal
+  setIsModalOpen(false);
+};
+
   return (
     <Flex
       minHeight="100vh"
