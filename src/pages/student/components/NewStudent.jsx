@@ -18,10 +18,10 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import { endPoint } from "../../config";
 import { useUser } from "../../routes/UserContext";
 import ForgotPassword from "../components/forgot-password/studentForgotPassword";
 import StudentSignIn from "./studentSignin";
-import { endPoint } from "../../config";
 
 export default function NewStudentSignin() {
   const [email, setEmail] = useState("");
@@ -325,6 +325,11 @@ export default function NewStudentSignin() {
               <option value="BSIT">BSIT</option>
               <option value="DIT">DIT</option>
               <option value="BSOA">BSOA</option>
+              <option value="BSCE">BSCE</option>
+              <option value="BSEE">BSEE</option>
+              <option value="DCVET">DCVET</option>
+              <option value="DEET">DEET</option>
+              <option value="DOMT">DOMT</option>
               <option></option>
             </Select>
 
