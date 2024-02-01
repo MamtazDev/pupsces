@@ -20,10 +20,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { endPoint } from "../../config";
 import { useUser } from "../../routes/UserContext";
 import ForgotPassword from "../components/forgotpassword/facultyForgotPassword";
 import FacultySignIn from "./facultySignin";
-import { endPoint } from "../../config";
 
 export default function NewFaculty() {
   const [showPassword, setShowPassword] = useState(false);
@@ -271,7 +271,7 @@ export default function NewFaculty() {
               height="2rem"
               bg="palette.secondary"
               variant="outline"
-              placeholder="Faculty ID"
+              placeholder="Faculty Number"
               color="palette.primay"
               // maxW="21rem"
               _placeholder={{
@@ -289,6 +289,7 @@ export default function NewFaculty() {
               variant="outline"
               placeholder="Email"
               color="palette.primay"
+              w="100%"
               // maxW="21rem"
               _placeholder={{
                 color: "#5C596E",
@@ -308,8 +309,8 @@ export default function NewFaculty() {
                     opacity: ".8",
                   }}
                   focusBorderColor="palette.secondary"
-                  // maxW="21rem"
-                  w="100%"
+                  // maxW="22rem"
+                  w="155%"
                   bg="palette.secondary"
                   style={{ borderRadius: "5px" }}
                 />

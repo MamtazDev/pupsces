@@ -291,7 +291,7 @@ function UserModal({ onClose, isOpen }) {
                 }}
               >
                 <option value="ICT">ICT</option>
-                <option value="Back Subject">Back Subject</option>
+                <option value="ABM">ABM</option>
                 <option value="Transferee">Transferee</option>
                 <option value="Shiftee">Shiftee</option>
                 <option value="Ladderized">Ladderized</option>
