@@ -8,6 +8,7 @@ import CurriculumUpload from "./pages/admin/pages/CurriculumUpload";
 import FacultyUpload from "./pages/admin/pages/FacultyUpload";
 import { Home } from "./pages/home/home";
 import { UserContextProvider } from "./pages/routes/UserContext";
+import Conversation from "./components/Chatting/Conversation";
 
 // Lazy load
 const StudentSignIn = lazy(() =>
@@ -41,7 +42,6 @@ const UserProfile = lazy(() => import("./pages/student/Studentuser/user"));
 const FacultyUserProfile = lazy(() =>
   import("./pages/faculty/FacultyUserProfile/facultyuser")
 );
-
 
 function App() {
   return (
@@ -310,6 +310,7 @@ function App() {
           />
         </Routes>
       </Router>
+      <Conversation />
     </UserContextProvider>
   );
 }
