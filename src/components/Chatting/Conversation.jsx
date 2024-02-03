@@ -70,18 +70,29 @@ const Conversation = () => {
           </div>
 
           <div className="chat_body">
-       <div className="chat_boxy">
-       {messages.map((message, index) => (
-              <div key={index}>
-                {message.text}
-                {message.file && (
-                  <div>
-                    <img src={URL.createObjectURL(message.file)} alt="" />
-                  </div>
-                )}
-              </div>
-            ))}
-       </div>
+            <div className="chat_boxy">
+              {messages.map((message, index) => (
+                <div style={{ marginBottom: "10px" }} key={index}>
+                  {message.text && (
+                    <p
+                      style={{
+                        background: "whitesmoke",
+                        padding: "5px 10px",
+                        display: "inline-block",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      {message.text}
+                    </p>
+                  )}
+                  {message.file && (
+                    <div>
+                      <img src={URL.createObjectURL(message.file)} alt="" />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="text_box">
