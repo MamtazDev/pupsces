@@ -10,20 +10,32 @@ const Conversation = () => {
 
   const [inputMessage, setInputMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [file, setFile] = useState(null);
+  const [fileDisplay, setFileDisplay] = useState("");
 
   const sendMessage = () => {
-    if (inputMessage.trim() !== "") {
-      const newMessages = [...messages, inputMessage];
+    if (inputMessage.trim() !== "" || file) {
+      const newMessages = [...messages, { text: inputMessage, file }];
       setMessages(newMessages);
       setInputMessage("");
+      setFile(null);
+      setFileDisplay("");
     }
   };
+
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
       sendMessage();
     }
   };
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    setFileDisplay(selectedFile);
+  };
+
   return (
     <div className="conversation">
       {show && (
@@ -58,14 +70,32 @@ const Conversation = () => {
           </div>
 
           <div className="chat_body">
-            {messages.map((message, index) => (
-              <div key={index}>{message}</div>
+       <div className="chat_boxy">
+       {messages.map((message, index) => (
+              <div key={index}>
+                {message.text}
+                {message.file && (
+                  <div>
+                    <img src={URL.createObjectURL(message.file)} alt="" />
+                  </div>
+                )}
+              </div>
             ))}
+       </div>
           </div>
 
           <div className="text_box">
             <button className="attachment_btn">
-              <IoAddOutline />
+              <label htmlFor="fileInput">
+                <IoAddOutline />
+              </label>
+              <input
+                type="file"
+                id="fileInput"
+                accept="image/*, .pdf, .doc, .docx"
+                onChange={handleFileChange}
+                style={{ display: "none" }}
+              />
             </button>
             <div
               style={{
@@ -83,7 +113,7 @@ const Conversation = () => {
                 onChange={(e) => setInputMessage(e.target.value)}
                 value={inputMessage}
                 onKeyPress={handleKeyPress}
-                placeholder="Type Here..."
+                placeholder={fileDisplay || "Type Here..."}
               />
               <button className="send_btn" onClick={sendMessage}>
                 <IoIosSend />
