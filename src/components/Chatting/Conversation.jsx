@@ -1,7 +1,7 @@
 import { useState } from "react";
 import chat from "../../assets/chat.png";
 import logo from "../../assets/p.jpg";
-import { IoAddOutline } from "react-icons/io5";
+import { FaPlus } from "react-icons/fa6";
 import { IoIosSend, IoMdClose } from "react-icons/io";
 import { FaMinus } from "react-icons/fa6";
 
@@ -39,7 +39,7 @@ const Conversation = () => {
   return (
     <div className="conversation">
       {show && (
-        <div className="chat_box">
+        <div className="chat_box shadow-sm">
           <div
             style={{
               display: "flex",
@@ -98,7 +98,7 @@ const Conversation = () => {
           <div className="text_box">
             <button className="attachment_btn">
               <label htmlFor="fileInput">
-                <IoAddOutline />
+                <FaPlus  />
               </label>
               <input
                 type="file"
