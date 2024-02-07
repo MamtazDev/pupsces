@@ -1,10 +1,9 @@
-import { Box, Flex } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import './style.css'
+import { Flex } from '@chakra-ui/react';
 
 function Dashboard() {
     const [messageData, setMessageData] = useState([]);
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,8 +33,14 @@ function Dashboard() {
       };
 
     return (
-        // <Flex justifyContent="center" alignItems="center">
-        <Box>
+        <Flex
+        minHeight="100vh"
+        w="100%"
+        position="absolute"
+        justifyContent="center"
+        zIndex={-1}
+      >
+        <div style={{ padding:'30px', backgroundColor:'#e6e6e6'}}>
             <div>
                 <h1>Message Data</h1>
                 <div>
@@ -48,7 +53,7 @@ function Dashboard() {
                             {message.image &&
                                 // <img width={100} height={100} src={`http://localhost:3000/api/v1/uploads/images/${message.image}`} alt="Message Image" />
                                 <div>
-                                    <img width={100} height={100} src={`http://localhost:3000/api/v1/uploads/images/${message.image}`} alt="Message Image" />
+                                    <img width={100} height={100} className='image' src={`http://localhost:3000/api/v1/uploads/images/${message.image}`} alt="Message Image" />
                                     {/* Download button */}
                                     <button  className='btn-style' onClick={() => handleDownload(`http://localhost:3000/api/v1/uploads/images/${message.image}`, `image_${index}.jpg`)}>Download</button>
                                 </div>
@@ -57,7 +62,10 @@ function Dashboard() {
                     ))}
                 </div>
             </div>
-        </Box>
+        </div>
+       
+
+    </Flex>
 
     )
 }

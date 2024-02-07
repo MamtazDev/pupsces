@@ -2,14 +2,21 @@
 
 .message{
     display: flex;
-      justify-content: space-between;
-      padding: 20px;
-      background: #f1f1f1;
-      margin: 20px;
-      border: 2px solid #ed8372;
-      border-radius: 10px;
+    justify-content: space-between;
+    padding: 20px;
+    background: #242020;
+    margin: 20px;
+    border: 2px solid #ed8372;
+    border-radius: 10px;
+    color: white;
+    font-family: math;
+    font-size: 20px;
   }
-
+.image{
+    margin: 5px 0px;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
   .btn-style{
     padding: 5px 30px;

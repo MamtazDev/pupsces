@@ -9,7 +9,7 @@ import FacultyUpload from "./pages/admin/pages/FacultyUpload";
 import { Home } from "./pages/home/home";
 import { UserContextProvider } from "./pages/routes/UserContext";
 import Conversation from "./components/Chatting/Conversation";
-import Dashboard from "./pages/Dashboard/Dashboard";
+// import Dashboard from "./pages/Dashboard/Dashboard";
 
 // Lazy load
 const StudentSignIn = lazy(() =>
@@ -22,6 +22,9 @@ const StudentAnalytics = lazy(() =>
   import("./pages/faculty/evaluation/usersEvaluation/studentAnalytics")
 );
 const FacultyHome = lazy(() => import("./pages/faculty/Home/FacultyHome"));
+const Dashboard = lazy(() =>
+  import("./pages/Dashboard/Dashboard")
+);
 const StudentDashboard = lazy(() =>
   import("./pages/student/dashboard/studentDashboard")
 );
