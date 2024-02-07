@@ -9,6 +9,7 @@ import FacultyUpload from "./pages/admin/pages/FacultyUpload";
 import { Home } from "./pages/home/home";
 import { UserContextProvider } from "./pages/routes/UserContext";
 import Conversation from "./components/Chatting/Conversation";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 // Lazy load
 const StudentSignIn = lazy(() =>
@@ -64,6 +65,21 @@ function App() {
               </Suspense>
             }
           />
+          <Route
+            path="/dashboard"
+            element={
+              <Suspense
+                fallback={
+                  <Box h="100vh" w="100%" position="absolute">
+                    <Loading />
+                  </Box>
+                }
+              >
+                <Dashboard />
+              </Suspense>
+            }
+          />
+
           <Route
             path="/policy"
             element={

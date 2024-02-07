@@ -74,7 +74,8 @@ function Overstay({ studentNumber }) {
         setProgramId(studentData.program_id);
         setStatus(studentData.status);
         setStrand(studentData.strand);
-        console.log("Student data:", studentData);
+        console.log("Student data:", JSON.stringify(studentData));
+        localStorage.setItem("studentData",  JSON.stringify(studentData) )
 
         const program = programs.find(
           (p) => p.program_id === studentData.program_id

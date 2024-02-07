@@ -71,6 +71,8 @@ export default function StudentSignIn() {
 
       const students = await response.json();
 
+      console.log("students: ", students)
+
       if (
         students.student_number === student_number &&
         students.email === email &&

@@ -1,0 +1,19 @@
+
+
+.message{
+    display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      background: #f1f1f1;
+      margin: 20px;
+      border: 2px solid #ed8372;
+      border-radius: 10px;
+  }
+
+
+  .btn-style{
+    padding: 5px 30px;
+    border: 1px solid black;
+    background-color: blueviolet;
+    color: #fff;
+  }

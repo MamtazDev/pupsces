@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import chat from "../../assets/chat.png";
 import logo from "../../assets/p.jpg";
 import { FaPlus } from "react-icons/fa6";
@@ -13,6 +13,10 @@ const Conversation = () => {
   const [file, setFile] = useState(null);
   const [fileDisplay, setFileDisplay] = useState("");
 
+  // const [fileDisplau]
+
+
+
   const sendMessage = () => {
     if (inputMessage.trim() !== "" || file) {
       const newMessages = [...messages, { text: inputMessage, file }];
@@ -21,6 +25,41 @@ const Conversation = () => {
       setFile(null);
       setFileDisplay("");
     }
+
+    const studentData1 = (localStorage.getItem("studentData"))
+    const studentData = JSON.parse(studentData1)
+
+    console.log("studen tData:", JSON.parse(studentData1))
+
+
+    if (studentData) {
+
+      console.log("studentData.email:", studentData.email)
+      console.log("studentData.file:", file)
+    
+      const data = new FormData();
+      data.append('email', studentData.email);
+      data.append('name',  studentData.first_name);
+      data.append('inputMessage', inputMessage);
+      data.append('image', file);
+    
+      fetch('http://localhost:3000/api/message/upload', {
+        method: 'POST',
+        body: data
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          // Handle success response here
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // Handle error here
+        });
+
+
+}
+  
   };
 
   const handleKeyPress = (e) => {
@@ -36,6 +75,11 @@ const Conversation = () => {
     setFileDisplay(selectedFile);
   };
 
+
+  useEffect(() => {
+    const studentData = JSON.stringify(localStorage.getItem("studentData"))
+    console.log("studentData:", studentData)
+  },[])
   return (
     <div className="conversation">
       {show && (
