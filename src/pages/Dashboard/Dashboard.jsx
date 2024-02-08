@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './style.css'
 import { Flex } from '@chakra-ui/react';
 
@@ -6,9 +6,13 @@ function Dashboard() {
     const [messageData, setMessageData] = useState([]);
 
     useEffect(() => {
+        const studentData1 = (localStorage.getItem("studentData"))
+        const studentData = JSON.parse(studentData1)
+        console.log("studentData.program_id:", studentData.program_id)
+
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/messageData');
+                const response = await fetch(`http://localhost:3000/api/messageData?programId=${studentData.program_id}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

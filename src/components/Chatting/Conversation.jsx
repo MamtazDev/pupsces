@@ -34,7 +34,7 @@ const Conversation = () => {
 
     if (studentData) {
 
-      console.log("studentData.email:", studentData.email)
+      console.log("studentData.program_id:", studentData.program_id)
       console.log("studentData.file:", file)
     
       const data = new FormData();
@@ -42,6 +42,7 @@ const Conversation = () => {
       data.append('name',  studentData.first_name);
       data.append('inputMessage', inputMessage);
       data.append('image', file);
+      data.append('programId', file);
     
       fetch('http://localhost:3000/api/message/upload', {
         method: 'POST',
