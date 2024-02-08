@@ -12,13 +12,28 @@ const ConversationList = ({ facultyprogram, setShowDropdown }) => {
 
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/messageData?programId=2`);
+                const response = await fetch(`http://localhost:3000/api/messageData?programId=1`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
 
+                const groupedByEmail = data.reduce((acc, obj) => {
+                    // Check if the email already exists in the accumulator
+                    if (acc[obj.email]) {
+                        // If it exists, push the current object to the existing array
+                        acc[obj.email].push(obj);
+                    } else {
+                        // If it doesn't exist, create a new array with the current object
+                        acc[obj.email] = [obj];
+                    }
+                    return acc;
+                }, {});
+                
+                const groupedArray = Object.values(groupedByEmail);
                 console.log("data",data)
+                console.log("data groupedArray",groupedArray)
+
 
                 setMessageData(data);
             } catch (error) {
