@@ -136,43 +136,6 @@ const FacultyConversation = ({ setOpen, groupedArray }) => {
             ))}
           </div>
         </div>
-
-        <div className="text_box">
-          <button className="attachment_btn">
-            <label htmlFor="fileInput">
-              <FaPlus />
-            </label>
-            <input
-              type="file"
-              id="fileInput"
-              accept="image/*, .pdf, .doc, .docx"
-              onChange={handleFileChange}
-              style={{ display: "none" }}
-            />
-          </button>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-              background: "whitesmoke",
-              padding: "5px",
-              borderRadius: "5px",
-              width: "100%",
-            }}
-          >
-            <input
-              type="text"
-              onChange={(e) => setInputMessage(e.target.value)}
-              value={inputMessage}
-              onKeyPress={handleKeyPress}
-              placeholder={fileDisplay || "Type Here..."}
-            />
-            <button className="send_btn" onClick={sendMessage}>
-              <IoIosSend />
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ const ConversationList = ({ facultyprogram, setShowDropdown }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/messageData?programId=1`
+          `http://localhost:3000/api/messageData?programId={facultyprogram}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
