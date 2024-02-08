@@ -98,21 +98,19 @@ const FacultyConversation = ({ setOpen, groupedArray }) => {
           <div className="chat_boxy">
             {groupedArray?.map((message, index) => (
               <div style={{ marginBottom: "10px" }} key={index}>
-                {message.map((data, index) => (
-                  <div key={index}>
-                    <p
-                      style={{
-                        background: "whitesmoke",
-                        padding: "5px 10px",
-                        display: "inline-block",
-                        borderRadius: "5px",
-                        marginBottom: "10px",
-                      }}
-                    >
-                      {data.inputMessage}
-                    </p>
-                  </div>
-                ))}
+                <div key={index}>
+                  <p
+                    style={{
+                      background: "whitesmoke",
+                      padding: "5px 10px",
+                      display: "inline-block",
+                      borderRadius: "5px",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    {message.inputMessage}
+                  </p>
+                </div>
               </div>
             ))}
             {messages.map((message, index) => (
