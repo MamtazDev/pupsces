@@ -3,6 +3,7 @@ import FacultyConversation from "./FacultyConversation";
 
 const ConversationList = ({ facultyprogram, setShowDropdown }) => {
   const [messageData, setMessageData] = useState([]);
+  const [groupData, setGroupData] = useState([]);
 
   useEffect(() => {
     const studentData1 = localStorage.getItem("studentData");
@@ -12,13 +13,28 @@ const ConversationList = ({ facultyprogram, setShowDropdown }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/messageData?programId=${facultyprogram}`
+          `http://localhost:3000/api/messageData?programId=1`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
+
+        const groupedByEmail = data.reduce((acc, obj) => {
+          if (acc[obj.email]) {
+            acc[obj.email].push(obj);
+          } else {
+            acc[obj.email] = [obj];
+          }
+          return acc;
+        }, {});
+
+        const groupedArray = Object.values(groupedByEmail);
+        console.log("data", data);
+        console.log("data groupedArray", groupedArray);
+
         setMessageData(data);
+        setGroupData(groupedArray);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -28,12 +44,13 @@ const ConversationList = ({ facultyprogram, setShowDropdown }) => {
   }, []);
 
   console.log("messageData", messageData);
+  console.log("groupData", groupData);
 
   const [open, setOpen] = useState(false);
 
   const handleModal = () => {
-    // setOpen(true)
-    setShowDropdown(false);
+    setOpen(true);
+    // setShowDropdown(false);
   };
 
   return (
@@ -59,7 +76,7 @@ const ConversationList = ({ facultyprogram, setShowDropdown }) => {
             <div>
               <p className="name">{data.name}</p>
               <p style={{ color: "lightgray", textSize: "12px" }}>
-                {data.inputMessage}
+                {data.email}
               </p>
             </div>
             <p style={{ textSize: "5px" }}>
@@ -69,7 +86,9 @@ const ConversationList = ({ facultyprogram, setShowDropdown }) => {
         ))}
       </div>
 
-      {open && <FacultyConversation setOpen={setOpen} />}
+      {open && (
+        <FacultyConversation setOpen={setOpen} groupedArray={groupData} />
+      )}
     </div>
   );
 };

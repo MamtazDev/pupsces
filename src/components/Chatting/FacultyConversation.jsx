@@ -5,7 +5,7 @@ import { FaPlus } from "react-icons/fa6";
 import { IoIosSend, IoMdClose } from "react-icons/io";
 import { FaMinus } from "react-icons/fa6";
 
-const FacultyConversation = ({ setOpen }) => {
+const FacultyConversation = ({ setOpen, groupedArray }) => {
   const [inputMessage, setInputMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [file, setFile] = useState(null);
@@ -96,6 +96,40 @@ const FacultyConversation = ({ setOpen }) => {
 
         <div className="chat_body">
           <div className="chat_boxy">
+            {groupedArray?.map((message, index) => (
+              <div style={{ marginBottom: "10px" }} key={index}>
+                {message.map((data, index) => (
+                  <p
+                    style={{
+                      background: "whitesmoke",
+                      padding: "5px 10px",
+                      display: "inline-block",
+                      borderRadius: "5px",
+                    }}
+                    key={index}
+                  >
+                    {data.inputMessage}
+                  </p>
+                ))}
+                {/* {message.text && (
+                  <p
+                    style={{
+                      background: "whitesmoke",
+                      padding: "5px 10px",
+                      display: "inline-block",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    {message.text}
+                  </p>
+                )}
+                {message.file && (
+                  <div>
+                    <img src={URL.createObjectURL(message.file)} alt="" />
+                  </div>
+                )} */}
+              </div>
+            ))}
             {messages.map((message, index) => (
               <div style={{ marginBottom: "10px" }} key={index}>
                 {message.text && (
