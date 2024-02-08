@@ -20,6 +20,7 @@ import GradesperSemester from "./analysis/gradesperSemester";
 import Core from "./analysis/highestCore";
 import Gen from "./analysis/highestGenEd";
 import Major from "./analysis/highestMajor";
+import Conversation from "../../../components/Chatting/Conversation";
 
 export default function StudentDashboard() {
   const studentNumber = Cookies.get("student_number");
@@ -136,7 +137,7 @@ export default function StudentDashboard() {
     fetchData();
   }, [programs, studentNumber]);
 
-  useEffect(() => {}, [
+  useEffect(() => { }, [
     firstYearFirstSemAverage,
     firstYearSecondSemAverage,
     SecondYearFirstSemAverage,
@@ -351,37 +352,32 @@ export default function StudentDashboard() {
       latestGradeInfo.year === "Third Year" ||
       latestGradeInfo.year === "Second Year"
     ) {
-      graduationMessage = `You are estimated to graduate in ${endYear - 3}-${
-        endYear - 2
-      }. endyear`;
+      graduationMessage = `You are estimated to graduate in ${endYear - 3}-${endYear - 2
+        }. endyear`;
     } else if (
       latestGradeInfo.year === "Fourth Year" &&
       Math.ceil(remainingCreditUnits / 23) === 1
     ) {
-      graduationMessage = `You are estimated to graduate in ${endYear - 3}-${
-        endYear - 2
-      } endyear.`;
+      graduationMessage = `You are estimated to graduate in ${endYear - 3}-${endYear - 2
+        } endyear.`;
     } else if (
       latestGradeInfo.year === "Fourth Year" &&
       Math.ceil(remainingCreditUnits / 23) === 3
     ) {
-      graduationMessage = `You are estimated to graduate in ${endYear - 2}-${
-        endYear - 1
-      } endyear.`;
+      graduationMessage = `You are estimated to graduate in ${endYear - 2}-${endYear - 1
+        } endyear.`;
     } else if (
       latestGradeInfo.year === "Fourth Year" &&
       Math.ceil(remainingCreditUnits / 23) === 2
     ) {
-      graduationMessage = `You are estimated to graduate in ${endYear - 2}-${
-        endYear - 1
-      } midyear.`;
+      graduationMessage = `You are estimated to graduate in ${endYear - 2}-${endYear - 1
+        } midyear.`;
     } else if (
       latestGradeInfo.year === "Fourth Year" &&
       Math.ceil(remainingCreditUnits / 23) === 4
     ) {
-      graduationMessage = `You are estimated to graduate in ${
-        endYear - 1
-      }-${endYear} endyear.`;
+      graduationMessage = `You are estimated to graduate in ${endYear - 1
+        }-${endYear} endyear.`;
     } else if (
       latestGradeInfo.year === "Fourth Year" &&
       Math.ceil(remainingCreditUnits / 23) === 5
@@ -394,13 +390,15 @@ export default function StudentDashboard() {
   }
 
   console.log("Rendering with gradesData:", gradesData);
+  const studentData1 = (localStorage.getItem("studentData"))
+  const studentData = JSON.parse(studentData1)
   return (
     <Flex
       flexDirection="column"
       position="relative"
       minHeight="100vh"
       justifyContent="center"
-      // alignItems="center"
+    // alignItems="center"
     >
       <Box
         w="100%"
@@ -639,6 +637,10 @@ export default function StudentDashboard() {
       </Wrap>
       <Spacer mt="10rem" />
       <Footer />
+      {
+        (studentData?.email) &&
+        <Conversation />
+      }
     </Flex>
   );
 }

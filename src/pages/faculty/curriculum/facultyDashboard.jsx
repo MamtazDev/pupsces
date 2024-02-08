@@ -26,7 +26,9 @@ import breakPoints from "../../../utils/breakpoint";
 
 import UsersData from "../userData/usersData";
 import FacultyTable from "./facultyTable";
+import chat from "../../../assets/chat.png";
 import { endPoint } from "../../config";
+import ConversationList from "../../../components/Chatting/ConversationList";
 
 function convertExcelDatesToReadable(dates) {
   const convertedDates = dates.map((excelValue, index) => {
@@ -366,6 +368,8 @@ export default function FacultyDashboard() {
   }, [searchQuery, students]);
 
   console.log(facultyId);
+
+  const [showDropdown, setShowDropdown] = useState(false)
   return (
     <Flex
       minHeight="100vh"
@@ -376,10 +380,11 @@ export default function FacultyDashboard() {
       flexDirection="column"
     >
       <FacultyNavbar />
+   
 
       {/* <VStack mt="9rem" w="80vw"> */}
       {/* <Wrap spacing="3" w={breakPoints} mb="8rem"> */}
-      <Box mt="9rem" w="80vw">
+      <Box mt="9rem" w="80vw"   position="relative">
         <VStack gap="3rem">
           <Box
             bg="#E3B04B"
@@ -395,6 +400,7 @@ export default function FacultyDashboard() {
             flexWrap="wrap"
             padding="2rem"
             gap={2}
+          
           >
             <Text
               fontSize="20px"
@@ -406,6 +412,10 @@ export default function FacultyDashboard() {
             </Text>
 
             <HStack spacing={3} flexWrap="wrap">
+
+            {showDropdown && <ConversationList />}
+
+
               <Button
                 onClick={handleUpload}
                 bg="palette.primary"
@@ -431,7 +441,13 @@ export default function FacultyDashboard() {
                   cursor: "pointer",
                 }}
               />
+              <button
+                onClick={() => setShowDropdown(!showDropdown)}
+              >
+                <img src={chat} alt="icon" />
+              </button>
             </HStack>
+        
           </Box>
 
           <HStack justify="flex-start" w="100%" flexWrap="wrap">
@@ -552,16 +568,16 @@ export default function FacultyDashboard() {
               "selectedProgram in UsersData:",
               selectedProgramForView
             ),
-            (
-              <div id={`userData-${studentNumber}`}>
-                <UsersData
-                  studentNumber={studentNumber}
-                  facultyId={facultyId}
-                  program={selectedProgramForView}
-                  strand={selectedStrand}
-                />
-              </div>
-            ))}
+              (
+                <div id={`userData-${studentNumber}`}>
+                  <UsersData
+                    studentNumber={studentNumber}
+                    facultyId={facultyId}
+                    program={selectedProgramForView}
+                    strand={selectedStrand}
+                  />
+                </div>
+              ))}
         </Flex>
       </Box>
       {/* </Wrap> */}

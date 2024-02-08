@@ -27,6 +27,7 @@ import NoEval from "../../../assets/noEval.json";
 import Navbar from "../../../components/navbar/navbar";
 import { endPoint } from "../../config";
 import EvaluationAll from "./evaluationAll";
+import Conversation from "../../../components/Chatting/Conversation";
 
 // student evaluation
 function Evaluation() {
@@ -436,25 +437,20 @@ function Evaluation() {
       case "1":
         return `${startYear}-${Number(startYear) + 1} - ${semester}`;
       case "2":
-        return `${Number(startYear) + 1}-${
-          Number(startYear) + 2
-        } - ${semester}`;
+        return `${Number(startYear) + 1}-${Number(startYear) + 2
+          } - ${semester}`;
       case "3":
-        return `${Number(startYear) + 2}-${
-          Number(startYear) + 3
-        } - ${semester}`;
+        return `${Number(startYear) + 2}-${Number(startYear) + 3
+          } - ${semester}`;
       case "4":
-        return `${Number(startYear) + 3}-${
-          Number(startYear) + 4
-        } - ${semester}`;
+        return `${Number(startYear) + 3}-${Number(startYear) + 4
+          } - ${semester}`;
       case 5:
-        return `${Number(startYear) + 4}-${
-          Number(startYear) + 5
-        } - ${semester}`;
+        return `${Number(startYear) + 4}-${Number(startYear) + 5
+          } - ${semester}`;
       case 6:
-        return `${Number(startYear) + 5}-${
-          Number(startYear) + 6
-        } - ${semester}`;
+        return `${Number(startYear) + 5}-${Number(startYear) + 6
+          } - ${semester}`;
 
       default:
         return "";
@@ -620,6 +616,10 @@ function Evaluation() {
     console.log("Remaining Credit Units", remainingCreditUnits);
   }, [creditUnits, remainingCreditUnits]);
 
+
+
+  const studentData1 = (localStorage.getItem("studentData"))
+  const studentData = JSON.parse(studentData1)
   return (
     <VStack
       justifyContent="center"
@@ -829,8 +829,8 @@ function Evaluation() {
                                 {key === "Bridging"
                                   ? key
                                   : `${capitalizeWords(
-                                      courseSemester
-                                    )} Semester `}
+                                    courseSemester
+                                  )} Semester `}
                               </Text>
                             </HStack>
                             <HStack>
@@ -1105,6 +1105,11 @@ function Evaluation() {
           />
         </Flex>
       )}
+
+      {
+        (studentData?.email) &&
+        <Conversation />
+      }
     </VStack>
   );
 }

@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { Suspense, lazy } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes, useLocation } from "react-router-dom";
 import Loading from "./components/loading";
 
 import Admin from "./pages/admin/admin";
@@ -48,6 +48,8 @@ const FacultyUserProfile = lazy(() =>
 );
 
 function App() {
+
+
   return (
     <UserContextProvider>
       <Router>
@@ -329,7 +331,8 @@ function App() {
           />
         </Routes>
       </Router>
-      <Conversation />
+
+  
     </UserContextProvider>
   );
 }
