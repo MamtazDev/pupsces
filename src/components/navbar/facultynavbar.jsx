@@ -24,8 +24,9 @@ import logo from "../../assets/PUPlogo.png";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { endPoint } from "../../pages/config";
+import chat from "../../assets/chat.png";
 
-function FacultyNavbar() {
+function FacultyNavbar({ showDropdown, setShowDropdown }) {
   const [showNavbar, setShowNavbar] = useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const facultyEmail = Cookies.get("facultyEmail");
@@ -196,7 +197,11 @@ function FacultyNavbar() {
         >
           <InitialsAvatar name={facultyName} className="avatar-circle" />
         </ChakraLink>
+        <button onClick={() => setShowDropdown(!showDropdown)}>
+        <img src={chat} alt="icon" />
+      </button>
       </Flex>
+   
     </Box>
   );
 }

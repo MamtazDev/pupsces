@@ -26,7 +26,7 @@ import breakPoints from "../../../utils/breakpoint";
 
 import UsersData from "../userData/usersData";
 import FacultyTable from "./facultyTable";
-import chat from "../../../assets/chat.png";
+
 import { endPoint } from "../../config";
 import ConversationList from "../../../components/Chatting/ConversationList";
 
@@ -384,7 +384,10 @@ export default function FacultyDashboard({
       w="100%"
       flexDirection="column"
     >
-      <FacultyNavbar />
+      <FacultyNavbar
+        showDropdown={showDropdown}
+        setShowDropdown={setShowDropdown}
+      />
 
       {/* <VStack mt="9rem" w="80vw"> */}
       {/* <Wrap spacing="3" w={breakPoints} mb="8rem"> */}
@@ -415,13 +418,6 @@ export default function FacultyDashboard({
             </Text>
 
             <HStack spacing={3} flexWrap="wrap">
-              {showDropdown && (
-                <ConversationList
-                  facultyprogram={facultyprogram}
-                  setShowDropdown={setShowDropdown}
-                />
-              )}
-
               <Button
                 onClick={handleUpload}
                 bg="palette.primary"
@@ -447,9 +443,6 @@ export default function FacultyDashboard({
                   cursor: "pointer",
                 }}
               />
-              <button onClick={() => setShowDropdown(!showDropdown)}>
-                <img src={chat} alt="icon" />
-              </button>
             </HStack>
           </Box>
 
@@ -587,6 +580,12 @@ export default function FacultyDashboard({
       {/* </VStack> */}
       <Spacer mt="10rem" />
       <Footer />
+      {showDropdown && (
+        <ConversationList
+          facultyprogram={facultyprogram}
+          setShowDropdown={setShowDropdown}
+        />
+      )}
     </Flex>
   );
 }

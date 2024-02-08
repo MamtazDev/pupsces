@@ -155,8 +155,8 @@ button:focus-visible {
   padding: 15px;
   border-radius: 8px;
   position: absolute;
-  top: 30%;
-  right: 0;
+  top: 100px;
+  right: 2%;
   width: auto;
   z-index: 9999;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, .1);
