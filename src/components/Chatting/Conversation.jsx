@@ -46,6 +46,9 @@ const Conversation = () => {
     
       fetch('http://localhost:3000/api/message/upload', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryABC123' // Replace ABC123 with your actual boundary
+        },
         body: data
       })
         .then(response => response.json())
