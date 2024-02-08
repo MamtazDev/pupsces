@@ -12,11 +12,14 @@ const ConversationList = ({ facultyprogram, setShowDropdown }) => {
 
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/messageData?programId=${facultyprogram}`);
+                const response = await fetch(`http://localhost:3000/api/messageData?programId=2`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
+
+                console.log("data",data)
+
                 setMessageData(data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -31,8 +34,8 @@ const ConversationList = ({ facultyprogram, setShowDropdown }) => {
     const [open, setOpen] = useState(false)
 
     const handleModal = ()=>{
-        // setOpen(true)
-  setShowDropdown(false) 
+        setOpen(true)
+        // setShowDropdown(false) 
     }
 
     return (
