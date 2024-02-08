@@ -65,7 +65,10 @@ function convertExcelDatesToReadable(dates) {
   return convertedDates.filter((date) => date !== null); // Remove null values
 }
 
-export default function FacultyDashboard() {
+export default function FacultyDashboard({
+  setFacultyProgram,
+  facultyprogram,
+}) {
   const [students, setStudents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedSchoolYear, setSelectedSchoolYear] = useState("");
@@ -86,7 +89,7 @@ export default function FacultyDashboard() {
   const [selectedProgramForView, setSelectedProgramForView] = useState(null);
 
   const [filteredStudents, setFilteredStudents] = useState([]);
-  const [facultyprogram, setFacultyProgram] = useState([]);
+
   const facultyEmail = Cookies.get("facultyEmail");
   const [facultyName, setFacultyName] = useState("");
   console.log("faculty email in cookies:", facultyEmail);
@@ -98,7 +101,7 @@ export default function FacultyDashboard() {
         .get(`${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`)
         .then((response) => {
           const facultyData = response.data;
-          console.log("facultyData:", facultyData)
+          console.log("facultyData:", facultyData);
 
           setFacultyName(
             `${facultyData.faculty_fname} ${facultyData.faculty_mname} ${facultyData.faculty_lname}`
@@ -371,7 +374,7 @@ export default function FacultyDashboard() {
 
   console.log(facultyId);
 
-  const [showDropdown, setShowDropdown] = useState(false)
+  const [showDropdown, setShowDropdown] = useState(false);
   return (
     <Flex
       minHeight="100vh"
@@ -382,11 +385,10 @@ export default function FacultyDashboard() {
       flexDirection="column"
     >
       <FacultyNavbar />
-   
 
       {/* <VStack mt="9rem" w="80vw"> */}
       {/* <Wrap spacing="3" w={breakPoints} mb="8rem"> */}
-      <Box mt="9rem" w="80vw"   position="relative">
+      <Box mt="9rem" w="80vw" position="relative">
         <VStack gap="3rem">
           <Box
             bg="#E3B04B"
@@ -402,7 +404,6 @@ export default function FacultyDashboard() {
             flexWrap="wrap"
             padding="2rem"
             gap={2}
-          
           >
             <Text
               fontSize="20px"
@@ -414,9 +415,12 @@ export default function FacultyDashboard() {
             </Text>
 
             <HStack spacing={3} flexWrap="wrap">
-
-            {showDropdown && <ConversationList facultyprogram={facultyprogram} setShowDropdown={setShowDropdown} />}
-
+              {showDropdown && (
+                <ConversationList
+                  facultyprogram={facultyprogram}
+                  setShowDropdown={setShowDropdown}
+                />
+              )}
 
               <Button
                 onClick={handleUpload}
@@ -443,13 +447,10 @@ export default function FacultyDashboard() {
                   cursor: "pointer",
                 }}
               />
-              <button
-                onClick={() => setShowDropdown(!showDropdown)}
-              >
+              <button onClick={() => setShowDropdown(!showDropdown)}>
                 <img src={chat} alt="icon" />
               </button>
             </HStack>
-        
           </Box>
 
           <HStack justify="flex-start" w="100%" flexWrap="wrap">
@@ -570,16 +571,16 @@ export default function FacultyDashboard() {
               "selectedProgram in UsersData:",
               selectedProgramForView
             ),
-              (
-                <div id={`userData-${studentNumber}`}>
-                  <UsersData
-                    studentNumber={studentNumber}
-                    facultyId={facultyId}
-                    program={selectedProgramForView}
-                    strand={selectedStrand}
-                  />
-                </div>
-              ))}
+            (
+              <div id={`userData-${studentNumber}`}>
+                <UsersData
+                  studentNumber={studentNumber}
+                  facultyId={facultyId}
+                  program={selectedProgramForView}
+                  strand={selectedStrand}
+                />
+              </div>
+            ))}
         </Flex>
       </Box>
       {/* </Wrap> */}

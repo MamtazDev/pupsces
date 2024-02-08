@@ -29,6 +29,9 @@ const Conversation = () => {
     const studentData1 = (localStorage.getItem("studentData"))
     const studentData = JSON.parse(studentData1)
 
+    const program_id = (localStorage.getItem("program_id"))
+    const program_idData = JSON.parse(program_id)
+
     console.log("studen tData:", JSON.parse(studentData1))
 
 
@@ -42,13 +45,10 @@ const Conversation = () => {
       data.append('name',  studentData.first_name);
       data.append('inputMessage', inputMessage);
       data.append('image', file);
-      data.append('programId', file);
+      data.append('programId', program_idData);
     
       fetch('http://localhost:3000/api/message/upload', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryABC123' // Replace ABC123 with your actual boundary
-        },
         body: data
       })
         .then(response => response.json())

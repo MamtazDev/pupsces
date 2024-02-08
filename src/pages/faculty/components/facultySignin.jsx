@@ -64,8 +64,9 @@ export default function FacultySignIn() {
       const facultyResponse = await fetch(`${endPoint}/faculty/${email}`);
       const facultyData = await facultyResponse.json();
 
-      console.log("Faculty data from server:", facultyData);
-
+      console.log("Faculty data from server new consoled:", facultyData.program_id);
+      localStorage.setItem("program_id", facultyData.program_id)
+      
       if (
         "message" in facultyData &&
         facultyData.message === "Faculty not found"
@@ -78,7 +79,7 @@ export default function FacultySignIn() {
         );
         const admin = await adminResponse.json();
 
-        console.log("Admin data from server:", admin);
+        // console.log("Admin data from server:", admin);
 
         if (admin.length > 0) {
           const adminData = admin[0]; // Access the first (and only) element of the array
@@ -155,7 +156,7 @@ export default function FacultySignIn() {
         <Box mr="0">
           <VStack align="flex-start" justifyContent="center">
             <Text fontSize="2rem" color="white" mb="1rem">
-              Sign In
+              Sign In  in
             </Text>
             <AnimatePresence>
               {error ? (

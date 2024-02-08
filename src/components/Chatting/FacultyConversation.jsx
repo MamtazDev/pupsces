@@ -99,6 +99,8 @@ const FacultyConversation = ({ setOpen, groupedArray }) => {
             {groupedArray?.map((message, index) => (
               <div style={{ marginBottom: "10px" }} key={index}>
                 <div key={index}>
+                  {
+                    message.inputMessage && 
                   <p
                     style={{
                       background: "whitesmoke",
@@ -110,6 +112,11 @@ const FacultyConversation = ({ setOpen, groupedArray }) => {
                   >
                     {message.inputMessage}
                   </p>
+                  }
+
+                  {/* {
+                    message.input 
+                  } */}
                 </div>
               </div>
             ))}

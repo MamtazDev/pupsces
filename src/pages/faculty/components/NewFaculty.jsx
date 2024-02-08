@@ -121,7 +121,7 @@ export default function NewFaculty() {
       }
 
       const facultyData = await facultyResponse.json();
-      console.log("Faculty Data from API:", facultyData);
+      console.log("Faculty Data from API new new:", facultyData);
 
       if (!facultyData || Object.keys(facultyData).length === 0) {
         console.error("Invalid faculty data structure:", facultyData);

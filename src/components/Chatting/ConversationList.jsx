@@ -11,10 +11,13 @@ const ConversationList = ({ facultyprogram, setShowDropdown }) => {
     const studentData = JSON.parse(studentData1);
     console.log("studentData.program_id:", studentData.program_id);
 
+    const program_id = localStorage.getItem("program_id");
+    const program_idData = JSON.parse(program_id);
+
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/messageData?programId={facultyprogram}`
+          `http://localhost:3000/api/messageData?programId=${program_idData}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
