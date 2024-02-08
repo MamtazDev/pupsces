@@ -9,7 +9,7 @@ function Dashboard() {
         const studentData1 = (localStorage.getItem("studentData"))
         const studentData = JSON.parse(studentData1)
         console.log("studentData.program_id:", studentData.program_id)
-        
+
         const fetchData = async () => {
             try {
                 const response = await fetch(`http://localhost:3000/api/messageData?programId=${studentData.program_id}`);
@@ -26,7 +26,9 @@ function Dashboard() {
         fetchData();
     }, []);
 
-    const handleDownload = (url) => {
+    console.log("messageData", messageData);
+
+    const handleDownload = (url, filename) => {
         window.open(url, '_blank');
         // Logic to download image
         // console.log('Downloading image:', url);
@@ -34,42 +36,42 @@ function Dashboard() {
         // anchor.href = url;
         // anchor.download = filename;
         // anchor.click();
-      };
+    };
 
     return (
         <Flex
-        minHeight="100vh"
-        w="100%"
-        position="absolute"
-        justifyContent="center"
-        zIndex={-1}
-      >
-        <div style={{ padding:'30px', backgroundColor:'#e6e6e6'}}>
-            <div>
-                <h1>Message Data</h1>
+            minHeight="100vh"
+            w="100%"
+            position="absolute"
+            justifyContent="center"
+            zIndex={-1}
+        >
+            <div style={{ padding: '30px', backgroundColor: '#e6e6e6' }}>
                 <div>
-                    {messageData.map((message, index) => (
-                        <div key={index} className="message" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <p>Name: {message.name}</p>
-                            <p>Email: {message.email}</p>
-                            <p>Message: {message.inputMessage}</p>
-                            {/* Render image if available */}
-                            {message.image &&
-                                // <img width={100} height={100} src={`http://localhost:3000/api/v1/uploads/images/${message.image}`} alt="Message Image" />
-                                <div>
-                                    <img width={100} height={100} className='image' src={`http://localhost:3000/api/v1/uploads/images/${message.image}`} alt="Message Image" />
-                                    {/* Download button */}
-                                    <button  className='btn-style' onClick={() => handleDownload(`http://localhost:3000/api/v1/uploads/images/${message.image}`, `image_${index}.jpg`)}>Download</button>
-                                </div>
-                            }
-                        </div>
-                    ))}
+                    <h1>Message Data</h1>
+                    <div>
+                        {messageData.map((message, index) => (
+                            <div key={index} className="message" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <p>Name: {message.name}</p>
+                                <p>Email: {message.email}</p>
+                                <p>Message: {message.inputMessage}</p>
+                                {/* Render image if available */}
+                                {message.image &&
+                                    // <img width={100} height={100} src={`http://localhost:3000/api/v1/uploads/images/${message.image}`} alt="Message Image" />
+                                    <div>
+                                        <img width={100} height={100} className='image' src={`http://localhost:3000/api/v1/uploads/images/${message.image}`} alt="Message Image" />
+                                        {/* Download button */}
+                                        <button className='btn-style' onClick={() => handleDownload(`http://localhost:3000/api/v1/uploads/images/${message.image}`, `image_${index}.jpg`)}>Download</button>
+                                    </div>
+                                }
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
-        </div>
-       
 
-    </Flex>
+
+        </Flex>
 
     )
 }
