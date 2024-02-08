@@ -160,5 +160,8 @@ button:focus-visible {
   width: auto;
   z-index: 9999;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, .1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 
 }

@@ -13,7 +13,7 @@ const ConversationList = () => {
                         <p className="name">Dihan Abir</p>
                         <p style={{ color: 'lightgray', textSize: "12px" }}>Who are you?</p>
                     </div>
-                    <p>20.30 <span>am</span></p>
+                    <p style={{textSize:"5px"}}>20.30 <span>am</span></p>
                 </div>)
             }
 
