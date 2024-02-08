@@ -56,7 +56,39 @@ const ConversationList = ({ facultyprogram, setShowDropdown }) => {
   return (
     <div>
       <div className="conversation_list">
-        {messageData?.map((data, index) => (
+        {groupData?.map((message, index) => (
+          <div style={{ marginBottom: "10px" }} key={index}>
+            {message.map((data, idx) => (
+              <div
+                onClick={() => handleModal()}
+                key={idx}
+                style={{ display: "flex", gap: "15px", alignItems: "center" }}
+              >
+                <img
+                  style={{ borderRadius: "50%" }}
+                  width={40}
+                  height={40}
+                  src={
+                    idx === 0 && data.image
+                      ? `http://localhost:3000/api/v1/uploads/images/${data.image}`
+                      : "https://play-lh.googleusercontent.com/C9CAt9tZr8SSi4zKCxhQc9v4I6AOTqRmnLchsu1wVDQL0gsQ3fmbCVgQmOVM1zPru8UH=w240-h480-rw"
+                  }
+                  alt=""
+                />
+                <div>
+                  <p className="name">{idx === 0 && data?.name}</p>
+                  <p style={{ color: "lightgray", textSize: "12px" }}>
+                    {idx === 0 && data.email}
+                  </p>
+                </div>
+                <p style={{ textSize: "5px" }}>
+                  20.30 <span>am</span>
+                </p>
+              </div>
+            ))}
+          </div>
+        ))}
+        {/* {messageData?.map((data, index) => (
           <div
             onClick={() => handleModal()}
             key={index}
@@ -83,7 +115,7 @@ const ConversationList = ({ facultyprogram, setShowDropdown }) => {
               20.30 <span>am</span>
             </p>
           </div>
-        ))}
+        ))} */}
       </div>
 
       {open && (

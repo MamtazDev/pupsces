@@ -99,35 +99,20 @@ const FacultyConversation = ({ setOpen, groupedArray }) => {
             {groupedArray?.map((message, index) => (
               <div style={{ marginBottom: "10px" }} key={index}>
                 {message.map((data, index) => (
-                  <p
-                    style={{
-                      background: "whitesmoke",
-                      padding: "5px 10px",
-                      display: "inline-block",
-                      borderRadius: "5px",
-                    }}
-                    key={index}
-                  >
-                    {data.inputMessage}
-                  </p>
-                ))}
-                {/* {message.text && (
-                  <p
-                    style={{
-                      background: "whitesmoke",
-                      padding: "5px 10px",
-                      display: "inline-block",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    {message.text}
-                  </p>
-                )}
-                {message.file && (
-                  <div>
-                    <img src={URL.createObjectURL(message.file)} alt="" />
+                  <div key={index}>
+                    <p
+                      style={{
+                        background: "whitesmoke",
+                        padding: "5px 10px",
+                        display: "inline-block",
+                        borderRadius: "5px",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      {data.inputMessage}
+                    </p>
                   </div>
-                )} */}
+                ))}
               </div>
             ))}
             {messages.map((message, index) => (
