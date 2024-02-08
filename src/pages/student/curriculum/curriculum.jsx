@@ -32,6 +32,7 @@ import breakPoints from "../../../utils/breakpoint";
 import { endPoint } from "../../config";
 import SpecialGradeModal from "./SpecialGradeModal";
 import "./curriculum.css";
+import Conversation from "../../../components/Chatting/Conversation";
 
 function Curriculum() {
   const studentNumber = Cookies.get("student_number");
@@ -1185,6 +1186,12 @@ function Curriculum() {
     }
   };
 
+
+
+  
+    const studentData1 = (localStorage.getItem("studentData"))
+    const studentDataNew = JSON.parse(studentData1)
+
   return (
     <Flex
       flexDirection="column"
@@ -1818,6 +1825,10 @@ function Curriculum() {
         <Spacer mt="10rem" />
         <Footer />
       </VStack>
+      {
+        (studentDataNew?.email) &&
+        <Conversation />
+      }
     </Flex>
   );
 }

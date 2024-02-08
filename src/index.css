@@ -149,3 +149,16 @@ button:focus-visible {
   height: 25px;
   width: 25px;
 }
+
+.conversation_list {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  position: absolute;
+  top: 30%;
+  right: 0;
+  width: auto;
+  z-index: 9999;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, .1);
+
+}
