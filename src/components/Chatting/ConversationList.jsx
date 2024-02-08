@@ -9,6 +9,7 @@ const ConversationList = ({ facultyprogram, setShowDropdown }) => {
         const studentData1 = (localStorage.getItem("studentData"))
         const studentData = JSON.parse(studentData1)
         console.log("studentData.program_id:", studentData.program_id)
+        // console.log("facultyprogram",facultyprogram)
 
         const fetchData = async () => {
             try {
