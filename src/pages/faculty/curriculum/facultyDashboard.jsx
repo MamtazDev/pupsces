@@ -413,7 +413,7 @@ export default function FacultyDashboard() {
 
             <HStack spacing={3} flexWrap="wrap">
 
-            {showDropdown && <ConversationList />}
+            {showDropdown && <ConversationList facultyprogram={facultyprogram} setShowDropdown={setShowDropdown} />}
 
 
               <Button

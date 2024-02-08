@@ -5,8 +5,8 @@ import { FaPlus } from "react-icons/fa6";
 import { IoIosSend, IoMdClose } from "react-icons/io";
 import { FaMinus } from "react-icons/fa6";
 
-const FacultyConversation = () => {
-  const [show, setShow] = useState(false);
+const FacultyConversation = ({ setOpen }) => {
+
 
   const [inputMessage, setInputMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -50,11 +50,11 @@ const FacultyConversation = () => {
         .then(response => response.json())
         .then(data => {
           console.log('Success:', data);
-        
+
         })
         .catch(error => {
           console.error('Error:', error);
-          
+
         });
 
 
@@ -79,102 +79,101 @@ const FacultyConversation = () => {
 
   return (
     <div className="conversation">
-      {show && (
-        <div className="chat_box shadow-sm">
+
+      <div className="chat_box shadow-sm">
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: "10px",
+            width: "100%",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <img width={30} src={logo} alt="" />
+            <p>PUPSCES</p>
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <button onClick={() => setOpen(false)}>
+              <FaMinus />
+            </button>
+            <button
+              onClick={() => {
+                setOpen(false);
+                setMessages([]);
+              }}
+            >
+              <IoMdClose />
+            </button>
+          </div>
+        </div>
+
+        <div className="chat_body">
+          <div className="chat_boxy">
+            {messages.map((message, index) => (
+              <div style={{ marginBottom: "10px" }} key={index}>
+                {message.text && (
+                  <p
+                    style={{
+                      background: "whitesmoke",
+                      padding: "5px 10px",
+                      display: "inline-block",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    {message.text}
+                  </p>
+                )}
+                {message.file && (
+                  <div>
+                    <img src={URL.createObjectURL(message.file)} alt="" />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="text_box">
+          <button className="attachment_btn">
+            <label htmlFor="fileInput">
+              <FaPlus />
+            </label>
+            <input
+              type="file"
+              id="fileInput"
+              accept="image/*, .pdf, .doc, .docx"
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+            />
+          </button>
           <div
             style={{
               display: "flex",
-              justifyContent: "space-between",
               alignItems: "center",
               gap: "10px",
+              background: "whitesmoke",
+              padding: "5px",
+              borderRadius: "5px",
               width: "100%",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <img width={30} src={logo} alt="" />
-              <p>PUPSCES</p>
-            </div>
-
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <button onClick={() => setShow(false)}>
-                <FaMinus />
-              </button>
-              <button
-                onClick={() => {
-                  setShow(false);
-                  setMessages([]);
-                }}
-              >
-                <IoMdClose />
-              </button>
-            </div>
-          </div>
-
-          <div className="chat_body">
-            <div className="chat_boxy">
-              {messages.map((message, index) => (
-                <div style={{ marginBottom: "10px" }} key={index}>
-                  {message.text && (
-                    <p
-                      style={{
-                        background: "whitesmoke",
-                        padding: "5px 10px",
-                        display: "inline-block",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      {message.text}
-                    </p>
-                  )}
-                  {message.file && (
-                    <div>
-                      <img src={URL.createObjectURL(message.file)} alt="" />
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="text_box">
-            <button className="attachment_btn">
-              <label htmlFor="fileInput">
-                <FaPlus />
-              </label>
-              <input
-                type="file"
-                id="fileInput"
-                accept="image/*, .pdf, .doc, .docx"
-                onChange={handleFileChange}
-                style={{ display: "none" }}
-              />
+            <input
+              type="text"
+              onChange={(e) => setInputMessage(e.target.value)}
+              value={inputMessage}
+              onKeyPress={handleKeyPress}
+              placeholder={fileDisplay || "Type Here..."}
+            />
+            <button className="send_btn" onClick={sendMessage}>
+              <IoIosSend />
             </button>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                background: "whitesmoke",
-                padding: "5px",
-                borderRadius: "5px",
-                width: "100%",
-              }}
-            >
-              <input
-                type="text"
-                onChange={(e) => setInputMessage(e.target.value)}
-                value={inputMessage}
-                onKeyPress={handleKeyPress}
-                placeholder={fileDisplay || "Type Here..."}
-              />
-              <button className="send_btn" onClick={sendMessage}>
-                <IoIosSend />
-              </button>
-            </div>
           </div>
         </div>
-      )}
-    
+      </div>
+
     </div>
   );
 };
