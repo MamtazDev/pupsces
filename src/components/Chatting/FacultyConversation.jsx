@@ -5,17 +5,11 @@ import { FaPlus } from "react-icons/fa6";
 import { IoIosSend, IoMdClose } from "react-icons/io";
 import { FaMinus } from "react-icons/fa6";
 
-const FacultyConversation = ({ setOpen }) => {
-
-
+const FacultyConversation = ({ setOpen, groupedArray }) => {
   const [inputMessage, setInputMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [file, setFile] = useState(null);
   const [fileDisplay, setFileDisplay] = useState("");
-
-
-
-
 
   const sendMessage = () => {
     if (inputMessage.trim() !== "" || file) {
@@ -26,40 +20,33 @@ const FacultyConversation = ({ setOpen }) => {
       setFileDisplay("");
     }
 
-    const studentData1 = (localStorage.getItem("studentData"))
-    const studentData = JSON.parse(studentData1)
+    const studentData1 = localStorage.getItem("studentData");
+    const studentData = JSON.parse(studentData1);
 
-    console.log("studen tData:", JSON.parse(studentData1))
-
+    console.log("studen tData:", JSON.parse(studentData1));
 
     if (studentData) {
-
-      console.log("studentData.email:", studentData.email)
-      console.log("studentData.file:", file)
+      console.log("studentData.email:", studentData.email);
+      console.log("studentData.file:", file);
 
       const data = new FormData();
-      data.append('email', studentData.email);
-      data.append('name', studentData.first_name);
-      data.append('inputMessage', inputMessage);
-      data.append('image', file);
+      data.append("email", studentData.email);
+      data.append("name", studentData.first_name);
+      data.append("inputMessage", inputMessage);
+      data.append("image", file);
 
-      fetch('http://localhost:3000/api/message/upload', {
-        method: 'POST',
-        body: data
+      fetch("http://localhost:3000/api/message/upload", {
+        method: "POST",
+        body: data,
       })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Success:', data);
-
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
         })
-        .catch(error => {
-          console.error('Error:', error);
-
+        .catch((error) => {
+          console.error("Error:", error);
         });
-
-
     }
-
   };
 
   const handleKeyPress = (e) => {
@@ -75,11 +62,8 @@ const FacultyConversation = ({ setOpen }) => {
     setFileDisplay(selectedFile);
   };
 
-
-
   return (
     <div className="conversation">
-
       <div className="chat_box shadow-sm">
         <div
           style={{
@@ -112,6 +96,40 @@ const FacultyConversation = ({ setOpen }) => {
 
         <div className="chat_body">
           <div className="chat_boxy">
+            {groupedArray?.map((message, index) => (
+              <div style={{ marginBottom: "10px" }} key={index}>
+                {message.map((data, index) => (
+                  <p
+                    style={{
+                      background: "whitesmoke",
+                      padding: "5px 10px",
+                      display: "inline-block",
+                      borderRadius: "5px",
+                    }}
+                    key={index}
+                  >
+                    {data.inputMessage}
+                  </p>
+                ))}
+                {/* {message.text && (
+                  <p
+                    style={{
+                      background: "whitesmoke",
+                      padding: "5px 10px",
+                      display: "inline-block",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    {message.text}
+                  </p>
+                )}
+                {message.file && (
+                  <div>
+                    <img src={URL.createObjectURL(message.file)} alt="" />
+                  </div>
+                )} */}
+              </div>
+            ))}
             {messages.map((message, index) => (
               <div style={{ marginBottom: "10px" }} key={index}>
                 {message.text && (
@@ -173,7 +191,6 @@ const FacultyConversation = ({ setOpen }) => {
           </div>
         </div>
       </div>
-
     </div>
   );
 };
