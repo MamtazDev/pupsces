@@ -99,24 +99,26 @@ const FacultyConversation = ({ setOpen, groupedArray }) => {
             {groupedArray?.map((message, index) => (
               <div style={{ marginBottom: "10px" }} key={index}>
                 <div key={index}>
-                  {
-                    message.inputMessage && 
-                  <p
-                    style={{
-                      background: "whitesmoke",
-                      padding: "5px 10px",
-                      display: "inline-block",
-                      borderRadius: "5px",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    {message.inputMessage}
-                  </p>
-                  }
+                  {message.inputMessage && (
+                    <p
+                      style={{
+                        background: "whitesmoke",
+                        padding: "5px 10px",
+                        display: "inline-block",
+                        borderRadius: "5px",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      {message.inputMessage}
+                    </p>
+                  )}
 
-                  {/* {
-                    message.input 
-                  } */}
+                  {message.image && (
+                    <img
+                      src={`http://localhost:3000/api/v1/uploads/images/${message.image}`}
+                      alt=""
+                    />
+                  )}
                 </div>
               </div>
             ))}
