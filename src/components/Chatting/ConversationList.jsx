@@ -4,6 +4,7 @@ import FacultyConversation from "./FacultyConversation";
 const ConversationList = ({ facultyprogram, setShowDropdown }) => {
   const [messageData, setMessageData] = useState([]);
   const [groupData, setGroupData] = useState([]);
+  const [groupMessageData, setGroupMessageData] = useState([]);
 
   useEffect(() => {
     const studentData1 = localStorage.getItem("studentData");
@@ -48,7 +49,10 @@ const ConversationList = ({ facultyprogram, setShowDropdown }) => {
 
   const [open, setOpen] = useState(false);
 
-  const handleModal = () => {
+  const handleModal = (message) => {
+    console.log("message", message)
+    setGroupMessageData( message)
+
     setOpen(true);
     // setShowDropdown(false);
   };
@@ -58,10 +62,10 @@ const ConversationList = ({ facultyprogram, setShowDropdown }) => {
       <div className="conversation_list">
         {groupData?.map((message, index) => (
           <div style={{ marginBottom: "10px" }} key={index}>
-            {message.map((data, idx) => (
-              <div
-                onClick={() => handleModal()}
-                key={idx}
+
+<div
+                onClick={() => handleModal(message)}
+                key={index}
                 style={{ display: "flex", gap: "15px", alignItems: "center" }}
               >
                 <img
@@ -69,23 +73,25 @@ const ConversationList = ({ facultyprogram, setShowDropdown }) => {
                   width={40}
                   height={40}
                   src={
-                    idx === 0 && data.image
-                      ? `http://localhost:3000/api/v1/uploads/images/${data.image}`
+                    message[0].image
+                      ? `http://localhost:3000/api/v1/uploads/images/${message[0].image}`
                       : "https://play-lh.googleusercontent.com/C9CAt9tZr8SSi4zKCxhQc9v4I6AOTqRmnLchsu1wVDQL0gsQ3fmbCVgQmOVM1zPru8UH=w240-h480-rw"
                   }
                   alt=""
                 />
                 <div>
-                  <p className="name">{idx === 0 && data?.name}</p>
+                  <p className="name">{message[0]?.name}</p>
                   <p style={{ color: "lightgray", textSize: "12px" }}>
-                    {idx === 0 && data.email}
+                    {message[0].email}
                   </p>
                 </div>
                 <p style={{ textSize: "5px" }}>
                   20.30 <span>am</span>
                 </p>
               </div>
-            ))}
+            {/* {message[0]?.map((data, idx) => (
+              
+            ))} */}
           </div>
         ))}
         {/* {messageData?.map((data, index) => (
@@ -119,7 +125,7 @@ const ConversationList = ({ facultyprogram, setShowDropdown }) => {
       </div>
 
       {open && (
-        <FacultyConversation setOpen={setOpen} groupedArray={groupData} />
+        <FacultyConversation setOpen={setOpen} groupedArray={groupMessageData} />
       )}
     </div>
   );
