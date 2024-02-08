@@ -9,7 +9,7 @@ function Dashboard() {
         const studentData1 = (localStorage.getItem("studentData"))
         const studentData = JSON.parse(studentData1)
         console.log("studentData.program_id:", studentData.program_id)
-
+        
         const fetchData = async () => {
             try {
                 const response = await fetch(`http://localhost:3000/api/messageData?programId=${studentData.program_id}`);
@@ -26,7 +26,7 @@ function Dashboard() {
         fetchData();
     }, []);
 
-    const handleDownload = (url,filename) => {
+    const handleDownload = (url) => {
         window.open(url, '_blank');
         // Logic to download image
         // console.log('Downloading image:', url);
@@ -75,3 +75,4 @@ function Dashboard() {
 }
 
 export default Dashboard
+

@@ -98,6 +98,8 @@ export default function FacultyDashboard() {
         .get(`${endPoint}/faculty/${encodeURIComponent(facultyEmail)}`)
         .then((response) => {
           const facultyData = response.data;
+          console.log("facultyData:", facultyData)
+
           setFacultyName(
             `${facultyData.faculty_fname} ${facultyData.faculty_mname} ${facultyData.faculty_lname}`
           );
