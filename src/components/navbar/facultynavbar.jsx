@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import InitialsAvatar from "react-initials-avatar";
 import "react-initials-avatar/lib/ReactInitialsAvatar.css";
 import { Link as RouterLink, NavLink } from "react-router-dom";
-import { HiMenu } from "react-icons/hi"; // Import the hamburger menu icon
+import { HiMenu } from "react-icons/hi";
 import "../../components/navbar/navbar.css";
 import { handleScroll } from "./handleNavbar";
 import logo from "../../assets/PUPlogo.png";
@@ -32,8 +32,9 @@ function FacultyNavbar({ facultyprogram }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const facultyEmail = Cookies.get("facultyEmail");
   const [facultyName, setFacultyName] = useState("");
-  
+
   const [showDropdown, setShowDropdown] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (facultyEmail) {
@@ -204,12 +205,14 @@ function FacultyNavbar({ facultyprogram }) {
           <img src={chat} alt="icon" />
         </button>
       </Flex>
-      {showDropdown && (
-        <ConversationList
-          facultyprogram={facultyprogram}
-          setShowDropdown={setShowDropdown}
-        />
-      )}
+
+      <ConversationList
+        showDropdown={showDropdown}
+        facultyprogram={facultyprogram}
+        setShowDropdown={setShowDropdown}
+        setOpen = {setOpen}
+        open={open}
+      />
     </Box>
   );
 }
