@@ -62,14 +62,21 @@ const FacultyConversation = ({ setOpen, groupedArray }) => {
     setFile(selectedFile);
     setFileDisplay(selectedFile);
   };
-  const handleDownload = (url) => {
-    window.open(url, "_blank");
-    // Logic to download image
-    // console.log('Downloading image:', url);
-    // const anchor = document.createElement('a');
-    // anchor.href = url;
-    // anchor.download = filename;
-    // anchor.click();
+  const handleDownload = (url, filename) => {
+    fetch(url)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", filename);
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+      })
+      .catch((error) => {
+        console.error("Error downloading image:", error);
+      });
   };
   return (
     <div className="conversation">
@@ -142,7 +149,8 @@ const FacultyConversation = ({ setOpen, groupedArray }) => {
                         }}
                         onClick={() =>
                           handleDownload(
-                            `http://localhost:3000/api/v1/uploads/images/${message.image}`
+                            `http://localhost:3000/api/v1/uploads/images/${message.image}`,
+                            message.image
                           )
                         }
                       >
