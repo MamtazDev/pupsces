@@ -25,12 +25,15 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { endPoint } from "../../pages/config";
 import chat from "../../assets/chat.png";
+import ConversationList from "../Chatting/ConversationList";
 
-function FacultyNavbar({ showDropdown, setShowDropdown }) {
+function FacultyNavbar({ facultyprogram }) {
   const [showNavbar, setShowNavbar] = useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const facultyEmail = Cookies.get("facultyEmail");
   const [facultyName, setFacultyName] = useState("");
+  
+  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
     if (facultyEmail) {
@@ -198,10 +201,15 @@ function FacultyNavbar({ showDropdown, setShowDropdown }) {
           <InitialsAvatar name={facultyName} className="avatar-circle" />
         </ChakraLink>
         <button onClick={() => setShowDropdown(!showDropdown)}>
-        <img src={chat} alt="icon" />
-      </button>
+          <img src={chat} alt="icon" />
+        </button>
       </Flex>
-   
+      {showDropdown && (
+        <ConversationList
+          facultyprogram={facultyprogram}
+          setShowDropdown={setShowDropdown}
+        />
+      )}
     </Box>
   );
 }

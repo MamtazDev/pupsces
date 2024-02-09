@@ -374,7 +374,6 @@ export default function FacultyDashboard({
 
   console.log(facultyId);
 
-  const [showDropdown, setShowDropdown] = useState(false);
   return (
     <Flex
       minHeight="100vh"
@@ -384,10 +383,7 @@ export default function FacultyDashboard({
       w="100%"
       flexDirection="column"
     >
-      <FacultyNavbar
-        showDropdown={showDropdown}
-        setShowDropdown={setShowDropdown}
-      />
+      <FacultyNavbar facultyprogram={facultyprogram} />
 
       {/* <VStack mt="9rem" w="80vw"> */}
       {/* <Wrap spacing="3" w={breakPoints} mb="8rem"> */}
@@ -580,12 +576,6 @@ export default function FacultyDashboard({
       {/* </VStack> */}
       <Spacer mt="10rem" />
       <Footer />
-      {showDropdown && (
-        <ConversationList
-          facultyprogram={facultyprogram}
-          setShowDropdown={setShowDropdown}
-        />
-      )}
     </Flex>
   );
 }
