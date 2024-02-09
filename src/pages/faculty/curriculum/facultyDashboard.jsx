@@ -65,15 +65,13 @@ function convertExcelDatesToReadable(dates) {
   return convertedDates.filter((date) => date !== null); // Remove null values
 }
 
-export default function FacultyDashboard({
-  setFacultyProgram,
-  facultyprogram,
-}) {
+export default function FacultyDashboard() {
   const [students, setStudents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedSchoolYear, setSelectedSchoolYear] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [facultyprogram, setFacultyProgram] = useState([]);
 
   const [filteredStudentCount, setFilteredStudentCount] = useState(0);
   const [showTableBody, setShowTableBody] = useState(false);
