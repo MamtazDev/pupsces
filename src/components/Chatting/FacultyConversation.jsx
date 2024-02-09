@@ -4,6 +4,7 @@ import logo from "../../assets/p.jpg";
 import { FaPlus } from "react-icons/fa6";
 import { IoIosSend, IoMdClose } from "react-icons/io";
 import { FaMinus } from "react-icons/fa6";
+import { IoMdDownload } from "react-icons/io";
 
 const FacultyConversation = ({ setOpen, groupedArray }) => {
   const [inputMessage, setInputMessage] = useState("");
@@ -61,7 +62,15 @@ const FacultyConversation = ({ setOpen, groupedArray }) => {
     setFile(selectedFile);
     setFileDisplay(selectedFile);
   };
-
+  const handleDownload = (url) => {
+    window.open(url, "_blank");
+    // Logic to download image
+    // console.log('Downloading image:', url);
+    // const anchor = document.createElement('a');
+    // anchor.href = url;
+    // anchor.download = filename;
+    // anchor.click();
+  };
   return (
     <div className="conversation">
       <div className="chat_box shadow-sm">
@@ -114,10 +123,32 @@ const FacultyConversation = ({ setOpen, groupedArray }) => {
                   )}
 
                   {message.image && (
-                    <img
-                      src={`http://localhost:3000/api/v1/uploads/images/${message.image}`}
-                      alt=""
-                    />
+                    <div style={{ position: "relative" }}>
+                      <a
+                        href={`http://localhost:3000/api/v1/uploads/images/${message.image}`}
+                        download
+                      >
+                        <img
+                          height={300}
+                          src={`http://localhost:3000/api/v1/uploads/images/${message.image}`}
+                          alt=""
+                        />
+                      </a>
+                      <button
+                        style={{
+                          position: "absolute",
+                          top: "20px",
+                          right: "0",
+                        }}
+                        onClick={() =>
+                          handleDownload(
+                            `http://localhost:3000/api/v1/uploads/images/${message.image}`
+                          )
+                        }
+                      >
+                        <IoMdDownload />
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>

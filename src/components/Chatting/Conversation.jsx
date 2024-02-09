@@ -4,6 +4,7 @@ import logo from "../../assets/p.jpg";
 import { FaPlus } from "react-icons/fa6";
 import { IoIosSend, IoMdClose } from "react-icons/io";
 import { FaMinus } from "react-icons/fa6";
+import { IoMdDownload } from "react-icons/io";
 
 const Conversation = () => {
   const [show, setShow] = useState(false);
@@ -15,8 +16,6 @@ const Conversation = () => {
 
   // const [fileDisplau]
 
-
-
   const sendMessage = () => {
     if (inputMessage.trim() !== "" || file) {
       const newMessages = [...messages, { text: inputMessage, file }];
@@ -26,44 +25,39 @@ const Conversation = () => {
       setFileDisplay("");
     }
 
-    const studentData1 = (localStorage.getItem("studentData"))
-    const studentData = JSON.parse(studentData1)
+    const studentData1 = localStorage.getItem("studentData");
+    const studentData = JSON.parse(studentData1);
 
-    const program_id = (localStorage.getItem("program_id"))
-    const program_idData = JSON.parse(program_id)
+    const program_id = localStorage.getItem("program_id");
+    const program_idData = JSON.parse(program_id);
 
-    console.log("studen tData:", JSON.parse(studentData1))
-
+    console.log("studen tData:", JSON.parse(studentData1));
 
     if (studentData) {
+      console.log("studentData.program_id:", studentData.program_id);
+      console.log("studentData.file:", file);
 
-      console.log("studentData.program_id:", studentData.program_id)
-      console.log("studentData.file:", file)
-    
       const data = new FormData();
-      data.append('email', studentData.email);
-      data.append('name',  studentData.first_name);
-      data.append('inputMessage', inputMessage);
-      data.append('image', file);
-      data.append('programId', program_idData);
-    
-      fetch('http://localhost:3000/api/message/upload', {
-        method: 'POST',
-        body: data
+      data.append("email", studentData.email);
+      data.append("name", studentData.first_name);
+      data.append("inputMessage", inputMessage);
+      data.append("image", file);
+      data.append("programId", program_idData);
+
+      fetch("http://localhost:3000/api/message/upload", {
+        method: "POST",
+        body: data,
       })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Success:', data);
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
           // Handle success response here
         })
-        .catch(error => {
-          console.error('Error:', error);
+        .catch((error) => {
+          console.error("Error:", error);
           // Handle error here
         });
-
-
-}
-  
+    }
   };
 
   const handleKeyPress = (e) => {
@@ -79,11 +73,10 @@ const Conversation = () => {
     setFileDisplay(selectedFile);
   };
 
-
   useEffect(() => {
-    const studentData = JSON.stringify(localStorage.getItem("studentData"))
-    console.log("studentData:", studentData)
-  },[])
+    const studentData = JSON.stringify(localStorage.getItem("studentData"));
+    console.log("studentData:", studentData);
+  }, []);
   return (
     <div className="conversation">
       {show && (
@@ -134,8 +127,23 @@ const Conversation = () => {
                     </p>
                   )}
                   {message.file && (
-                    <div>
-                      <img src={URL.createObjectURL(message.file)} alt="" />
+                    <div style={{ position: "relative" }}>
+                      <a href={URL.createObjectURL(message.file)} download>
+                        <img
+                          height={300}
+                          src={URL.createObjectURL(message.file)}
+                          alt=""
+                        />
+                      </a>
+                      <button
+                        style={{
+                          position: "absolute",
+                          top: "20px",
+                          right: "0",
+                        }}
+                      >
+                        <IoMdDownload />
+                      </button>
                     </div>
                   )}
                 </div>
@@ -146,7 +154,7 @@ const Conversation = () => {
           <div className="text_box">
             <button className="attachment_btn">
               <label htmlFor="fileInput">
-                <FaPlus  />
+                <FaPlus />
               </label>
               <input
                 type="file"
